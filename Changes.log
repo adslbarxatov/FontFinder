@@ -1,0 +1,13 @@
+Font finder changes log
+
+Version 1.6
+ • Publication on GitHub.
+ 
+Version 2.0
+ • Serious speedup of searching process achieved:
+   - Some search bugs fixed;
+   - Many outdated and ineffective modules removed or replaced;
+   - Generic search logic has been revised.
+ • Unnecessary interface elements have been removed;
+ • User interface accessibility has been improved.
+ 
