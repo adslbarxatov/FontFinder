@@ -1,12 +1,12 @@
-# FontFinder v 2.0
+# FontFinder v 2.2
 A tool for finding font by its image
 
 #
 
-This tool allows you to find font name/family by its image. You must only present font sample
+This tool allows you to find font name/family by its image. You need only present font sample
 on the picture (high contrast, only target letters) and specify pictured text. Application
 allows you to set font search parameters and interruption condition (percentage of match).
-Warning! Tool works only with fonts that are installed on your system.
+Warning! Tool works only with fonts that are installed on your operating system.
 
 #
 
@@ -18,7 +18,7 @@ Annotation (compilation of tool tips):
    Обрезанное до границ текста изображение будет отображено в поле ниже кнопки выбора картинки.
    
 2. Для подбора шрифта необходимо указать текст, изображённый на картинке, с учётом регистра.
-   В данной версии программы текст не может быть длиннее 100 символов. Одновременно он не может быть пустым.
+   В данной версии программы текст не может быть длиннее 50 символов. Одновременно он не может быть пустым.
    
 3. В некоторых случаях параметры шрифта существенно влияют на его отображение. 
    Укажите эти параметры, если поиск не даёт желаемых результатов.
