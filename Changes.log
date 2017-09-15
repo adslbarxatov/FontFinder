@@ -11,3 +11,8 @@ Version 2.0
  • Unnecessary interface elements have been removed;
  • User interface accessibility has been improved.
  
+Version 2.2
+ • Some interface bugs fixed;
+ • 'Red crosshair instead of sample image' bug fixed (appears when main window loses focus);
+ • Memory leaks seriously decreased.
+ 
