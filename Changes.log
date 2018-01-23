@@ -16,3 +16,8 @@ Version 2.2
  • 'Red crosshair instead of sample image' bug fixed (appears when main window loses focus);
  • Memory leaks seriously decreased.
  
+Version 2.3
+ • Results count field removed (now it is permanently 100).
+ • Font style now apply correctly after the first search.
+ • Some interface changes applied.
+ 
