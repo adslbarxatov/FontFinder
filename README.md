@@ -1,4 +1,4 @@
-# FontFinder v 2.3
+# FontFinder v 2.4
 A tool for finding font by its image / Инструмент для поиска шрифта по его изображению
 #
 This tool allows you to find font name/family by its image. You need only present font sample
@@ -42,6 +42,6 @@ Annotation (compilation of tool tips):
 
 #
 
-Needs Windows XP or newer, Framework 4.0 or newer. Interface language: ru_ru
+Needs Windows XP or newer, Framework 4.0 or newer. Interface languages: ru_ru, en_us
 
-Требуется ОС Windows XP и новее, Framework 4.0 и новее. Язык интерфейса: ru_ru
+Требуется ОС Windows XP и новее, Framework 4.0 и новее. Языки интерфейса: ru_ru, en_us
