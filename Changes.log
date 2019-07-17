@@ -20,4 +20,6 @@ Version 2.3
  • Results count field removed (now it is permanently 100).
  • Font style now apply correctly after the first search.
  • Some interface changes applied.
- 
+
+Version 2.4
+ • English localization for interface added.
