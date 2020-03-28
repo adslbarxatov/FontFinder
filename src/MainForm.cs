@@ -14,6 +14,7 @@ namespace FontFinder
 		// Переменные
 		private Bitmap image = null;									// Исходное изображение
 		private string imageText = "";									// Текст на нём
+		private ImageCreator ic;										// Оператор, формирующий образцы шрифтов
 		private List<FontFamily> foundFF = new List<FontFamily> ();		// Найденные шрифты
 		private List<double> foundFFMatch = new List<double> ();		// Оценки степени их соответствия исходному изображению
 		private FontStyle searchFontStyle = FontStyle.Regular;			// Стиль шрифта для поиска
@@ -29,6 +30,9 @@ namespace FontFinder
 		private const uint MaxResultsCount = 100;		// Максимальное количество отображаемых результатов
 		private const uint MinValidationLimit = 50;		// Минимальный порог прерывания поиска
 		private const uint MaxValidationLimit = 99;		// Максимальный порог прерывания поиска
+
+		private const string picturesExtensions = "(*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|" +
+			"*.bmp;*.gif;*.jpe;*.jpeg;*.jpg;*.jfif;*.png";
 
 		/// <summary>
 		/// Конструктор. Создаёт главную форму программы
@@ -115,7 +119,7 @@ namespace FontFinder
 				SelectImage.Enabled = LoadedPicture.Visible = LoadedPicText.Enabled =
 				CBold.Enabled = CItalic.Enabled = CUnder.Enabled = CStrike.Enabled =
 				PauseSearch.Enabled = SearchPauseFactor.Enabled =
-				StartSearch.Enabled = RU.Enabled = EN.Enabled = false;
+				StartSearch.Enabled = RU.Enabled = EN.Enabled = BExit.Enabled = false;
 
 			// Считывание параметров поиска
 			imageText = LoadedPicText.Text;
@@ -131,14 +135,14 @@ namespace FontFinder
 			foundFFMatch.Clear ();
 
 			// Запуск потока поиска и ожидание его завершения
-			HardWorkExecutor hwe = new HardWorkExecutor (Search);
+			ESHQSetupStub.HardWorkExecutor hwe = new ESHQSetupStub.HardWorkExecutor (Search);
 
 			// Деблокировка окна
 			Label02.Enabled = Label03.Enabled = Label05.Enabled =
 				SelectImage.Enabled = LoadedPicture.Visible = LoadedPicText.Enabled =
 				CBold.Enabled = CItalic.Enabled = CUnder.Enabled = CStrike.Enabled =
 				PauseSearch.Enabled =
-				StartSearch.Enabled = RU.Enabled = EN.Enabled = true;
+				StartSearch.Enabled = RU.Enabled = EN.Enabled = BExit.Enabled = true;
 			SearchPauseFactor.Enabled = PauseSearch.Checked;
 
 			// Выгрузка результатов
@@ -160,41 +164,8 @@ namespace FontFinder
 			// Поиск
 			for (int i = 0; i < ff.Length; i++)
 				{
-				// Создание изображения с выбранным шрифтом и его подгонка под требуемый размер
-				ImageCreator ic;
-				FontStyle orig = searchFontStyle;
-				int t = 0;
-
-retry:
-				try
-					{
-					Font font = new Font (ff[i], image.Height, searchFontStyle);
-					ic = new ImageCreator (imageText, font);
-					font.Dispose ();
-					}
-				catch
-					{
-					// Если не получается, выбрать другой стиль
-					if (t < otherStyles.Length)
-						{
-						searchFontStyle = otherStyles[t++];
-						if (CUnder.Checked)
-							{
-							searchFontStyle |= FontStyle.Underline;
-							}
-						if (CStrike.Checked)
-							{
-							searchFontStyle |= FontStyle.Strikeout;
-							}
-						goto retry;
-						}
-					else
-						{
-						// Возврат исходного стиля
-						searchFontStyle = orig;
-						continue;
-						}
-					}
+				// Создание изображения с выбранным шрифтом
+				FontStyle resultStyle = CreateBitmapFromFont (imageText, ff[i], image.Height, searchFontStyle);
 
 				// Сравнение
 				double res = 0;
@@ -209,7 +180,7 @@ retry:
 				// Запрос на прерывание поиска
 				if (PauseSearch.Checked && (res >= searchPauseFactor))
 					{
-					PreviewForm prf = new PreviewForm (imageText, ff[i], searchFontStyle, CUnder.Checked, CStrike.Checked);
+					PreviewForm prf = new PreviewForm (ic.CreatedImage, ff[i].Name + ", " + resultStyle.ToString ());
 					if (MessageBox.Show (RU.Checked ? "Завершить поиск?" : "Finish the search?",
 						ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 						{
@@ -243,14 +214,12 @@ retry:
 				// Возврат прогресса
 				string msg = (RU.Checked ? "Обрабатывается " : "Processing ") + i.ToString () +
 					(RU.Checked ? " из " : " from ") + ff.Length.ToString () + ":\n" + ff[i].Name;
-				if (orig != searchFontStyle)
+				if (resultStyle != searchFontStyle)
 					{
-					msg += (RU.Checked ? " со стилем " : " with style ") + searchFontStyle.ToString ();
+					msg += (RU.Checked ? " со стилем " : " with style ") + resultStyle.ToString ();
 					}
-				((BackgroundWorker)sender).ReportProgress ((int)(100.0 * (double)i / (double)ff.Length), msg);
-
-				// Возврат исходного стиля
-				searchFontStyle = orig;
+				((BackgroundWorker)sender).ReportProgress ((int)(ESHQSetupStub.HardWorkExecutor.ProgressBarSize *
+					(double)i / (double)ff.Length), msg);
 
 				// Завершение работы, если получено требование от диалога
 				if (((BackgroundWorker)sender).CancellationPending || e.Cancel)
@@ -259,6 +228,55 @@ retry:
 					return;
 					}
 				}
+			}
+
+		// Метод формирует изображение шрифта
+		private FontStyle CreateBitmapFromFont (string Text, FontFamily Font, float Size, FontStyle Style)
+			{
+			Font font = null;
+
+			// Обработка указанного стиля
+			try
+				{
+				font = new Font (Font, Size, Style);
+				ic = new ImageCreator (Text, font);
+				font.Dispose ();
+				return Style;
+				}
+			catch
+				{
+				ic.Dispose ();
+				if (font != null)
+					font.Dispose ();
+				}
+
+			// Если не получается, выбрать другой стиль
+			for (int t = 0; t < otherStyles.Length; t++)
+				{
+				FontStyle otherFontStyle = otherStyles[t];
+				if (CUnder.Checked)
+					otherFontStyle |= FontStyle.Underline;
+				if (CStrike.Checked)
+					otherFontStyle |= FontStyle.Strikeout;
+
+				try
+					{
+					font = new Font (Font, Size, otherFontStyle);
+					ic = new ImageCreator (Text, font);
+					font.Dispose ();
+					return otherFontStyle;
+					}
+				catch
+					{
+					ic.Dispose ();
+					if (font != null)
+						font.Dispose ();
+					}
+				}
+
+			// Иначе - непонятно, что делать
+			ic.Dispose ();
+			return Style;
 			}
 
 		// Выход из программы
@@ -271,24 +289,24 @@ retry:
 		private void Q1_Click (object sender, System.EventArgs e)
 			{
 			MessageBox.Show (RU.Checked ?
-				"     Рекомендуется использование контрастных изображений, на которых тёмный текст расположен " +
-				"на светлом фоне, и кроме него ничего нет. Текст должен быть ровным (без траекторий).\n" +
-				"     Обрезанное до границ текста изображение будет отображено в поле ниже кнопки выбора картинки"
+				"Рекомендуется использование контрастных изображений, на которых тёмный текст расположен " +
+				"на светлом фоне, и кроме него ничего нет. Текст должен быть ровным (без траекторий).\n\n" +
+				"Обрезанное до границ текста изображение будет отображено в поле ниже кнопки выбора картинки"
 				:
-				"     It is recommended to use contrast pictures with dark text and bright background (without other " +
-				"elements). Text must be flat (without trajectories).\n" +
-				"     Cropped image will be shown in the field below the image selection button",
+				"It is recommended to use contrast pictures with dark text and bright background (without other " +
+				"elements). Text must be flat (without trajectories).\n\n" +
+				"Cropped image will be shown in the field below the image selection button",
 				ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 
 		private void Q2_Click (object sender, System.EventArgs e)
 			{
 			MessageBox.Show (RU.Checked ?
-				"     Для подбора шрифта необходимо указать текст, изображённый на картинке, с учётом регистра." +
+				"Для подбора шрифта необходимо указать текст, изображённый на картинке, с учётом регистра." +
 				" В данной версии программы текст не может быть длиннее " + MaxSearchStringLength.ToString () +
 				" символов. Одновременно он не может отсутствовать"
 				:
-				"     It is necessary to specify the text from the picture (it's case sensitive). This version of " +
+				"It is necessary to specify the text from the picture (it's case sensitive). This version of " +
 				"application allows non-empty text strings no longer than " + MaxSearchStringLength.ToString () + " characters",
 				ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
@@ -296,10 +314,10 @@ retry:
 		private void Q3_Click (object sender, System.EventArgs e)
 			{
 			MessageBox.Show (RU.Checked ?
-				"     В некоторых случаях параметры шрифта существенно влияют на его отображение. " +
+				"В некоторых случаях параметры шрифта существенно влияют на его отображение. " +
 				"Укажите эти параметры, если поиск не даёт желаемых результатов"
 				:
-				"     In some cases these parameters may significantly change results of search. " +
+				"In some cases these parameters may significantly change results of search. " +
 				"Specify them if you haven't received needed fonts",
 				ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
@@ -307,14 +325,14 @@ retry:
 		private void Q4_Click (object sender, System.EventArgs e)
 			{
 			MessageBox.Show (RU.Checked ?
-				"     Если вы хотите, чтобы поиск был прерван при обнаружении совпадения с некоторым порогом, можно установить " +
+				"Если вы хотите, чтобы поиск был прерван при обнаружении совпадения с некоторым порогом, можно установить " +
 				"соответствующий флажок. Порогом срабатывания этого правила служит число от " + MinValidationLimit.ToString () +
-				" до " + MaxValidationLimit.ToString () + " процентов.\n" +
-				"     Нажатие кнопки «Поиск» запустит перебор шрифтов на предмет совпадения с тем, который использован в загруженном " +
+				" до " + MaxValidationLimit.ToString () + " процентов.\n\n" +
+				"Нажатие кнопки «Поиск» запустит перебор шрифтов на предмет совпадения с тем, который использован в загруженном " +
 				"изображении"
 				:
-				"     If you want to pause search when you get the specified percentage of similarity (between " +
-				MinValidationLimit.ToString () + " and " + MaxValidationLimit.ToString () + "). " +
+				"If you want to pause search when you get the specified percentage of similarity (between " +
+				MinValidationLimit.ToString () + " and " + MaxValidationLimit.ToString () + ").\n\n" +
 				"'Search' button starts fonts matching with sample image",
 				ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
@@ -322,21 +340,24 @@ retry:
 		private void Q5_Click (object sender, System.EventArgs e)
 			{
 			MessageBox.Show (RU.Checked ?
-				"     По окончании поиска в списке будет отображено не более " + MaxResultsCount.ToString () +
-				" наиболее подходящих шрифтов и степени их совпадения с оригиналом в процентах. Двойной щелчок по любому " +
-				"результату позволяет отобразить заданный ранее текст с использованием выбранного шрифта и стиля.\n" +
-				"     Поиск может занимать значительное время. Используйте кнопку «×», чтобы остановить поиск и просмотреть " +
+				"По окончании поиска в списке будет отображено не более " + MaxResultsCount.ToString () +
+				" наиболее подходящих шрифтов и степени их совпадения с оригиналом в процентах. Щелчок по любому " +
+				"результату позволяет отобразить заданный ранее текст с использованием выбранного шрифта и стиля.\n\n" +
+				"Поиск может занимать значительное время. Используйте кнопку «×», чтобы остановить поиск и просмотреть " +
 				"уже имеющиеся результаты"
 				:
-				"     After search complete you'll get a list of most matching fonts (no more than " + MaxResultsCount.ToString () + "). " +
-				"By double-clicking you can see specified text in selected font and style.\n" +
-				"     Search may be too long. Use '×' button to finish it immediately and view current results",
+				"After search complete you'll get a list of most matching fonts (no more than " + MaxResultsCount.ToString () + "). " +
+				"By clicking you can see specified text in selected font and style.\n\n" +
+				"Search may be too long. Use '×' button to finish it immediately and view current results",
 				ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
 
 		// Выбор пункта для предпросмотра
-		private void ResultsList_DoubleClick (object sender, System.EventArgs e)
+		private void ResultsList_SelectedIndexChanged (object sender, System.EventArgs e)
 			{
+			if (ResultsList.SelectedIndex < 0)
+				return;
+
 			// Проверка на наличие текста
 			if (LoadedPicText.Text == "")
 				{
@@ -346,8 +367,13 @@ retry:
 				}
 
 			// Запуск просмотра
-			PreviewForm pf = new PreviewForm (LoadedPicText.Text, foundFF[ResultsList.SelectedIndex], searchFontStyle,
-				CUnder.Checked, CStrike.Checked);
+			if (ViewBox.BackgroundImage != null)
+				ViewBox.BackgroundImage.Dispose ();
+
+			FontStyle resultStyle = CreateBitmapFromFont (LoadedPicText.Text, foundFF[ResultsList.SelectedIndex],
+				ViewBox.Height, searchFontStyle);
+			ViewBox.BackgroundImage = (Image)ic.CreatedImage.Clone ();
+			ic.Dispose ();
 			}
 
 		// Установка или снятие галочки
@@ -373,8 +399,6 @@ retry:
 		// Локализация формы
 		private void RU_CheckedChanged (object sender, System.EventArgs e)
 			{
-			const string picturesExtensions = "(*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|*.bmp;*.gif;*.jpe;*.jpeg;*.jpg;*.jfif;*.png";
-
 			if (RU.Checked)
 				{
 				OpenImage.Filter = "Изображения " + picturesExtensions;
@@ -391,6 +415,7 @@ retry:
 				StartSearch.Text = "4. &Начните поиск";
 				Label05.Text = "5. Результаты (по степени совпадения с образцом):";
 				BExit.Text = "В&ыход";
+				BAbout.Text = "&О программе";
 				}
 			else
 				{
@@ -408,6 +433,20 @@ retry:
 				StartSearch.Text = "4. Begin &search";
 				Label05.Text = "5. Results (in descending order of similarity's degree):";
 				BExit.Text = "E&xit";
+				BAbout.Text = "Abo&ut";
+				}
+			}
+
+		// Отображение справки
+		private void BAbout_Click (object sender, System.EventArgs e)
+			{
+			ProgramDescription.ShowAbout ();
+
+			if (MessageBox.Show (RU.Checked ? "Показать видеоруководство пользователя на нашем YouTube-канале?" :
+				"Do you want to view video-manual on our YouTube channel?", ProgramDescription.AssemblyTitle,
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+				{
+				ProgramDescription.ShowVideoManual ();
 				}
 			}
 		}

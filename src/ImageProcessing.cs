@@ -109,9 +109,7 @@ namespace FontFinder
 		public void Dispose ()
 			{
 			if (image != null)
-				{
 				image.Dispose ();
-				}
 			whiteBrush.Dispose ();
 			blackBrush.Dispose ();
 			}
@@ -328,9 +326,7 @@ lb:
 		public void Dispose ()
 			{
 			if (image != null)
-				{
 				image.Dispose ();
-				}
 			}
 		}
 	}

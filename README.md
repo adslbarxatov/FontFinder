@@ -1,4 +1,4 @@
-# FontFinder v 2.4
+# FontFinder v 2.5
 
 A tool for finding font by its image / Инструмент для поиска шрифта по его изображению
 

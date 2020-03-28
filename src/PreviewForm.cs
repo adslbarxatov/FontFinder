@@ -8,79 +8,36 @@ namespace FontFinder
 	/// </summary>
 	public partial class PreviewForm:Form
 		{
-		// Переменные
-		private string viewText = "";									// Текст-образец
-		private FontFamily viewFontFamily = null;						// Шрифт
-		private FontStyle viewFontStyle = FontStyle.Regular;			// Стиль отображения шрифта
-		private bool understrike = false, strikeout = false;			// Флаги подчёркивания и зачёркивания
-		private FontStyle[] otherStyles = { FontStyle.Regular,			// Стили, замещающие текущий в случае его недопустимости
-											  FontStyle.Bold ,
-											  FontStyle.Italic,
-											  FontStyle.Bold | FontStyle.Italic };
-
 		/// <summary>
 		/// Конструктор. Запускает форму просмотра шрифта
 		/// </summary>
-		/// <param name="Strikeout">Указывает, является ли текст, используемый для просмотра, перечёркнутым</param>
-		/// <param name="Understrike">Указывает, является ли текст, используемый для просмотра, подчёркнутым</param>
-		/// <param name="ViewFontFamily">Имя шрифта для просмотра</param>
-		/// <param name="ViewFontStyle">Стиль шрифта</param>
-		/// <param name="ViewText">Текст-образец</param>
-		public PreviewForm (string ViewText, FontFamily ViewFontFamily, FontStyle ViewFontStyle, bool Understrike, bool Strikeout)
+		/// <param name="Preview">Изображение для отображения</param>
+		/// <param name="Caption">Подпись окна просмотра</param>
+		public PreviewForm (Bitmap Preview, string Caption)
 			{
 			InitializeComponent ();
-
-			viewText = ViewText;
-			viewFontFamily = ViewFontFamily;
-			viewFontStyle = ViewFontStyle;
-			understrike = Understrike;
-			strikeout = Strikeout;
-
-			this.ShowDialog ();
-			}
-
-		// Загрузка формы
-		private void PreviewForm_Load (object sender, System.EventArgs e)
-			{
-			ImageCreator ic = null;
-			int t = 0;
-
-			// Формирование изображения
-retry:
-			try
-				{
-				ic = new ImageCreator (viewText, new Font (viewFontFamily, ViewBox.Height, viewFontStyle));
-				}
-			catch
-				{
-				// Если не получается, выбрать другой стиль
-				if (t < otherStyles.Length)
-					{
-					viewFontStyle = otherStyles[t++];
-					if (understrike)
-						{
-						viewFontStyle |= FontStyle.Underline;
-						}
-					if (strikeout)
-						{
-						viewFontStyle |= FontStyle.Strikeout;
-						}
-					goto retry;
-					}
-				}
-
-			// Отображение
-			ViewBox.BackgroundImage = new Bitmap (ic.CreatedImage, ViewBox.Width, (int)((double)ic.CreatedImage.Height *
-				((double)ViewBox.Width / (double)ic.CreatedImage.Width)));
+			ViewBox.BackgroundImage = new Bitmap (Preview, ViewBox.Width, (int)((double)Preview.Height *
+				((double)ViewBox.Width / (double)Preview.Width)));
 
 			// Заголовок окна
-			this.Text = /*"Просмотр шрифта " +*/ viewFontFamily.Name + /*", стиль "*/", " + viewFontStyle.ToString ();
+			this.Text = Caption;
+			this.ShowDialog ();
 			}
 
 		// Закрытие формы
 		private void FClose_Click (object sender, System.EventArgs e)
 			{
 			this.Close ();
+			}
+
+		// Изменение размера формы
+		private void PreviewForm_Resize (object sender, System.EventArgs e)
+			{
+			FClose.Top = this.Height - 62;
+			FClose.Left = (this.Width - FClose.Width) / 2;
+
+			ViewBox.Width = this.Width - 30;
+			ViewBox.Height = this.Height - 80;
 			}
 		}
 	}

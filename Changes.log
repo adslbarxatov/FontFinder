@@ -1,25 +1,31 @@
-Font finder changes log
+﻿Font finder changes log
 
-Version 1.6
- • Publication on GitHub.
- 
-Version 2.0
- • Serious speedup of searching process achieved:
-   - Some search bugs fixed;
-   - Many outdated and ineffective modules removed or replaced;
-   - Generic search logic has been revised.
- • Unnecessary interface elements have been removed;
- • User interface accessibility has been improved.
- 
-Version 2.2
- • Some interface bugs fixed;
- • 'Red crosshair instead of sample image' bug fixed (appears when main window loses focus);
- • Memory leaks seriously decreased.
- 
-Version 2.3
- • Results count field removed (now it is permanently 100).
- • Font style now apply correctly after the first search.
- • Some interface changes applied.
+Version 2.5
+• Result font preview and its processing code moved to the main window; preview window will be used only with stop-factor;
+• Malicious processing of font’s substitution styles in case of unavailability of selected one has been fixed;
+• Progress window has been updated;
+• Search tips have been updated
 
 Version 2.4
- • English localization for interface added.
+• English localization for interface added
+
+Version 2.3
+• Results count field removed (now it is permanently 100);
+• Font style now applies correctly after the first search;
+• Some interface changes applied
+
+Version 2.2
+• Some interface bugs fixed;
+• 'Red crosshair instead of sample image' bug fixed (appears when main window loses focus);
+• Memory leaks seriously decreased
+
+Version 2.0
+• Serious speedup of searching process achieved:
+    Some search bugs fixed;
+    Many outdated and ineffective modules removed or replaced;
+    Generic search logic has been revised;
+• Unnecessary interface elements have been removed;
+• User interface accessibility has been improved
+
+Version 1.6
+• Publication on GitHub
