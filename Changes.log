@@ -1,5 +1,12 @@
 ﻿Font finder changes log
 
+Version 2.6
+• Removed processing of fonts that give empty pictures;
+• Removed processing of fonts that give the same comparison results;
+• Sample image creator now uses larger field and center text alignment for better fonts fitting;
+• All image fields of application now use zooming mode for loaded and created pictures;
+• Some processing bugs fixed (available managed exceptions have been worked around, null references removed)
+
 Version 2.5
 • Result font preview and its processing code moved to the main window; preview window will be used only with stop-factor;
 • Malicious processing of font’s substitution styles in case of unavailability of selected one has been fixed;

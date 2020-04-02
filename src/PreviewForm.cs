@@ -16,8 +16,7 @@ namespace FontFinder
 		public PreviewForm (Bitmap Preview, string Caption)
 			{
 			InitializeComponent ();
-			ViewBox.BackgroundImage = new Bitmap (Preview, ViewBox.Width, (int)((double)Preview.Height *
-				((double)ViewBox.Width / (double)Preview.Width)));
+			ViewBox.BackgroundImage = Preview;
 
 			// Заголовок окна
 			this.Text = Caption;

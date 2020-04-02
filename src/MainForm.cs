@@ -118,7 +118,7 @@ namespace FontFinder
 			Label02.Enabled = Label03.Enabled = Label05.Enabled =
 				SelectImage.Enabled = LoadedPicture.Visible = LoadedPicText.Enabled =
 				CBold.Enabled = CItalic.Enabled = CUnder.Enabled = CStrike.Enabled =
-				PauseSearch.Enabled = SearchPauseFactor.Enabled =
+				PauseSearch.Enabled = SearchPauseFactor.Enabled = ViewBox.Visible =
 				StartSearch.Enabled = RU.Enabled = EN.Enabled = BExit.Enabled = false;
 
 			// Считывание параметров поиска
@@ -141,7 +141,7 @@ namespace FontFinder
 			Label02.Enabled = Label03.Enabled = Label05.Enabled =
 				SelectImage.Enabled = LoadedPicture.Visible = LoadedPicText.Enabled =
 				CBold.Enabled = CItalic.Enabled = CUnder.Enabled = CStrike.Enabled =
-				PauseSearch.Enabled =
+				PauseSearch.Enabled = ViewBox.Visible =
 				StartSearch.Enabled = RU.Enabled = EN.Enabled = BExit.Enabled = true;
 			SearchPauseFactor.Enabled = PauseSearch.Checked;
 
@@ -166,6 +166,8 @@ namespace FontFinder
 				{
 				// Создание изображения с выбранным шрифтом
 				FontStyle resultStyle = CreateBitmapFromFont (imageText, ff[i], image.Height, searchFontStyle);
+				if ((ic == null) || (ic.CreatedImage == null))
+					continue;
 
 				// Сравнение
 				double res = 0;
@@ -176,6 +178,11 @@ namespace FontFinder
 				catch
 					{
 					}
+
+				// Отсечение совпадающих результатов
+				// (исходим из предположения, что разные шрифты не могут давать одинаковый результат сравнения)
+				if (foundFFMatch.Contains (res))
+					continue;
 
 				// Запрос на прерывание поиска
 				if (PauseSearch.Checked && (res >= searchPauseFactor))
@@ -235,17 +242,21 @@ namespace FontFinder
 			{
 			Font font = null;
 
-			// Обработка указанного стиля
+			// Обработка указанного стиля (если возможно)
 			try
 				{
-				font = new Font (Font, Size, Style);
-				ic = new ImageCreator (Text, font);
-				font.Dispose ();
-				return Style;
+				if (Font.IsStyleAvailable (Style))
+					{
+					font = new Font (Font, Size, Style);
+					ic = new ImageCreator (Text, font);
+					font.Dispose ();
+					return Style;
+					}
 				}
 			catch
 				{
-				ic.Dispose ();
+				if (ic != null)
+					ic.Dispose ();
 				if (font != null)
 					font.Dispose ();
 				}
@@ -261,21 +272,26 @@ namespace FontFinder
 
 				try
 					{
-					font = new Font (Font, Size, otherFontStyle);
-					ic = new ImageCreator (Text, font);
-					font.Dispose ();
-					return otherFontStyle;
+					if (Font.IsStyleAvailable (otherFontStyle))
+						{
+						font = new Font (Font, Size, otherFontStyle);
+						ic = new ImageCreator (Text, font);
+						font.Dispose ();
+						return otherFontStyle;
+						}
 					}
 				catch
 					{
-					ic.Dispose ();
+					if (ic != null)
+						ic.Dispose ();
 					if (font != null)
 						font.Dispose ();
 					}
 				}
 
 			// Иначе - непонятно, что делать
-			ic.Dispose ();
+			if (ic != null)
+				ic.Dispose ();
 			return Style;
 			}
 
@@ -372,6 +388,9 @@ namespace FontFinder
 
 			FontStyle resultStyle = CreateBitmapFromFont (LoadedPicText.Text, foundFF[ResultsList.SelectedIndex],
 				ViewBox.Height, searchFontStyle);
+			if (ic.CreatedImage == null)
+				return;
+
 			ViewBox.BackgroundImage = (Image)ic.CreatedImage.Clone ();
 			ic.Dispose ();
 			}
@@ -415,7 +434,7 @@ namespace FontFinder
 				StartSearch.Text = "4. &Начните поиск";
 				Label05.Text = "5. Результаты (по степени совпадения с образцом):";
 				BExit.Text = "В&ыход";
-				BAbout.Text = "&О программе";
+				BAbout.Text = "Abo&ut";
 				}
 			else
 				{
@@ -443,7 +462,7 @@ namespace FontFinder
 			ProgramDescription.ShowAbout ();
 
 			if (MessageBox.Show (RU.Checked ? "Показать видеоруководство пользователя на нашем YouTube-канале?" :
-				"Do you want to view video-manual on our YouTube channel?", ProgramDescription.AssemblyTitle,
+				"Do you want to view user videoguide on our YouTube channel?", ProgramDescription.AssemblyTitle,
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 				{
 				ProgramDescription.ShowVideoManual ();

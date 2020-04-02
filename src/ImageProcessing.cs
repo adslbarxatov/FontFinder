@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 
 namespace FontFinder
@@ -17,14 +18,16 @@ namespace FontFinder
 		/// <returns>Степень совпадения в процентах</returns>
 		static public double Compare (Bitmap ControlSample, Bitmap CreatedImage)
 			{
+			// Переменные
 			double res = 0.0;
 
-			// Возврат в случае несовпадения размеров
+			// Контроль
+			if ((ControlSample == null) || (CreatedImage == null))
+				return res;
+
 			if (ControlSample.Width * ControlSample.Height *
 				CreatedImage.Width * CreatedImage.Height == 0)
-				{
 				return res;
-				}
 
 			// Сравнение с учётом масштаба
 			for (int x = 0; x < ControlSample.Width; x++)
@@ -84,14 +87,14 @@ namespace FontFinder
 			b.Dispose ();
 
 			// Получение дескриптора для отрисовки текста
-			image = new Bitmap ((int)sz.Width, (int)sz.Height);
+			image = new Bitmap ((int)(sz.Width * 1.2f), (int)(sz.Height * 1.2f));
 			g = Graphics.FromImage (image);
 
 			// Заливка изображения
 			g.FillRectangle (whiteBrush, 0, 0, image.Width, image.Height);
 
 			// Отрисовка текста
-			g.DrawString (Text, UsedFont, blackBrush, 0, 0);
+			g.DrawString (Text, UsedFont, blackBrush, (image.Width - sz.Width) / 2, (image.Height - sz.Height) / 2);
 
 			// Обрезка изображения
 			ImageLoader il = new ImageLoader (image);
@@ -192,9 +195,7 @@ namespace FontFinder
 		public ImageLoader (Image CreatedImage)
 			{
 			if (CreatedImage != null)
-				{
 				image = (Bitmap)CreatedImage.Clone ();
-				}
 			}
 
 		/// <summary>
@@ -213,9 +214,7 @@ namespace FontFinder
 			{
 			// Контроль
 			if (status != ImageLoaderStatuses.Ok)
-				{
 				return new Rectangle ();
-				}
 
 			Rectangle r = new Rectangle (0, 0, 1, 1);
 			int x, y;
@@ -235,7 +234,7 @@ namespace FontFinder
 ll:
 			if (x == image.Width)
 				{
-				return r;		// Эта ситуация, по идее, возможна лишь при полностью белом рисунке
+				return new Rectangle ();		// Эта ситуация возможна лишь при полностью белом рисунке
 				}
 			// На этом месте произойдёт её полное отсеивание
 			else
@@ -298,15 +297,15 @@ lb:
 			{
 			// Контроль
 			if (status != ImageLoaderStatuses.Ok)
-				{
 				return null;
-				}
 
-			// Получение границ рисунка
+			// Получение границ рисунка и отсечение пустых полей
 			Rectangle borders = GetBorder ();
+			if (borders == Rectangle.Empty)
+				return null;
 
 			// Возврат
-			return image.Clone (borders, System.Drawing.Imaging.PixelFormat.Format1bppIndexed);
+			return image.Clone (borders, PixelFormat.Format1bppIndexed);
 			}
 
 		/// <summary>

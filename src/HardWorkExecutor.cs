@@ -168,8 +168,11 @@ namespace ESHQSetupStub
 			// Завершение работы исполнителя
 			try
 				{
-				executionResult = int.Parse (e.Result.ToString ());
-				result = e.Result.ToString ();
+				if (e.Result != null)
+					{
+					executionResult = int.Parse (e.Result.ToString ());
+					result = e.Result.ToString ();
+					}
 				}
 			catch
 				{
