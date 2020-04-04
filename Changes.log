@@ -1,32 +1,40 @@
 ﻿Font finder changes log
 
-Version 2.6
+Version 2.7u:
+• Comparison algorithm has been improved;
+• Added image oversize notification;
+• Application icon and namespace have been unified;
+• Interface language now can be saved; localization system has been also unified;
+• All help tips megred to the single guide;
+• Added skip list handler for matching degrees of compliance
+
+Version 2.6:
 • Removed processing of fonts that give empty pictures;
 • Removed processing of fonts that give the same comparison results;
 • Sample image creator now uses larger field and center text alignment for better fonts fitting;
 • All image fields of application now use zooming mode for loaded and created pictures;
 • Some processing bugs fixed (available managed exceptions have been worked around, null references removed)
 
-Version 2.5
+Version 2.5:
 • Result font preview and its processing code moved to the main window; preview window will be used only with stop-factor;
 • Malicious processing of font’s substitution styles in case of unavailability of selected one has been fixed;
 • Progress window has been updated;
 • Search tips have been updated
 
-Version 2.4
+Version 2.4:
 • English localization for interface added
 
-Version 2.3
+Version 2.3:
 • Results count field removed (now it is permanently 100);
 • Font style now applies correctly after the first search;
 • Some interface changes applied
 
-Version 2.2
+Version 2.2:
 • Some interface bugs fixed;
 • 'Red crosshair instead of sample image' bug fixed (appears when main window loses focus);
 • Memory leaks seriously decreased
 
-Version 2.0
+Version 2.0:
 • Serious speedup of searching process achieved:
     Some search bugs fixed;
     Many outdated and ineffective modules removed or replaced;
@@ -34,5 +42,5 @@ Version 2.0
 • Unnecessary interface elements have been removed;
 • User interface accessibility has been improved
 
-Version 1.6
+Version 1.6:
 • Publication on GitHub

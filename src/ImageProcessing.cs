@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
-namespace FontFinder
+namespace RD_AAOW
 	{
 	/// <summary>
 	/// Класс отвечает за сравнение двух изображений с возвратом результата
@@ -25,8 +25,7 @@ namespace FontFinder
 			if ((ControlSample == null) || (CreatedImage == null))
 				return res;
 
-			if (ControlSample.Width * ControlSample.Height *
-				CreatedImage.Width * CreatedImage.Height == 0)
+			if (ControlSample.Width * ControlSample.Height * CreatedImage.Width * CreatedImage.Height == 0)
 				return res;
 
 			// Сравнение с учётом масштаба
@@ -34,9 +33,9 @@ namespace FontFinder
 				{
 				for (int y = 0; y < ControlSample.Height; y++)
 					{
-					if (Math.Abs (ControlSample.GetPixel (x, y).R -
-						CreatedImage.GetPixel ((int)(((double)x / (double)ControlSample.Width) * (double)CreatedImage.Width),
-						(int)(((double)y / (double)ControlSample.Height) * (double)CreatedImage.Height)).R) < 128)
+					if (Math.Abs (ControlSample.GetPixel (x, y).R - 
+						CreatedImage.GetPixel (CreatedImage.Width * x / ControlSample.Width,
+						CreatedImage.Height * y / ControlSample.Height).R) < 128)
 						{
 						res += 1.0;
 						}
@@ -44,7 +43,7 @@ namespace FontFinder
 				}
 
 			// Результат
-			return 100.0 * res / (double)(ControlSample.Width * ControlSample.Height);
+			return 100.0 * res / (ControlSample.Width * ControlSample.Height);
 			}
 		}
 

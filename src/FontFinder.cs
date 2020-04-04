@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace FontFinder
+namespace RD_AAOW
 	{
 	/// <summary>
 	/// Класс описывает главную функцию программы

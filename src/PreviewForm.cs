@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace FontFinder
+namespace RD_AAOW
 	{
 	/// <summary>
 	/// Форма предпросмотра шрифта

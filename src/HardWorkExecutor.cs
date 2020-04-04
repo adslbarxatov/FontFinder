@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ESHQSetupStub
+namespace RD_AAOW
 	{
 	/// <summary>
 	/// Класс предоставляет интерфейс визуализации прогресса установки/удаления программы
@@ -14,8 +15,9 @@ namespace ESHQSetupStub
 		private bool allowClose = false;						// Запрет выхода из формы до окончания работы
 		private Bitmap progress, frameGreenGrey, frameBack;		// Объекты-отрисовщики
 		private Graphics g, gp;
-		private int currentXOffset = 0;
-		private int currentPercentage = 0;
+		private int currentXOffset = 0,
+			currentPercentage = 0;
+		private object parameters;								// Параметры инициализации потока
 
 		/// <summary>
 		/// Длина шкалы прогресса
@@ -125,6 +127,95 @@ namespace ESHQSetupStub
 			DrawingTimer.Enabled = true;
 			}
 
+#if !SIMPLE_HWE
+		/// <summary>
+		/// Конструктор. Выполняет настройку и запуск процесса установки/удаления
+		/// </summary>
+		/// <param name="HardWorkProcess">Процесс, выполняющий установку/удаление</param>
+		/// <param name="Mode">Режим установки/удаления файлов</param>
+		/// <param name="SetupPath">Путь установки/удаления</param>
+		/// <param name="Uninstall">Флаг удаления ранее установленных файлов</param>
+		public HardWorkExecutor (DoWorkEventHandler HardWorkProcess, string SetupPath, ArchiveOperator.SetupModes Mode, bool Uninstall)
+			{
+			// Инициализация
+			List<string> argument = new List<string> ();
+			argument.Add (SetupPath);
+			argument.Add (((int)Mode).ToString ());
+			argument.Add (Uninstall.ToString ());
+			parameters = argument;
+
+			// Настройка BackgroundWorker
+			bw.ProgressChanged += ProgressChanged;
+
+			bw.WorkerReportsProgress = true;		// Разрешает возвраты изнутри процесса
+			bw.WorkerSupportsCancellation = true;	// Разрешает завершение процесса
+
+			bw.DoWork += ((HardWorkProcess != null) ? HardWorkProcess : DoWork);
+			bw.RunWorkerCompleted += RunWorkerCompleted;
+
+			// Инициализация ProgressBar
+			InitializeProgressBar ();
+
+			// Готово. Запуск
+			this.ShowDialog ();
+			}
+
+		/// <summary>
+		/// Конструктор. Выполняет проверку доступной версии обновления в скрытом режиме
+		/// </summary>
+		/// <param name="HardWorkProcess">Выполняемый процесс</param>
+		/// <param name="PackageVersion">Версия пакета развёртки для сравнения</param>
+		public HardWorkExecutor (DoWorkEventHandler HardWorkProcess, string PackageVersion)
+			{
+			// Настройка BackgroundWorker
+			bw.WorkerReportsProgress = true;		// Разрешает возвраты изнутри процесса
+			bw.WorkerSupportsCancellation = true;	// Разрешает завершение процесса
+
+			bw.DoWork += ((HardWorkProcess != null) ? HardWorkProcess : DoWork);
+			bw.RunWorkerCompleted += RunWorkerCompleted;
+
+			// Запуск
+			bw.RunWorkerAsync (PackageVersion);
+			}
+#endif
+
+		/// <summary>
+		/// Конструктор. Выполняет указанное действие с указанными параметрами в скрытом режиме
+		/// </summary>
+		/// <param name="HardWorkProcess">Выполняемый процесс</param>
+		/// <param name="Parameters">Передаваемые параметры выполнения</param>
+		/// <param name="Caption">Сообщение для отображения (если не задано, окно прогресса не отображается)</param>
+		public HardWorkExecutor (DoWorkEventHandler HardWorkProcess, object Parameters, string Caption)
+			{
+			// Настройка BackgroundWorker
+			bw.WorkerReportsProgress = true;		// Разрешает возвраты изнутри процесса
+			bw.WorkerSupportsCancellation = true;	// Разрешает завершение процесса
+
+			bw.DoWork += ((HardWorkProcess != null) ? HardWorkProcess : DoWork);
+			bw.RunWorkerCompleted += RunWorkerCompleted;
+			bw.ProgressChanged += ProgressChanged;
+
+			// Донастройка окна
+			if ((Caption == null) || (Caption == ""))
+				{
+				bw.RunWorkerAsync (Parameters);
+				}
+			else
+				{
+				parameters = Parameters;
+
+				InitializeProgressBar ();
+				currentPercentage = (int)ProgressBarSize;
+
+				this.AbortButton.Visible = this.AbortButton.Enabled = false;
+				this.StateLabel.Text = Caption;
+				this.StateLabel.TextAlign = ContentAlignment.MiddleCenter;
+
+				// Запуск
+				this.ShowDialog ();
+				}
+			}
+
 		/// <summary>
 		/// Конструктор. Выполняет указанное действие
 		/// </summary>
@@ -142,6 +233,7 @@ namespace ESHQSetupStub
 			// Донастройка окна
 			InitializeProgressBar ();
 			currentPercentage = (int)ProgressBarSize;
+			AbortButton.FlatStyle = FlatStyle.Standard;
 
 			// Запуск
 			this.ShowDialog ();
@@ -150,7 +242,7 @@ namespace ESHQSetupStub
 		// Метод запускает выполнение процесса
 		private void HardWorkExecutor_Shown (object sender, System.EventArgs e)
 			{
-			bw.RunWorkerAsync ();
+			bw.RunWorkerAsync (parameters);
 			}
 
 		// Метод обрабатывает изменение состояния процесса

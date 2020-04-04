@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BAboutText" xml:space="preserve">
+    <value>Abo&amp;ut</value>
+  </data>
+  <data name="BExitText" xml:space="preserve">
+    <value>В&amp;ыход</value>
+  </data>
+  <data name="BSkippingText" xml:space="preserve">
+    <value>Пропуск</value>
+  </data>
+  <data name="CBoldText" xml:space="preserve">
+    <value>&amp;Жирный</value>
+  </data>
+  <data name="CItalicText" xml:space="preserve">
+    <value>&amp;Курсив</value>
+  </data>
+  <data name="ClearSkippingFonts" xml:space="preserve">
+    <value>Очистить список пропускаемых шрифтов?</value>
+  </data>
+  <data name="CStrikeText" xml:space="preserve">
+    <value>&amp;Зачёркнутый</value>
+  </data>
+  <data name="CUnderText" xml:space="preserve">
+    <value>&amp;Подчёркнутый</value>
+  </data>
+  <data name="EmptyTextField" xml:space="preserve">
+    <value>Поле текста не должно быть пустым. Укажите текст для просмотра шрифта</value>
+  </data>
+  <data name="FileIsNotAnImage" xml:space="preserve">
+    <value>Указанный файл не является допустимым изображением</value>
+  </data>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>Указанный файл не найден или недоступен</value>
+  </data>
+  <data name="FinishSearch" xml:space="preserve">
+    <value>Завершить поиск?</value>
+  </data>
+  <data name="HelpText" xml:space="preserve">
+    <value>Краткое руководство пользователя
+
+1. Рекомендуется использование контрастных изображений, на которых тёмный текст расположен на светлом фоне, и кроме него ничего нет. Текст должен быть ровным (без траекторий).
+Обрезанное до границ текста изображение будет отображено в поле ниже кнопки выбора картинки.
+
+2. Для подбора шрифта необходимо указать текст, изображённый на картинке, с учётом регистра.  В данной версии программы текст не может быть длиннее {0:D} символов. Одновременно он не может отсутствовать.
+
+3. В некоторых случаях параметры шрифта существенно влияют на его отображение. Укажите эти параметры, если поиск не даёт желаемых результатов.
+
+4. Если вы хотите, чтобы поиск был прерван при обнаружении совпадения с некоторым порогом, можно установить соответствующий флажок. Порогом срабатывания этого правила служит число от {1:D} до {2:D} процентов.
+Нажатие кнопки «Поиск» запустит перебор шрифтов на предмет совпадения с тем, который использован в загруженном изображении.
+
+5. По окончании поиска в списке будет отображено не более {3:D} наиболее подходящих шрифтов и степени их совпадения с оригиналом в процентах. Щелчок по любому результату позволяет отобразить заданный ранее текст с использованием выбранного шрифта и стиля.
+Поиск может занимать значительное время. Используйте кнопку «×», чтобы остановить поиск и просмотреть уже имеющиеся результаты.
+
+6. Приложение добавит шрифты, которые дают одинаковые результаты сравнения, в список пропуска. Это увеличит скорость поиска. При необходимости вы можете изменить его вручную или отключить, используя соответствующий флажок</value>
+  </data>
+  <data name="Label02Text" xml:space="preserve">
+    <value>2. Укажите текст, содержащийся на изображении:</value>
+  </data>
+  <data name="Label03Text" xml:space="preserve">
+    <value>3. Укажите предполагаемый стиль и требуемый стоп-фактор:</value>
+  </data>
+  <data name="Label05Text" xml:space="preserve">
+    <value>5. Результаты (по степени совпадения с образцом):</value>
+  </data>
+  <data name="Label06Text" xml:space="preserve">
+    <value>%-ное совпадение</value>
+  </data>
+  <data name="LargePicture" xml:space="preserve">
+    <value>Загруженное изображение превышает рекомендуемые размеры. Обработка может занять значительное время</value>
+  </data>
+  <data name="OpenImageFilter" xml:space="preserve">
+    <value>Изображения</value>
+  </data>
+  <data name="OpenImageTitle" xml:space="preserve">
+    <value>Выберите файл изображения</value>
+  </data>
+  <data name="PauseSearchText" xml:space="preserve">
+    <value>П&amp;риостанавливать поиск, если найдено</value>
+  </data>
+  <data name="ProcessingMessage" xml:space="preserve">
+    <value>Обрабатывается {0:D} из {1:D}:
+{2:S}</value>
+  </data>
+  <data name="ProcessingStyle" xml:space="preserve">
+    <value> со стилем {0:S}</value>
+  </data>
+  <data name="SelectImageText" xml:space="preserve">
+    <value>1. Укажите &amp;изображение с образцом шрифта</value>
+  </data>
+  <data name="ShowVideo" xml:space="preserve">
+    <value>Показать видеоруководство пользователя на нашем YouTube-канале?</value>
+  </data>
+  <data name="SkipListProcessorCaption" xml:space="preserve">
+    <value>Пропускаемые шрифты</value>
+  </data>
+  <data name="SpecifyTextFromImage" xml:space="preserve">
+    <value>Укажите текст с загруженного изображения</value>
+  </data>
+  <data name="StartSearchText" xml:space="preserve">
+    <value>4. &amp;Начните поиск</value>
+  </data>
+  <data name="WrongFont" xml:space="preserve">
+    <value>Выбранный шрифт не поддерживается</value>
+  </data>
+  <data name="FillingRequiredText" xml:space="preserve">
+    <value>Требуется заполнение</value>
+  </data>
+  <data name="SkippingFontsCount" xml:space="preserve">
+    <value>
+Пропускаемых шрифтов: {0:D}</value>
+  </data>
+</root>
