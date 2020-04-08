@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace RD_AAOW
 		private List<string> skippingFonts = new List<string> ();
 		private const string skippingFontsListFile = ProgramDescription.AssemblyMainName + ".skp";
 		private SupportedLanguages al;
+		private string sampleText = "Sample";
 
 		/// <summary>
 		/// Конструктор. Загружает данные о пропускаемых шрифтах
@@ -49,11 +51,16 @@ namespace RD_AAOW
 		/// <summary>
 		/// Метод открывает окно ручного управления списком
 		/// </summary>
+		/// <param name="SampleText">Образец текста для предпросмотра шрифтов</param>
 		/// <param name="InterfaceLanguage">Язык интерфейса программы</param>
-		public void EditList (SupportedLanguages InterfaceLanguage)
+		public void EditList (SupportedLanguages InterfaceLanguage, string SampleText)
 			{
-			// Заголовок окна
+			// Инициализация
+			if ((SampleText != null) && (SampleText != ""))
+				sampleText = SampleText;
 			al = InterfaceLanguage;
+
+			// Настройка
 			this.Text = Localization.GetText ("SkipListProcessorCaption", al);
 			BExit.Text = Localization.GetText ("BExitText", al);
 			FillingRequired.Text = Localization.GetText ("FillingRequiredText", al);
@@ -194,6 +201,29 @@ namespace RD_AAOW
 				{
 				return (uint)skippingFonts.Count;
 				}
+			}
+
+		// Просмотр шрифта
+		private void FontsListbox_DoubleClick (object sender, System.EventArgs e)
+			{
+			// Контроль
+			if (FontsListbox.SelectedIndex < 0)
+				return;
+
+			// Формирование и отображение изображения
+			Bitmap createdImage;
+			FontFamily fontFamily = new FontFamily (FontsListbox.Items[FontsListbox.SelectedIndex].ToString ());
+
+			ImageProcessor.CreateBitmapFromFont (sampleText, fontFamily, 200, FontStyle.Regular,
+				false, false, out createdImage);
+			if (createdImage == null)
+				return;
+
+			PreviewForm pf = new PreviewForm (createdImage, fontFamily.Name);
+
+			// Завершение
+			pf.Dispose ();
+			createdImage.Dispose ();
 			}
 		}
 	}

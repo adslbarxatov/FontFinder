@@ -6,17 +6,23 @@ using System.IO;
 namespace RD_AAOW
 	{
 	/// <summary>
-	/// Класс отвечает за сравнение двух изображений с возвратом результата
+	/// Класс отвечает за обработку изображений
 	/// </summary>
-	static public class ImageComparer
+	public static class ImageProcessor
 		{
+		// Стили, замещающие текущий в случае его недоступности
+		private static FontStyle[] otherStyles = { FontStyle.Regular,	
+											  FontStyle.Bold ,
+											  FontStyle.Italic,
+											  FontStyle.Bold | FontStyle.Italic };
+
 		/// <summary>
 		/// Сравнивает два изображения и возвращает степень их совпадения
 		/// </summary>
 		/// <param name="ControlSample">Контрольное изображение</param>
 		/// <param name="CreatedImage">Изображение для сравнения</param>
 		/// <returns>Степень совпадения в процентах</returns>
-		static public double Compare (Bitmap ControlSample, Bitmap CreatedImage)
+		public static double Compare (Bitmap ControlSample, Bitmap CreatedImage)
 			{
 			// Переменные
 			double res = 0.0;
@@ -33,7 +39,7 @@ namespace RD_AAOW
 				{
 				for (int y = 0; y < ControlSample.Height; y++)
 					{
-					if (Math.Abs (ControlSample.GetPixel (x, y).R - 
+					if (Math.Abs (ControlSample.GetPixel (x, y).R -
 						CreatedImage.GetPixel (CreatedImage.Width * x / ControlSample.Width,
 						CreatedImage.Height * y / ControlSample.Height).R) < 128)
 						{
@@ -44,6 +50,84 @@ namespace RD_AAOW
 
 			// Результат
 			return 100.0 * res / (ControlSample.Width * ControlSample.Height);
+			}
+
+		/// <summary>
+		/// Метод формирует изображение шрифта
+		/// </summary>
+		/// <param name="Font">Используемый шрифт</param>
+		/// <param name="ResultImage">Изображение шрифта</param>
+		/// <param name="Size">Кегль шрифта</param>
+		/// <param name="Strikeout">Флаг зачёркивания</param>
+		/// <param name="Style">Стиль используемого шрифта</param>
+		/// <param name="Text">Текст для формирования изображения</param>
+		/// <param name="Underline">Флаг подчёркивания</param>
+		/// <returns>Возвращает стиль, который удалось применить к указанному шрифту</returns>
+		public static FontStyle CreateBitmapFromFont (string Text, FontFamily Font, float Size, FontStyle Style,
+			bool Underline, bool Strikeout, out Bitmap ResultImage)
+			{
+			Font font = null;
+			ImageCreator ic = null;
+
+			// Обработка указанного стиля (если возможно)
+			try
+				{
+				if (Font.IsStyleAvailable (Style))
+					{
+					font = new Font (Font, Size, Style);
+					ic = new ImageCreator (Text, font);
+					font.Dispose ();
+
+					ResultImage = (Bitmap)ic.CreatedImage.Clone ();
+					ic.Dispose ();
+					return Style;
+					}
+				}
+			catch
+				{
+				if (ic != null)
+					ic.Dispose ();
+				if (font != null)
+					font.Dispose ();
+				}
+
+			// Если не получается, выбрать другой стиль
+			for (int t = 0; t < otherStyles.Length; t++)
+				{
+				FontStyle otherFontStyle = otherStyles[t];
+				if (Underline)
+					otherFontStyle |= FontStyle.Underline;
+				if (Strikeout)
+					otherFontStyle |= FontStyle.Strikeout;
+
+				try
+					{
+					if (Font.IsStyleAvailable (otherFontStyle))
+						{
+						font = new Font (Font, Size, otherFontStyle);
+						ic = new ImageCreator (Text, font);
+						font.Dispose ();
+
+						ResultImage = (Bitmap)ic.CreatedImage.Clone ();
+						ic.Dispose ();
+						return otherFontStyle;
+						}
+					}
+				catch
+					{
+					if (ic != null)
+						ic.Dispose ();
+					if (font != null)
+						font.Dispose ();
+					}
+				}
+
+			// Иначе - непонятно, что делать
+			if (ic != null)
+				ic.Dispose ();
+
+			ResultImage = null;
+			return Style;
 			}
 		}
 

@@ -14,14 +14,9 @@ namespace RD_AAOW
 		// Переменные
 		private Bitmap image = null;									// Исходное изображение
 		private string imageText = "";									// Текст на нём
-		private ImageCreator ic;										// Оператор, формирующий образцы шрифтов
 		private List<FontFamily> foundFF = new List<FontFamily> ();		// Найденные шрифты
 		private List<double> foundFFMatch = new List<double> ();		// Оценки степени их соответствия исходному изображению
 		private FontStyle searchFontStyle = FontStyle.Regular;			// Стиль шрифта для поиска
-		private FontStyle[] otherStyles = { FontStyle.Regular,			// Стили, замещающие текущий в случае его недопустимости
-											  FontStyle.Bold ,
-											  FontStyle.Italic,
-											  FontStyle.Bold | FontStyle.Italic };
 		private SupportedLanguages al = Localization.CurrentLanguage;
 		private SkipListProcessor slp = new SkipListProcessor ();
 
@@ -168,6 +163,7 @@ namespace RD_AAOW
 			InstalledFontCollection ifc = new InstalledFontCollection ();
 			FontFamily[] ff = ifc.Families;
 			ifc.Dispose ();
+			Bitmap createdImage;
 
 			// Поиск
 			for (int i = 0; i < ff.Length; i++)
@@ -177,15 +173,16 @@ namespace RD_AAOW
 					continue;
 
 				// Создание изображения с выбранным шрифтом
-				FontStyle resultStyle = CreateBitmapFromFont (imageText, ff[i], image.Height, searchFontStyle);
-				if ((ic == null) || (ic.CreatedImage == null))
+				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, ff[i], image.Height, searchFontStyle,
+					CUnder.Checked, CStrike.Checked, out createdImage);
+				if (createdImage == null)
 					continue;	// Здесь шрифты не пропускаем, т.к. есть шрифты, где лишь некоторые символы дают такой результат
 
 				// Сравнение
 				double res = 0;
 				try
 					{
-					res = ImageComparer.Compare (image, ic.CreatedImage);	// Иногда имеют место сбои обращения к изображению
+					res = ImageProcessor.Compare (image, createdImage);	// Иногда имеют место сбои обращения к изображению
 					}
 				catch
 					{
@@ -203,7 +200,7 @@ namespace RD_AAOW
 				// Запрос на прерывание поиска
 				if (PauseSearch.Checked && (res >= searchPauseFactor))
 					{
-					PreviewForm prf = new PreviewForm (ic.CreatedImage, ff[i].Name + ", " + resultStyle.ToString ());
+					PreviewForm prf = new PreviewForm (createdImage, ff[i].Name + ", " + resultStyle.ToString ());
 					if (MessageBox.Show (Localization.GetText ("FinishSearch", al),
 						ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 						{
@@ -230,7 +227,7 @@ namespace RD_AAOW
 					}
 
 				// Очистка памяти
-				ic.Dispose ();
+				createdImage.Dispose ();
 
 				// Возврат прогресса
 				string msg = string.Format (Localization.GetText ("ProcessingMessage", al), i, ff.Length, ff[i].Name);
@@ -248,64 +245,6 @@ namespace RD_AAOW
 					return;
 					}
 				}
-			}
-
-		// Метод формирует изображение шрифта
-		private FontStyle CreateBitmapFromFont (string Text, FontFamily Font, float Size, FontStyle Style)
-			{
-			Font font = null;
-
-			// Обработка указанного стиля (если возможно)
-			try
-				{
-				if (Font.IsStyleAvailable (Style))
-					{
-					font = new Font (Font, Size, Style);
-					ic = new ImageCreator (Text, font);
-					font.Dispose ();
-					return Style;
-					}
-				}
-			catch
-				{
-				if (ic != null)
-					ic.Dispose ();
-				if (font != null)
-					font.Dispose ();
-				}
-
-			// Если не получается, выбрать другой стиль
-			for (int t = 0; t < otherStyles.Length; t++)
-				{
-				FontStyle otherFontStyle = otherStyles[t];
-				if (CUnder.Checked)
-					otherFontStyle |= FontStyle.Underline;
-				if (CStrike.Checked)
-					otherFontStyle |= FontStyle.Strikeout;
-
-				try
-					{
-					if (Font.IsStyleAvailable (otherFontStyle))
-						{
-						font = new Font (Font, Size, otherFontStyle);
-						ic = new ImageCreator (Text, font);
-						font.Dispose ();
-						return otherFontStyle;
-						}
-					}
-				catch
-					{
-					if (ic != null)
-						ic.Dispose ();
-					if (font != null)
-						font.Dispose ();
-					}
-				}
-
-			// Иначе - непонятно, что делать
-			if (ic != null)
-				ic.Dispose ();
-			return Style;
 			}
 
 		// Выход из программы
@@ -355,13 +294,13 @@ namespace RD_AAOW
 			if (ViewBox.BackgroundImage != null)
 				ViewBox.BackgroundImage.Dispose ();
 
-			FontStyle resultStyle = CreateBitmapFromFont (LoadedPicText.Text, foundFF[ResultsList.SelectedIndex],
-				ViewBox.Height, searchFontStyle);
-			if (ic.CreatedImage == null)
+			Bitmap createdImage;
+			ImageProcessor.CreateBitmapFromFont (LoadedPicText.Text, foundFF[ResultsList.SelectedIndex], ViewBox.Height, searchFontStyle,
+				CUnder.Checked, CStrike.Checked, out createdImage);
+			if (createdImage == null)
 				return;
 
-			ViewBox.BackgroundImage = (Image)ic.CreatedImage.Clone ();
-			ic.Dispose ();
+			ViewBox.BackgroundImage = createdImage;
 			}
 
 		// Установка или снятие галочки
@@ -413,7 +352,7 @@ namespace RD_AAOW
 		// Работа с пропущенными шрифтами
 		private void BSkipping_Click (object sender, System.EventArgs e)
 			{
-			slp.EditList (al);
+			slp.EditList (al, LoadedPicText.Text);
 			}
 		}
 	}

@@ -6,7 +6,7 @@ namespace RD_AAOW
 	/// <summary>
 	/// Класс описывает главную функцию программы
 	/// </summary>
-	public static class Program
+	public static class FontFinderProgram
 		{
 		/// <summary>
 		/// Главная точка входа для приложения

@@ -1,5 +1,9 @@
 ﻿Font finder changes log
 
+Version 2.8:
+• Added fonts preview for skipping window (on double-clicking);
+• Some code improvements applied
+
 Version 2.7u:
 • Comparison algorithm has been improved;
 • Added image oversize notification;
