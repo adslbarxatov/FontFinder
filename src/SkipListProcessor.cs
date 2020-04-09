@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -15,7 +17,19 @@ namespace RD_AAOW
 		private List<string> skippingFonts = new List<string> ();
 		private const string skippingFontsListFile = ProgramDescription.AssemblyMainName + ".skp";
 		private SupportedLanguages al;
-		private string sampleText = "Sample";
+		private string sampleText = "SaMpLe 123";
+		private FontFamily[] existentFonts;
+
+		/// <summary>
+		/// Возвращает список шрифтов операционной системы
+		/// </summary>
+		public FontFamily[] ExistentFonts
+			{
+			get
+				{
+				return existentFonts;
+				}
+			}
 
 		/// <summary>
 		/// Конструктор. Загружает данные о пропускаемых шрифтах
@@ -24,6 +38,14 @@ namespace RD_AAOW
 			{
 			// Инициализация
 			InitializeComponent ();
+
+			// Получение списка шрифтов системы
+			InstalledFontCollection ifc = new InstalledFontCollection ();
+			existentFonts = ifc.Families;
+			ifc.Dispose ();
+
+			ExistentFontsListBox.DataSource = existentFonts;
+			ExistentFontsListBox.DisplayMember = ExistentFontsListBox.ValueMember = "Name";
 
 			// Загрузка файла
 			FileStream FS = null;
@@ -64,63 +86,63 @@ namespace RD_AAOW
 			this.Text = Localization.GetText ("SkipListProcessorCaption", al);
 			BExit.Text = Localization.GetText ("BExitText", al);
 			FillingRequired.Text = Localization.GetText ("FillingRequiredText", al);
+			ExistentLabel.Text = string.Format (Localization.GetText ("ExistentLabelText", al), ExistentFontsListBox.Items.Count);
 
 			// Запуск
-			FontsListbox.DataSource = null;
-			FontsListbox.DataSource = skippingFonts;
+			SkippingFontsListBox.DataSource = null;
+			SkippingFontsListBox.DataSource = skippingFonts;
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+
 			this.ShowDialog ();
 			}
 
 		// Добавление шрифта
-		private void BAdd_Click (object sender, System.EventArgs e)
+		private void BAdd_Click (object sender, EventArgs e)
 			{
-			try
-				{
-				if (FontSelector.ShowDialog () == DialogResult.OK)
-					{
-					if (!skippingFonts.Contains (FontSelector.Font.Name))
-						skippingFonts.Add (FontSelector.Font.Name);
-					skippingFonts.Sort ();
+			if (ExistentFontsListBox.SelectedIndex < 0)
+				return;
 
-					FontsListbox.DataSource = null;
-					FontsListbox.DataSource = skippingFonts;
-					}
-				}
-			catch
-				{
-				MessageBox.Show (Localization.GetText ("WrongFont", al), ProgramDescription.AssemblyTitle,
-					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				}
+			string s = ExistentFontsListBox.SelectedValue.ToString ();
+
+			if (!skippingFonts.Contains (s))
+				skippingFonts.Add (s);
+			skippingFonts.Sort ();
+
+			SkippingFontsListBox.DataSource = null;
+			SkippingFontsListBox.DataSource = skippingFonts;
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
 			}
 
 		// Выход
-		private void BExit_Click (object sender, System.EventArgs e)
+		private void BExit_Click (object sender, EventArgs e)
 			{
 			this.Close ();
 			}
 
 		// Удаление шрифта
-		private void BRemove_Click (object sender, System.EventArgs e)
+		private void BRemove_Click (object sender, EventArgs e)
 			{
-			if (FontsListbox.SelectedIndex >= 0)
-				{
-				skippingFonts.RemoveAt (FontsListbox.SelectedIndex);
+			if (SkippingFontsListBox.SelectedIndex < 0)
+				return;
 
-				FontsListbox.DataSource = null;
-				FontsListbox.DataSource = skippingFonts;
-				}
+			skippingFonts.RemoveAt (SkippingFontsListBox.SelectedIndex);
+
+			SkippingFontsListBox.DataSource = null;
+			SkippingFontsListBox.DataSource = skippingFonts;
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
 			}
 
 		// Очистка списка шрифтов
-		private void BClear_Click (object sender, System.EventArgs e)
+		private void BClear_Click (object sender, EventArgs e)
 			{
 			if (MessageBox.Show (Localization.GetText ("ClearSkippingFonts", al), ProgramDescription.AssemblyTitle,
 				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
 				{
 				skippingFonts.Clear ();
 
-				FontsListbox.DataSource = null;
-				FontsListbox.DataSource = skippingFonts;
+				SkippingFontsListBox.DataSource = null;
+				SkippingFontsListBox.DataSource = skippingFonts;
+				SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
 				}
 			}
 
@@ -204,22 +226,54 @@ namespace RD_AAOW
 			}
 
 		// Просмотр шрифта
-		private void FontsListbox_DoubleClick (object sender, System.EventArgs e)
+		private void SkippingFontsListBox_DoubleClick (object sender, EventArgs e)
 			{
 			// Контроль
-			if (FontsListbox.SelectedIndex < 0)
+			if (SkippingFontsListBox.SelectedIndex < 0)
 				return;
 
 			// Формирование и отображение изображения
 			Bitmap createdImage;
-			FontFamily fontFamily = new FontFamily (FontsListbox.Items[FontsListbox.SelectedIndex].ToString ());
+			FontFamily fontFamily = null;
+			try
+				{
+				fontFamily = new FontFamily (SkippingFontsListBox.Items[SkippingFontsListBox.SelectedIndex].ToString ());
+				}
+			catch
+				{
+				MessageBox.Show (Localization.GetText ("WrongFont", al), ProgramDescription.AssemblyTitle,
+					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				return;
+				}
 
-			ImageProcessor.CreateBitmapFromFont (sampleText, fontFamily, 200, FontStyle.Regular,
+			ImageProcessor.CreateBitmapFromFont (sampleText, fontFamily, 150, FontStyle.Regular,
 				false, false, out createdImage);
 			if (createdImage == null)
 				return;
 
 			PreviewForm pf = new PreviewForm (createdImage, fontFamily.Name);
+
+			// Завершение
+			pf.Dispose ();
+			createdImage.Dispose ();
+			}
+
+		private void ExistentFontsListBox_DoubleClick (object sender, EventArgs e)
+			{
+			// Контроль
+			if (ExistentFontsListBox.SelectedIndex < 0)
+				return;
+
+			// Формирование и отображение изображения
+			Bitmap createdImage;
+			FontFamily ff = (FontFamily)ExistentFontsListBox.Items[ExistentFontsListBox.SelectedIndex];
+
+			ImageProcessor.CreateBitmapFromFont (sampleText, ff, 150, FontStyle.Regular,
+				false, false, out createdImage);
+			if (createdImage == null)
+				return;
+
+			PreviewForm pf = new PreviewForm (createdImage, ff.Name);
 
 			// Завершение
 			pf.Dispose ();

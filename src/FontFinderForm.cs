@@ -159,22 +159,19 @@ namespace RD_AAOW
 		// Поток поиска шрифта
 		private void Search (object sender, DoWorkEventArgs e)
 			{
-			// Получение списка шрифтов системы
-			InstalledFontCollection ifc = new InstalledFontCollection ();
-			FontFamily[] ff = ifc.Families;
-			ifc.Dispose ();
+			// Переменные
 			Bitmap createdImage;
 
 			// Поиск
-			for (int i = 0; i < ff.Length; i++)
+			for (int i = 0; i < slp.ExistentFonts.Length; i++)
 				{
 				// Проверка на пропуск
-				if (slp.FontMustBeSkipped (ff[i].Name))
+				if (slp.FontMustBeSkipped (slp.ExistentFonts[i].Name))
 					continue;
 
 				// Создание изображения с выбранным шрифтом
-				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, ff[i], image.Height, searchFontStyle,
-					CUnder.Checked, CStrike.Checked, out createdImage);
+				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, slp.ExistentFonts[i], image.Height,
+					searchFontStyle, CUnder.Checked, CStrike.Checked, out createdImage);
 				if (createdImage == null)
 					continue;	// Здесь шрифты не пропускаем, т.к. есть шрифты, где лишь некоторые символы дают такой результат
 
@@ -193,14 +190,14 @@ namespace RD_AAOW
 				if (foundFFMatch.Contains (res))
 					{
 					if (slp.FillingIsRequired)
-						slp.AddSkippingFont (ff[i].Name);
+						slp.AddSkippingFont (slp.ExistentFonts[i].Name);
 					continue;
 					}
 
 				// Запрос на прерывание поиска
 				if (PauseSearch.Checked && (res >= searchPauseFactor))
 					{
-					PreviewForm prf = new PreviewForm (createdImage, ff[i].Name + ", " + resultStyle.ToString ());
+					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name + ", " + resultStyle.ToString ());
 					if (MessageBox.Show (Localization.GetText ("FinishSearch", al),
 						ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
 						{
@@ -216,7 +213,7 @@ namespace RD_AAOW
 						break;
 					}
 
-				foundFF.Insert (j, ff[i]);
+				foundFF.Insert (j, slp.ExistentFonts[i]);
 				foundFFMatch.Insert (j, res);
 
 				// Обрезка списка результатов снизу
@@ -230,13 +227,14 @@ namespace RD_AAOW
 				createdImage.Dispose ();
 
 				// Возврат прогресса
-				string msg = string.Format (Localization.GetText ("ProcessingMessage", al), i, ff.Length, ff[i].Name);
+				string msg = string.Format (Localization.GetText ("ProcessingMessage", al), i, slp.ExistentFonts.Length,
+					slp.ExistentFonts[i].Name);
 				if (resultStyle != searchFontStyle)
 					msg += string.Format (Localization.GetText ("ProcessingStyle", al), resultStyle.ToString ());
 				msg += string.Format (Localization.GetText ("SkippingFontsCount", al), slp.SkippingFontsCount);
 
 				((BackgroundWorker)sender).ReportProgress ((int)(HardWorkExecutor.ProgressBarSize *
-					(double)i / (double)ff.Length), msg);
+					i / slp.ExistentFonts.Length), msg);
 
 				// Завершение работы, если получено требование от диалога
 				if (((BackgroundWorker)sender).CancellationPending || e.Cancel)

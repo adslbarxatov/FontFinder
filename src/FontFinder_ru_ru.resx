@@ -218,7 +218,7 @@
     <value>4. &amp;Начните поиск</value>
   </data>
   <data name="WrongFont" xml:space="preserve">
-    <value>Выбранный шрифт не поддерживается</value>
+    <value>Выбранный шрифт недоступен</value>
   </data>
   <data name="FillingRequiredText" xml:space="preserve">
     <value>Требуется заполнение</value>
@@ -226,5 +226,11 @@
   <data name="SkippingFontsCount" xml:space="preserve">
     <value>
 Пропускаемых шрифтов: {0:D}</value>
+  </data>
+  <data name="ExistentLabelText" xml:space="preserve">
+    <value>Доступные шрифты ({0:D}):</value>
+  </data>
+  <data name="SkippingLabelText" xml:space="preserve">
+    <value>Пропускаемые шрифты ({0:D}):</value>
   </data>
 </root>

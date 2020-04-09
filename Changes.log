@@ -1,5 +1,10 @@
 ﻿Font finder changes log
 
+Version 2.9:
+• Removed dangerous code in font preview window;
+• System fonts now available in listbox instead of external dialog;
+• Skipping fonts window now shows their quantity and number of system fonts
+
 Version 2.8:
 • Added fonts preview for skipping window (on double-clicking);
 • Some code improvements applied

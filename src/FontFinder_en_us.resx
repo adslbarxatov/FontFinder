@@ -218,7 +218,7 @@ Search may be too long. Use '×' button to finish it immediately and view curren
     <value>4. Begin &amp;search</value>
   </data>
   <data name="WrongFont" xml:space="preserve">
-    <value>Specified font is unsupported</value>
+    <value>Specified font is unavailable</value>
   </data>
   <data name="FillingRequiredText" xml:space="preserve">
     <value>Filling required</value>
@@ -226,5 +226,11 @@ Search may be too long. Use '×' button to finish it immediately and view curren
   <data name="SkippingFontsCount" xml:space="preserve">
     <value>
 Skipping fonts: {0:D}</value>
+  </data>
+  <data name="ExistentLabelText" xml:space="preserve">
+    <value>Existent fonts ({0:D}):</value>
+  </data>
+  <data name="SkippingLabelText" xml:space="preserve">
+    <value>Skipping fonts ({0:D}):</value>
   </data>
 </root>
