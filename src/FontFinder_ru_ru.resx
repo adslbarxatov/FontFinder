@@ -233,4 +233,7 @@
   <data name="SkippingLabelText" xml:space="preserve">
     <value>Пропускаемые шрифты ({0:D}):</value>
   </data>
+  <data name="SampleText" xml:space="preserve">
+    <value>ОбРаЗеЦ 123</value>
+  </data>
 </root>

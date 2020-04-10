@@ -233,4 +233,7 @@ Skipping fonts: {0:D}</value>
   <data name="SkippingLabelText" xml:space="preserve">
     <value>Skipping fonts ({0:D}):</value>
   </data>
+  <data name="SampleText" xml:space="preserve">
+    <value>SaMpLe 123</value>
+  </data>
 </root>

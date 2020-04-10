@@ -15,8 +15,10 @@ namespace RD_AAOW
 		/// <param name="Caption">Подпись окна просмотра</param>
 		public PreviewForm (Bitmap Preview, string Caption)
 			{
+			// Инициализация
 			InitializeComponent ();
 			ViewBox.BackgroundImage = Preview;
+			this.CancelButton = this.AcceptButton = FClose;
 
 			// Заголовок окна
 			this.Text = Caption;

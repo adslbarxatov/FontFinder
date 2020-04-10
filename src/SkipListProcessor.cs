@@ -17,8 +17,9 @@ namespace RD_AAOW
 		private List<string> skippingFonts = new List<string> ();
 		private const string skippingFontsListFile = ProgramDescription.AssemblyMainName + ".skp";
 		private SupportedLanguages al;
-		private string sampleText = "SaMpLe 123";
+		private string sampleText;
 		private FontFamily[] existentFonts;
+		private bool changed = false;
 
 		/// <summary>
 		/// Возвращает список шрифтов операционной системы
@@ -78,9 +79,12 @@ namespace RD_AAOW
 		public void EditList (SupportedLanguages InterfaceLanguage, string SampleText)
 			{
 			// Инициализация
+			al = InterfaceLanguage;
+
 			if ((SampleText != null) && (SampleText != ""))
 				sampleText = SampleText;
-			al = InterfaceLanguage;
+			else
+				sampleText = Localization.GetText ("SampleText", al);
 
 			// Настройка
 			this.Text = Localization.GetText ("SkipListProcessorCaption", al);
@@ -99,18 +103,23 @@ namespace RD_AAOW
 		// Добавление шрифта
 		private void BAdd_Click (object sender, EventArgs e)
 			{
+			// Контроль
 			if (ExistentFontsListBox.SelectedIndex < 0)
 				return;
 
+			// Добавление
 			string s = ExistentFontsListBox.SelectedValue.ToString ();
 
 			if (!skippingFonts.Contains (s))
 				skippingFonts.Add (s);
 			skippingFonts.Sort ();
 
+			// Передача в списки
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
 			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+
+			changed = true;
 			}
 
 		// Выход
@@ -122,28 +131,38 @@ namespace RD_AAOW
 		// Удаление шрифта
 		private void BRemove_Click (object sender, EventArgs e)
 			{
+			// Контроль
 			if (SkippingFontsListBox.SelectedIndex < 0)
 				return;
 
+			// Удаление
 			skippingFonts.RemoveAt (SkippingFontsListBox.SelectedIndex);
 
+			// Обновление списков
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
 			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+
+			changed = true;
 			}
 
 		// Очистка списка шрифтов
 		private void BClear_Click (object sender, EventArgs e)
 			{
+			// Контроль
 			if (MessageBox.Show (Localization.GetText ("ClearSkippingFonts", al), ProgramDescription.AssemblyTitle,
-				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.Yes)
-				{
-				skippingFonts.Clear ();
+				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+				return;
 
-				SkippingFontsListBox.DataSource = null;
-				SkippingFontsListBox.DataSource = skippingFonts;
-				SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
-				}
+			// Сброс
+			skippingFonts.Clear ();
+
+			// Обновление
+			SkippingFontsListBox.DataSource = null;
+			SkippingFontsListBox.DataSource = skippingFonts;
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+
+			changed = true;
 			}
 
 		/// <summary>
@@ -151,6 +170,10 @@ namespace RD_AAOW
 		/// </summary>
 		public void SaveList ()
 			{
+			// Контроль
+			if (!changed)
+				return;
+
 			// Загрузка файла
 			FileStream FS = null;
 			try
@@ -188,7 +211,10 @@ namespace RD_AAOW
 		public void AddSkippingFont (string FontName)
 			{
 			if (FillingRequired.Checked && !skippingFonts.Contains (FontName))
+				{
 				skippingFonts.Add (FontName);
+				changed = true;
+				}
 			}
 
 		/// <summary>
@@ -211,6 +237,7 @@ namespace RD_AAOW
 				{
 				skippingFonts.Sort ();
 				FillingRequired.Checked = false;
+				changed = true;
 				}
 			}
 
@@ -278,6 +305,39 @@ namespace RD_AAOW
 			// Завершение
 			pf.Dispose ();
 			createdImage.Dispose ();
+			}
+
+		// Клавиатурное управление
+		private void ExistentFontsListBox_KeyDown (object sender, KeyEventArgs e)
+			{
+			switch (e.KeyCode)
+				{
+				case Keys.Right:
+				case Keys.Insert:
+					BAdd_Click (null, null);
+					break;
+
+				case Keys.Space:
+				case Keys.Return:
+					ExistentFontsListBox_DoubleClick (null, null);
+					break;
+				}
+			}
+
+		private void SkippingFontsListBox_KeyDown (object sender, KeyEventArgs e)
+			{
+			switch (e.KeyCode)
+				{
+				case Keys.Left:
+				case Keys.Delete:
+					BRemove_Click (null, null);
+					break;
+
+				case Keys.Space:
+				case Keys.Return:
+					ExistentFontsListBox_DoubleClick (null, null);
+					break;
+				}
 			}
 		}
 	}

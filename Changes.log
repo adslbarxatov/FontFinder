@@ -1,5 +1,13 @@
 ﻿Font finder changes log
 
+Version 2.10:
+• Skipping fonts window now may be operated with keyboard:
+    Space or Enter key in both lists - font preview;
+    Left or Insert key in the left list - add skipping font;
+    Right or Delete key in the right list - remove skipping font;
+• Application icon updated;
+• Skipping fonts file will not be rewritten when no changes performed
+
 Version 2.9:
 • Removed dangerous code in font preview window;
 • System fonts now available in listbox instead of external dialog;
