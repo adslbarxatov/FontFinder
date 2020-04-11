@@ -2,9 +2,9 @@
 
 Version 2.10:
 • Skipping fonts window now may be operated with keyboard:
-    Space or Enter key in both lists - font preview;
-    Left or Insert key in the left list - add skipping font;
-    Right or Delete key in the right list - remove skipping font;
+    Space or Enter key in both lists – font preview;
+    Left or Insert key in the left list – add skipping font;
+    Right or Delete key in the right list – remove skipping font;
 • Application icon updated;
 • Skipping fonts file will not be rewritten when no changes performed
 
@@ -22,7 +22,7 @@ Version 2.7u:
 • Added image oversize notification;
 • Application icon and namespace have been unified;
 • Interface language now can be saved; localization system has been also unified;
-• All help tips megred to the single guide;
+• All help tips merged to the single guide;
 • Added skip list handler for matching degrees of compliance
 
 Version 2.6:
