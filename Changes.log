@@ -1,5 +1,9 @@
 ﻿Font finder changes log
 
+Version 2.10.2L:
+• Applied correct representation of supported languages list;
+• Some interface improvements applied
+
 Version 2.10:
 • Skipping fonts window now may be operated with keyboard:
     Space or Enter key in both lists – font preview;

@@ -43,8 +43,7 @@ namespace RD_AAOW
 			SearchPauseFactor.Minimum = MinValidationLimit;
 			SearchPauseFactor.Maximum = MaxValidationLimit;
 
-			for (int i = 0; i < Localization.AvailableLanguages; i++)
-				LanguageCombo.Items.Add (((SupportedLanguages)i).ToString ());
+			LanguageCombo.Items.AddRange (Localization.LanguagesNames);
 			try
 				{
 				LanguageCombo.SelectedIndex = (int)al;
