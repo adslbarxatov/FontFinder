@@ -15,8 +15,7 @@ namespace RD_AAOW
 		private bool allowClose = false;						// Запрет выхода из формы до окончания работы
 		private Bitmap progress, frameGreenGrey, frameBack;		// Объекты-отрисовщики
 		private Graphics g, gp;
-		private int currentXOffset = 0,
-			currentPercentage = 0;
+		private int currentXOffset = 0, currentPercentage = 0;
 		private object parameters;								// Параметры инициализации потока
 
 		/// <summary>
@@ -78,8 +77,8 @@ namespace RD_AAOW
 			Point[] frame = new Point[] {
 					new Point (0, 0),
 					new Point (this.Width / 4, 0),
-					new Point (this.Width / 4 + progress .Height / 2, progress .Height / 2),
-					new Point (this.Width / 4, progress .Height),
+					new Point (this.Width / 4 + progress.Height / 2, progress .Height / 2),
+					new Point (this.Width / 4, progress.Height),
 					new Point (0, progress .Height),
 					new Point (progress .Height / 2, progress .Height / 2)
 					};
@@ -132,15 +131,15 @@ namespace RD_AAOW
 		/// Конструктор. Выполняет настройку и запуск процесса установки/удаления
 		/// </summary>
 		/// <param name="HardWorkProcess">Процесс, выполняющий установку/удаление</param>
-		/// <param name="Mode">Режим установки/удаления файлов</param>
 		/// <param name="SetupPath">Путь установки/удаления</param>
 		/// <param name="Uninstall">Флаг удаления ранее установленных файлов</param>
-		public HardWorkExecutor (DoWorkEventHandler HardWorkProcess, string SetupPath, ArchiveOperator.SetupModes Mode, bool Uninstall)
+		/// <param name="PackagePath">Путь к пакету развёртки</param>
+		public HardWorkExecutor (DoWorkEventHandler HardWorkProcess, string SetupPath, string PackagePath, bool Uninstall)
 			{
 			// Инициализация
 			List<string> argument = new List<string> ();
 			argument.Add (SetupPath);
-			argument.Add (((int)Mode).ToString ());
+			argument.Add (PackagePath);
 			argument.Add (Uninstall.ToString ());
 			parameters = argument;
 
@@ -180,7 +179,7 @@ namespace RD_AAOW
 #endif
 
 		/// <summary>
-		/// Конструктор. Выполняет указанное действие с указанными параметрами в скрытом режиме
+		/// Конструктор. Выполняет указанное действие с указанными параметрами
 		/// </summary>
 		/// <param name="HardWorkProcess">Выполняемый процесс</param>
 		/// <param name="Parameters">Передаваемые параметры выполнения</param>
@@ -242,6 +241,9 @@ namespace RD_AAOW
 		// Метод запускает выполнение процесса
 		private void HardWorkExecutor_Shown (object sender, System.EventArgs e)
 			{
+#if !SIMPLE_HWE
+			this.TopMost = true;
+#endif
 			bw.RunWorkerAsync (parameters);
 			}
 
@@ -262,8 +264,8 @@ namespace RD_AAOW
 				{
 				if (e.Result != null)
 					{
-					executionResult = int.Parse (e.Result.ToString ());
 					result = e.Result.ToString ();
+					executionResult = int.Parse (e.Result.ToString ());
 					}
 				}
 			catch
@@ -328,7 +330,7 @@ namespace RD_AAOW
 			// Отрисовка текущей позиции
 			gp.DrawImage (frameGreenGrey, currentXOffset, 0);
 			gp.DrawImage (frameBack, -9 * this.Width / 4, 0);
-			gp.DrawImage (frameBack, currentPercentage * (progress.Width - progress.Height / 2) / ProgressBarSize -
+			gp.DrawImage (frameBack, currentPercentage * (progress.Width - progress.Height) / ProgressBarSize -
 				this.Width / 4, 0);
 
 			g.DrawImage (progress, 10, StateLabel.Top + StateLabel.Height + 10);

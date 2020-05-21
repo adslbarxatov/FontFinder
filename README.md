@@ -1,6 +1,8 @@
-# FontFinder v 2.10.2L
+# FontFinder v 2.11h
 
-A tool for finding font by its image / Инструмент для поиска шрифта по его изображению
+A tool for finding font by its image
+
+Инструмент для поиска шрифта по его изображению
 
 #
 

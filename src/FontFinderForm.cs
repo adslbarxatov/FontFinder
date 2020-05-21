@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace RD_AAOW
@@ -259,18 +258,11 @@ namespace RD_AAOW
 		// Справочные сведения
 		private void Q5_Click (object sender, System.EventArgs e)
 			{
-			// Общая
-			ProgramDescription.ShowAbout ();
-
-			// Справка
-			MessageBox.Show (string.Format (Localization.GetText ("HelpText", al), MaxSearchStringLength,
-				MinValidationLimit, MaxValidationLimit, MaxResultsCount), ProgramDescription.AssemblyTitle,
-				MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-			// Видео
-			if (MessageBox.Show (Localization.GetText ("ShowVideo", al), ProgramDescription.AssemblyTitle,
-				MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-				ProgramDescription.ShowVideoManual ();
+			AboutForm af = new AboutForm (al, "https://github.com/adslbarxatov/FontFinder",
+				"https://github.com/adslbarxatov/FontFinder/releases",
+				"https://www.youtube.com/watch?v=7Ct-kWmqxu4&list=PLe7qKwHNkZTvIOPvUtnt_D3RZd6gOTzNu&index=2",
+				string.Format (Localization.GetText ("HelpText", al), MaxSearchStringLength,
+				MinValidationLimit, MaxValidationLimit, MaxResultsCount));
 			}
 
 		// Выбор пункта для предпросмотра
