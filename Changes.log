@@ -1,5 +1,10 @@
 ﻿Font finder changes log
 
+Version 2.11.1p:
+• Updated application info interface (more convenient font is used for now);
+• Added a button to access the Application development policy and EULA in the application info interface (due to ADP update);
+• Added automatic check for updates to the application info interface
+
 Version 2.11h:
 • New application info interface implemented
 
