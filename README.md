@@ -1,4 +1,4 @@
-# FontFinder v 2.11.1p
+# FontFinder v 2.12p
 
 A tool for finding font by its image
 

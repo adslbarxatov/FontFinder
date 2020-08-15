@@ -1,5 +1,9 @@
 ﻿Font finder changes log
 
+Version 2.12p:
+• Added ability to accept/decline ADP at first start to the application info interface;
+• Added ability to show currently obtained match percentage during the search
+
 Version 2.11.1p:
 • Updated application info interface (more convenient font is used for now);
 • Added a button to access the Application development policy and EULA in the application info interface (due to ADP update);

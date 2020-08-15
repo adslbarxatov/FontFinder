@@ -223,8 +223,9 @@
   <data name="FillingRequiredText" xml:space="preserve">
     <value>Требуется заполнение</value>
   </data>
-  <data name="SkippingFontsCount" xml:space="preserve">
+  <data name="SkippingFontsCountAndPercentage" xml:space="preserve">
     <value>
+Максимальное полученное совпадение: {1:S}%
 Пропускаемых шрифтов: {0:D}</value>
   </data>
   <data name="ExistentLabelText" xml:space="preserve">

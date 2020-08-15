@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -19,13 +20,29 @@ namespace RD_AAOW
 		private SupportedLanguages al = Localization.CurrentLanguage;
 		private SkipListProcessor slp = new SkipListProcessor ();
 
-		private double searchPauseFactor = 90.0;		// Порог срабатывания правила приостановки поиска
+		private double searchPauseFactor = 90.0;						// Порог срабатывания правила приостановки поиска
 
 		// Ограничительные константы
-		private const uint MaxSearchStringLength = 50;	// Максимальная длина строки для сравнения
-		private const uint MaxResultsCount = 100;		// Максимальное количество отображаемых результатов
-		private const uint MinValidationLimit = 50;		// Минимальный порог прерывания поиска
-		private const uint MaxValidationLimit = 99;		// Максимальный порог прерывания поиска
+
+		/// <summary>
+		/// Максимальная длина строки для сравнения
+		/// </summary>
+		public const uint MaxSearchStringLength = 50;
+
+		/// <summary>
+		/// Максимальное количество отображаемых результатов
+		/// </summary>
+		public const uint MaxResultsCount = 100;
+
+		/// <summary>
+		/// Минимальный порог прерывания поиска
+		/// </summary>
+		public const uint MinValidationLimit = 50;
+
+		/// <summary>
+		/// Максимальный порог прерывания поиска
+		/// </summary>
+		public const uint MaxValidationLimit = 99;
 
 		/// <summary>
 		/// Конструктор. Создаёт главную форму программы
@@ -54,7 +71,7 @@ namespace RD_AAOW
 			}
 
 		// Выбор изображения
-		private void SelectImage_Click (object sender, System.EventArgs e)
+		private void SelectImage_Click (object sender, EventArgs e)
 			{
 			// Отключение кнопки поиска (на всякий случай)
 			StartSearch.Enabled = false;
@@ -65,7 +82,7 @@ namespace RD_AAOW
 			}
 
 		// Изображение выбрано
-		private void OpenImage_FileOk (object sender, System.ComponentModel.CancelEventArgs e)
+		private void OpenImage_FileOk (object sender, CancelEventArgs e)
 			{
 			// Проверка изображения
 			ImageLoader il = new ImageLoader (OpenImage.FileName);
@@ -107,7 +124,7 @@ namespace RD_AAOW
 			}
 
 		// Запуск поиска
-		private void StartSearch_Click (object sender, System.EventArgs e)
+		private void StartSearch_Click (object sender, EventArgs e)
 			{
 			if (LoadedPicText.Text == "")
 				{
@@ -161,6 +178,7 @@ namespace RD_AAOW
 			Bitmap createdImage;
 
 			// Поиск
+			double maxRes = 0;
 			for (int i = 0; i < slp.ExistentFonts.Length; i++)
 				{
 				// Проверка на пропуск
@@ -225,11 +243,15 @@ namespace RD_AAOW
 				createdImage.Dispose ();
 
 				// Возврат прогресса
+				if (maxRes < res)
+					maxRes = res;
+
 				string msg = string.Format (Localization.GetText ("ProcessingMessage", al), i, slp.ExistentFonts.Length,
 					slp.ExistentFonts[i].Name);
 				if (resultStyle != searchFontStyle)
 					msg += string.Format (Localization.GetText ("ProcessingStyle", al), resultStyle.ToString ());
-				msg += string.Format (Localization.GetText ("SkippingFontsCount", al), slp.SkippingFontsCount);
+				msg += string.Format (Localization.GetText ("SkippingFontsCountAndPercentage", al),
+					slp.SkippingFontsCount, maxRes.ToString ("F2"));
 
 				((BackgroundWorker)sender).ReportProgress ((int)(HardWorkExecutor.ProgressBarSize *
 					i / slp.ExistentFonts.Length), msg);
@@ -244,7 +266,7 @@ namespace RD_AAOW
 			}
 
 		// Выход из программы
-		private void BExit_Click (object sender, System.EventArgs e)
+		private void BExit_Click (object sender, EventArgs e)
 			{
 			this.Close ();
 			}
@@ -256,17 +278,13 @@ namespace RD_AAOW
 			}
 
 		// Справочные сведения
-		private void Q5_Click (object sender, System.EventArgs e)
+		private void Q5_Click (object sender, EventArgs e)
 			{
-			AboutForm af = new AboutForm (al, "https://github.com/adslbarxatov/FontFinder",
-				"https://github.com/adslbarxatov/FontFinder/releases",
-				"https://www.youtube.com/watch?v=7Ct-kWmqxu4&list=PLe7qKwHNkZTvIOPvUtnt_D3RZd6gOTzNu&index=2",
-				string.Format (Localization.GetText ("HelpText", al), MaxSearchStringLength,
-				MinValidationLimit, MaxValidationLimit, MaxResultsCount));
+			ProgramDescription.ShowAbout (false);
 			}
 
 		// Выбор пункта для предпросмотра
-		private void ResultsList_SelectedIndexChanged (object sender, System.EventArgs e)
+		private void ResultsList_SelectedIndexChanged (object sender, EventArgs e)
 			{
 			if (ResultsList.SelectedIndex < 0)
 				return;
@@ -293,13 +311,13 @@ namespace RD_AAOW
 			}
 
 		// Установка или снятие галочки
-		private void PauseSearch_CheckedChanged (object sender, System.EventArgs e)
+		private void PauseSearch_CheckedChanged (object sender, EventArgs e)
 			{
 			SearchPauseFactor.Enabled = PauseSearch.Checked;
 			}
 
 		// Настройка стиля поиска
-		private void CBold_CheckedChanged (object sender, System.EventArgs e)
+		private void CBold_CheckedChanged (object sender, EventArgs e)
 			{
 			searchFontStyle = FontStyle.Regular;
 			if (CBold.Checked)
@@ -313,7 +331,7 @@ namespace RD_AAOW
 			}
 
 		// Локализация формы
-		private void LanguageCombo_SelectedIndexChanged (object sender, System.EventArgs e)
+		private void LanguageCombo_SelectedIndexChanged (object sender, EventArgs e)
 			{
 			// Сохранение языка
 			Localization.CurrentLanguage = al = (SupportedLanguages)LanguageCombo.SelectedIndex;
@@ -339,7 +357,7 @@ namespace RD_AAOW
 			}
 
 		// Работа с пропущенными шрифтами
-		private void BSkipping_Click (object sender, System.EventArgs e)
+		private void BSkipping_Click (object sender, EventArgs e)
 			{
 			slp.EditList (al, LoadedPicText.Text);
 			}

@@ -223,8 +223,9 @@ Search may be too long. Use '×' button to finish it immediately and view curren
   <data name="FillingRequiredText" xml:space="preserve">
     <value>Filling required</value>
   </data>
-  <data name="SkippingFontsCount" xml:space="preserve">
+  <data name="SkippingFontsCountAndPercentage" xml:space="preserve">
     <value>
+Maximum match obtained: {1:S}%
 Skipping fonts: {0:D}</value>
   </data>
   <data name="ExistentLabelText" xml:space="preserve">
