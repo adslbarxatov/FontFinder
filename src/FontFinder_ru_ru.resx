@@ -237,4 +237,7 @@
   <data name="SampleText" xml:space="preserve">
     <value>ОбРаЗеЦ 123</value>
   </data>
+  <data name="AlreadyStarted" xml:space="preserve">
+    <value>Программа {0:S} уже запущена</value>
+  </data>
 </root>

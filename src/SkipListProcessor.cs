@@ -11,7 +11,7 @@ namespace RD_AAOW
 	/// <summary>
 	/// Форма настройки пропускаемых шрифтов
 	/// </summary>
-	public partial class SkipListProcessor:Form
+	public partial class SkipListProcessor: Form
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = new List<string> ();

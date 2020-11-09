@@ -237,4 +237,7 @@ Skipping fonts: {0:D}</value>
   <data name="SampleText" xml:space="preserve">
     <value>SaMpLe 123</value>
   </data>
+  <data name="AlreadyStarted" xml:space="preserve">
+    <value>{0:S} is already running</value>
+  </data>
 </root>

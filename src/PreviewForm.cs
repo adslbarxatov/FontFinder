@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace RD_AAOW
@@ -6,7 +7,7 @@ namespace RD_AAOW
 	/// <summary>
 	/// Форма предпросмотра шрифта
 	/// </summary>
-	public partial class PreviewForm:Form
+	public partial class PreviewForm: Form
 		{
 		/// <summary>
 		/// Конструктор. Запускает форму просмотра шрифта
@@ -26,13 +27,13 @@ namespace RD_AAOW
 			}
 
 		// Закрытие формы
-		private void FClose_Click (object sender, System.EventArgs e)
+		private void FClose_Click (object sender, EventArgs e)
 			{
 			this.Close ();
 			}
 
 		// Изменение размера формы
-		private void PreviewForm_Resize (object sender, System.EventArgs e)
+		private void PreviewForm_Resize (object sender, EventArgs e)
 			{
 			FClose.Top = this.Height - 62;
 			FClose.Left = (this.Width - FClose.Width) / 2;

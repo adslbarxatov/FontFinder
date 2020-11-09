@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -13,7 +14,7 @@ namespace RD_AAOW
 	/// <summary>
 	/// Класс описывает интерфейс отображения сведений о программе
 	/// </summary>
-	public partial class AboutForm:Form
+	public partial class AboutForm: Form
 		{
 		// Переменные
 		private string projectLink, updatesLink, userManualLink;
@@ -60,7 +61,6 @@ namespace RD_AAOW
 				{
 				IconBox.BackgroundImage = this.Icon.ToBitmap ();
 				}
-			//IconBox.BackgroundImage = Icon.ExtractAssociatedIcon (Assembly.GetExecutingAssembly ().Location).ToBitmap ();
 
 			// Завершение
 			UserManualButton.Enabled = (userManualLink != "");
@@ -462,7 +462,10 @@ htmlError:
 			long length = 0, current = 0;
 			try
 				{
-				length = long.Parse (paths[2]);
+				if (paths[2].StartsWith ("0x"))
+					length = long.Parse (paths[2].Substring (2), NumberStyles.AllowHexSpecifier);
+				else
+					length = long.Parse (paths[2]);
 				}
 			catch { }
 
@@ -590,6 +593,74 @@ htmlError:
 			{
 			accepted = false;
 			this.Close ();
+			}
+
+		/// <summary>
+		/// Метод выполняет регистрацию указанного расширения файла и привязывает его к текущему приложению
+		/// </summary>
+		/// <param name="FileExtension">Расширение файла без точки</param>
+		/// <param name="FileTypeName">Название типа файла</param>
+		/// <param name="Openable">Флаг указывает, будет ли файл доступен для открытия в приложении</param>
+		/// <param name="ShowWarning">Флаг указывает, что необходимо отобразить предупреждение перед регистрацией</param>
+		/// <param name="FileIcon">Ресурс, хранящий значок формата файла</param>
+		/// <returns>Возвращает true в случае успеха</returns>
+		public static bool RegisterFileExtension (string FileExtension, string FileTypeName, Icon FileIcon,
+			bool Openable, bool ShowWarning)
+			{
+			// Подготовка
+			string fileExt = FileExtension.ToLower ().Replace (".", "");
+
+			// Контроль
+			if (ShowWarning)
+				{
+				string msg = "Warning: required file extensions will be registered using current app location.\n\n" +
+					"Make sure you will not change location of this application before using this feature.\n\n" +
+					"Do you want to continue?";
+
+				if (Localization.CurrentLanguage == SupportedLanguages.ru_ru)
+					msg = "Предупреждение: необходимые расширения файлов будут зарегистрированы с использованием " +
+						"текущего местоположения приложения.\n\nУбедитесь, что вы не будете менять расположение " +
+						"этого приложения перед использованием этой функции.\n\nВы хотите продолжить?";
+
+				if (MessageBox.Show (msg, ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo,
+					MessageBoxIcon.Exclamation) == DialogResult.No)
+					return false;
+				}
+
+			// Выполнение
+			try
+				{
+				// Запись значка
+				FileStream FS = new FileStream (fileExt + ".ico", FileMode.Create);
+				FileIcon.Save (FS);
+				FS.Close ();
+
+				// Запись значений реестра
+				Registry.SetValue ("HKEY_CLASSES_ROOT\\." + fileExt, "", fileExt + "file");
+				Registry.SetValue ("HKEY_CLASSES_ROOT\\" + fileExt + "file", "", FileTypeName);
+				Registry.SetValue ("HKEY_CLASSES_ROOT\\" + fileExt + "file\\DefaultIcon", "", Application.StartupPath +
+					"\\" + fileExt + ".ico");
+
+				if (Openable)
+					{
+					Registry.SetValue ("HKEY_CLASSES_ROOT\\" + fileExt + "file\\shell", "", "open");
+					//Registry.SetValue ("HKEY_CLASSES_ROOT\\" + fileExt + "file\\shell\\open", "", "&Open");
+					Registry.SetValue ("HKEY_CLASSES_ROOT\\" + fileExt + "file\\shell\\open", "Icon",
+						Application.StartupPath + "\\" + fileExt + ".ico");
+					Registry.SetValue ("HKEY_CLASSES_ROOT\\" + fileExt + "file\\shell\\open\\command", "",
+						"\"" + Application.ExecutablePath + "\" \"%1\"");
+					}
+				else
+					{
+					Registry.SetValue ("HKEY_CLASSES_ROOT\\" + fileExt + "file", "NoOpen", "");
+					}
+				}
+			catch
+				{
+				return false;
+				}
+
+			return true;
 			}
 		}
 	}

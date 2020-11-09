@@ -9,18 +9,18 @@ namespace RD_AAOW
 	/// <summary>
 	/// Главная форма программы
 	/// </summary>
-	public partial class MainForm:Form
+	public partial class MainForm: Form
 		{
 		// Переменные
-		private Bitmap image = null;									// Исходное изображение
-		private string imageText = "";									// Текст на нём
-		private List<FontFamily> foundFF = new List<FontFamily> ();		// Найденные шрифты
-		private List<double> foundFFMatch = new List<double> ();		// Оценки степени их соответствия исходному изображению
-		private FontStyle searchFontStyle = FontStyle.Regular;			// Стиль шрифта для поиска
+		private Bitmap image = null;                                    // Исходное изображение
+		private string imageText = "";                                  // Текст на нём
+		private List<FontFamily> foundFF = new List<FontFamily> ();     // Найденные шрифты
+		private List<double> foundFFMatch = new List<double> ();        // Оценки степени их соответствия исходному изображению
+		private FontStyle searchFontStyle = FontStyle.Regular;          // Стиль шрифта для поиска
 		private SupportedLanguages al = Localization.CurrentLanguage;
 		private SkipListProcessor slp = new SkipListProcessor ();
 
-		private double searchPauseFactor = 90.0;						// Порог срабатывания правила приостановки поиска
+		private double searchPauseFactor = 90.0;                        // Порог срабатывания правила приостановки поиска
 
 		// Ограничительные константы
 
@@ -189,13 +189,13 @@ namespace RD_AAOW
 				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, slp.ExistentFonts[i], image.Height,
 					searchFontStyle, CUnder.Checked, CStrike.Checked, out createdImage);
 				if (createdImage == null)
-					continue;	// Здесь шрифты не пропускаем, т.к. есть шрифты, где лишь некоторые символы дают такой результат
+					continue;   // Здесь шрифты не пропускаем, т.к. есть шрифты, где лишь некоторые символы дают такой результат
 
 				// Сравнение
 				double res = 0;
 				try
 					{
-					res = ImageProcessor.Compare (image, createdImage);	// Иногда имеют место сбои обращения к изображению
+					res = ImageProcessor.Compare (image, createdImage); // Иногда имеют место сбои обращения к изображению
 					}
 				catch
 					{
@@ -337,7 +337,8 @@ namespace RD_AAOW
 			Localization.CurrentLanguage = al = (SupportedLanguages)LanguageCombo.SelectedIndex;
 
 			// Локализация
-			OpenImage.Filter = Localization.GetText ("OpenImageFilter", al) + " (*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|" +
+			OpenImage.Filter = Localization.GetText ("OpenImageFilter", al) +
+				" (*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|" +
 				"*.bmp;*.gif;*.jpe;*.jpeg;*.jpg;*.jfif;*.png";
 			OpenImage.Title = Localization.GetText ("OpenImageTitle", al);
 
