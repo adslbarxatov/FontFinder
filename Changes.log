@@ -1,5 +1,8 @@
 ﻿Font finder changes log
 
+Version 2.12.5:
+• Added ability to 'ask developer' via E-mail for help, or send wish, advice or bug report
+
 Version 2.12.4:
 • Fixed bug in Policy acception interface that disallowed to accept it in offline mode at first start
 
