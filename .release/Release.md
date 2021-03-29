@@ -1,5 +1,6 @@
-_Changes for v 2.13_:
+_Changes for v 2.13.1_:
+- Added keyboard control for “about” interface;
+- Bug with skipped fonts file, when the app “lost” it in some cases, has been fixed
 - New identity applied;
 - New links to RD AAOW FDL added;
-- Added direct lab link;
-- Added ability to 'ask developer' via E-mail for help, or send wish, advice or bug report
+- Added direct lab link

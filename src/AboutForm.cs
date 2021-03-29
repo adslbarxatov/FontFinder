@@ -51,6 +51,8 @@ namespace RD_AAOW
 			{
 			// Инициализация
 			InitializeComponent ();
+			this.AcceptButton = ExitButton;
+			this.CancelButton = MisacceptButton;
 
 			// Получение параметров
 			userManualLink = (UserManualLink == null) ? "" : UserManualLink;
@@ -718,6 +720,7 @@ htmlError:
 		private void MisacceptButton_Click (object sender, EventArgs e)
 			{
 			accepted = false;
+			UpdatesTimer.Enabled = false;
 			this.Close ();
 			}
 

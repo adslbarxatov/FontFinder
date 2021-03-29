@@ -15,7 +15,7 @@ namespace RD_AAOW
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = new List<string> ();
-		private const string skippingFontsListFile = ProgramDescription.AssemblyMainName + ".skp";
+		private string skippingFontsListFile = AboutForm.AppStartupPath + ProgramDescription.AssemblyMainName + ".skp";
 		private SupportedLanguages al;
 		private string sampleText;
 		private FontFamily[] existentFonts;

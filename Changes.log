@@ -1,7 +1,9 @@
 ﻿Font finder changes log
 
-ToDo:
-- Apply fixed icons
+Version 2.13.1:
+• Fixed icons applied;
+• Added keyboard control for “about” interface;
+• Bug with skipped fonts file, when the app “lost” it in some cases, has been fixed
 
 Version 2.13:
 • New identity applied;
