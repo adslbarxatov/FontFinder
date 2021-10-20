@@ -9,7 +9,7 @@ namespace RD_AAOW
 	/// <summary>
 	/// Главная форма программы
 	/// </summary>
-	public partial class MainForm: Form
+	public partial class MainForm:Form
 		{
 		// Переменные
 		private Bitmap image = null;                                    // Исходное изображение
@@ -154,7 +154,7 @@ namespace RD_AAOW
 			foundFFMatch.Clear ();
 
 			// Запуск потока поиска и ожидание его завершения
-			HardWorkExecutor hwe = new HardWorkExecutor (Search);
+			HardWorkExecutor hwe = new HardWorkExecutor (Search, null, " ", false, true);
 			slp.FinishFilling ();
 
 			// Деблокировка окна

@@ -1,3 +1,3 @@
-_Changes for v 2.13.2_:
-- Updated link and text presenter for ADP;
-- Bug with skipped fonts file, when the app “lost” it in some cases, has been fixed
+_Changes for v 2.13.10_:
+- AboutForm and HardWorkExecutor universal classes have been upgraded and improved;
+- Update link for ADP

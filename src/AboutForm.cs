@@ -14,14 +14,18 @@ namespace RD_AAOW
 	/// <summary>
 	/// Класс описывает интерфейс отображения сведений о программе
 	/// </summary>
-	public partial class AboutForm: Form
+	public partial class AboutForm:Form
 		{
 		// Переменные
 		private string projectLink, updatesLink, userManualLink;
 		private SupportedLanguages al;
 		private string updatesMessage = "", description = "", policyLoaderCaption = "";
 
-		private const string adpLink = "https://github.com/adslbarxatov/adp";       // Ссылка на Политику
+		/// <summary>
+		/// Ссылка на Политику разработки приложений
+		/// </summary>
+		public const string ADPLink = "https://adslbarxatov.github.io/ADP";
+
 		private const string labLink1 = "https://vk.com/rd_aaow_fdl";               // Ссылки на лабораторию
 		private const string labLink2 = "https://t.me/rd_aaow_fdl";
 		private const string defaultGitLink = "https://github.com/adslbarxatov/";   // Мастер-ссылка проекта
@@ -184,14 +188,14 @@ namespace RD_AAOW
 			HardWorkExecutor hwe;
 			if (!AcceptMode)
 				{
-				hwe = new HardWorkExecutor (UpdatesChecker, null, "");
+				hwe = new HardWorkExecutor (UpdatesChecker, null, null, false, false);
 				UpdatesTimer.Enabled = true;
 				}
 
 			// Получение Политики
 			else
 				{
-				hwe = new HardWorkExecutor (PolicyLoader, null, policyLoaderCaption);
+				hwe = new HardWorkExecutor (PolicyLoader, null, policyLoaderCaption, true, false);
 
 				string html = hwe.Result.ToString ();
 				if (html != "")
@@ -199,7 +203,7 @@ namespace RD_AAOW
 					DescriptionBox.Text = html;
 
 					int left = html.IndexOf ("rev");
-					int right = html.IndexOf ("\r", left);
+					int right = html.IndexOf ("\n", left);
 					if ((left >= 0) && (right >= 0))
 						adpRevision = html.Substring (left, right - left);
 					}
@@ -233,12 +237,14 @@ namespace RD_AAOW
 		// Метод получает Политику разработки
 		private void PolicyLoader (object sender, DoWorkEventArgs e)
 			{
-			string html = GetHTML (adpLink);
+			string html = GetHTML (ADPLink);
 			int textLeft = 0, textRight = 0;
 
-			if (((textLeft = html.IndexOf ("<article")) >= 0) && ((textRight = html.IndexOf ("</a>Changes log", textLeft)) >= 0))
+			if (((textLeft = html.IndexOf ("code\">")) >= 0) &&
+				((textRight = html.IndexOf ("id=\"changes-log---", textLeft)) >= 0))
 				{
 				// Обрезка
+				textLeft += 6;
 				html = html.Substring (textLeft, textRight - textLeft);
 
 				// Формирование абзацных отступов
@@ -249,10 +255,12 @@ namespace RD_AAOW
 				while (((textLeft = html.IndexOf ("<")) >= 0) && ((textRight = html.IndexOf (">", textLeft)) >= 0))
 					html = html.Replace (html.Substring (textLeft, textRight - textLeft + 1), "");
 
-				// Удаление последних абзацев и замена спецсимволов
-				string ss = System.Text.Encoding.Unicode.GetString (new byte[] { 0x0F, 0xFE });
-				html = html.Replace ("✔" + ss, "✔").Replace ("⚠" + ss, "❢").Replace ("\n\n", "\n");
-				html = html.Substring (0, html.Length - 6);
+				html = html.Substring (0, html.Length - 12);
+				}
+			else
+				{
+				e.Result = "";
+				return;
 				}
 
 			e.Result = html;
@@ -333,7 +341,7 @@ namespace RD_AAOW
 			{
 			try
 				{
-				Process.Start (adpLink);
+				Process.Start (ADPLink);
 				}
 			catch
 				{
@@ -462,7 +470,7 @@ namespace RD_AAOW
 				}
 
 			// Получение обновлений Политики (ошибки игнорируются)
-			html = GetHTML (adpLink);
+			html = GetHTML (ADPLink);
 			if (((i = html.IndexOf ("<title")) >= 0) && ((j = html.IndexOf ("</title", i)) >= 0))
 				{
 				// Обрезка
@@ -504,7 +512,8 @@ htmlError:
 			return;
 			}
 
-#if !SIMPLE_HWE
+#if DPMODULE
+
 		/// <summary>
 		/// Метод-исполнитель загрузки пакета обновлений
 		/// </summary>
@@ -626,6 +635,7 @@ htmlError:
 			e.Result = 0;
 			return;
 			}
+
 #endif
 
 		// Контроль сообщения об обновлении
@@ -703,7 +713,7 @@ htmlError:
 				{
 				resp = (HttpWebResponse)rq.GetResponse ();
 				}
-			catch
+			catch //(Exception e)
 				{
 				// Любая ошибка здесь будет означать необходимость прекращения проверки
 				return html;
