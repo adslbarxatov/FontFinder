@@ -19,7 +19,8 @@ namespace RD_AAOW
 		// Переменные
 		private string projectLink, updatesLink, userManualLink;
 		private SupportedLanguages al;
-		private string updatesMessage = "", description = "", policyLoaderCaption = "";
+		private string updatesMessage = "", description = "", policyLoaderCaption = "",
+			registryFail = "";
 
 		/// <summary>
 		/// Ссылка на Политику разработки приложений
@@ -162,7 +163,13 @@ namespace RD_AAOW
 					MisacceptButton.Text = "О&тклонить";
 					DescriptionBox.Text = AcceptMode ? "Не удалось получить текст Политики. " +
 						"Попробуйте использовать кнопку перехода в браузер" : description;
+
 					policyLoaderCaption = "Подготовка к запуску...";
+					registryFail = ProgramDescription.AssemblyMainName + " не может сохранить настройки в реестре Windows.\n\n" +
+						"Попробуйте выполнить следующие изменения в свойствах исполняемого файла:\n" +
+						"• разблокируйте приложение в общих свойствах (кнопка «Разблокировать»);\n" +
+						"• включите запуск от имени администратора для всех пользователей в настройках совместимости.\n\n" +
+						"После этого перезапустите программу и повторите попытку";
 
 					this.Text = AcceptMode ? "Политика разработки и соглашение пользователя" : "О программе";
 					break;
@@ -177,7 +184,13 @@ namespace RD_AAOW
 					MisacceptButton.Text = "&Decline";
 					DescriptionBox.Text = AcceptMode ? "Failed to get Policy text. Try button to open it in browser" :
 						description;
+
 					policyLoaderCaption = "Preparing for launch...";
+					registryFail = ProgramDescription.AssemblyMainName + " cannot save settings in the Windows registry.\n\n" +
+						"Try the following changes to properties of the executable file:\n" +
+						"• unblock the app in general properties (“Unblock” button);\n" +
+						"• enable running as administrator for all users in compatibility settings.\n\n" +
+						"Then restart the program and try again";
 
 					this.Text = AcceptMode ? "Development policy and user agreement" : "About application";
 					break;
@@ -221,12 +234,23 @@ namespace RD_AAOW
 			try
 				{
 				if (StartupMode)
+					{
 					Registry.SetValue (ProgramDescription.AssemblySettingsKey, LastShownVersionKey,
 						ProgramDescription.AssemblyVersion);
-				if (AcceptMode && accepted)
-					Registry.SetValue (ADPRevisionPath, ADPRevisionKey, adpRevision.Replace ("!", ""));
+
+					// Контроль доступа к реестру
+					if (Registry.GetValue (ProgramDescription.AssemblySettingsKey, LastShownVersionKey, "").ToString () !=
+						ProgramDescription.AssemblyVersion)
+						{
+						MessageBox.Show (registryFail, ProgramDescription.AssemblyTitle, MessageBoxButtons.OK,
+							MessageBoxIcon.Exclamation);
+						}
+					}
+
 				// В случае невозможности загрузки Политики признак необходимости принятия до этого момента
 				// не удаляется из строки версии. Поэтому требуется страховка
+				if (AcceptMode && accepted)
+					Registry.SetValue (ADPRevisionPath, ADPRevisionKey, adpRevision.Replace ("!", ""));
 				}
 			catch { }
 
