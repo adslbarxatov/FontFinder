@@ -26,7 +26,7 @@ Version 2.13:
 • Added direct lab link
 
 Version 2.12.5:
-• Added ability to 'ask developer' via E-mail for help, or send wish, advice or bug report
+• Added ability to “ask developer” via E-mail for help, or send wish, advice or bug report
 
 Version 2.12.4:
 • Fixed bug in Policy acception interface that disallowed to accept it in offline mode at first start
@@ -38,7 +38,7 @@ Version 2.12.2:
 • Cumulative changes applied
 
 Version 2.12.1i:
-• Application info interface now able to get last release's changes log;
+• Application info interface now able to get last release’s changes log;
 • Found and fixed hidden bug that caused an error when starting the application from local network;
 • Fixed bug that caused the web page request method to fail if server disconnected
 
@@ -106,7 +106,7 @@ Version 2.3:
 
 Version 2.2:
 • Some interface bugs fixed;
-• 'Red crosshair instead of sample image' bug fixed (appears when main window loses focus);
+• “Red crosshair instead of sample image” bug fixed (appears when main window loses focus);
 • Memory leaks seriously decreased
 
 Version 2.0:
