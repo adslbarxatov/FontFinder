@@ -1,5 +1,8 @@
 ﻿Font finder changes log
 
+Version 2.13.17:
+• Updated internal mechanism of checking for updates (applied compatibility with new GitHub theme)
+
 Version 2.13.15:
 • Added the registry access checker: it will show recommended actions for the executable file
   when Windows doesn’t allow saving settings;
