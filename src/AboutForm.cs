@@ -379,8 +379,8 @@ namespace RD_AAOW
 				msg = "• «Да» – перейти на страницу Лаборатории в ВКонтакте;\n" +
 					"• «Нет» – перейти в группу Лаборатории в Telegram";
 			else
-				msg = "• “Yes” – go to Laboratory's page in VK;\n" +
-					"• “No” – go to Laboratory's group in Telegram";
+				msg = "• “Yes” – go to Laboratory’s page in VK;\n" +
+					"• “No” – go to Laboratory’s group in Telegram";
 
 			string link;
 			switch (MessageBox.Show (msg, ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNoCancel,
