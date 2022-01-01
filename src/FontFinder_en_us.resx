@@ -240,4 +240,7 @@ Skipping fonts: {0:D}</value>
   <data name="AlreadyStarted" xml:space="preserve">
     <value>{0:S} is already running</value>
   </data>
+  <data name="ffsfile" xml:space="preserve">
+    <value>Fonts skipping list file</value>
+  </data>
 </root>

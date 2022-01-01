@@ -1,5 +1,10 @@
 ﻿Font finder changes log
 
+Version 2.14:
+• App got the scalable icons and the digital signature (only self-signed for now);
+• Applied some updates for core assemblies;
+• Added new icon for FFS (fonts skipping list) file
+
 Version 2.13.18:
 • Updated link to user videoguide
 

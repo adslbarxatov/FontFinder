@@ -11,11 +11,13 @@ namespace RD_AAOW
 	/// <summary>
 	/// Форма настройки пропускаемых шрифтов
 	/// </summary>
-	public partial class SkipListProcessor: Form
+	public partial class SkipListProcessor:Form
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = new List<string> ();
-		private string skippingFontsListFile = AboutForm.AppStartupPath + ProgramDescription.AssemblyMainName + ".skp";
+		private string oldSkippingFontsListFile = RDGenerics.AppStartupPath + ProgramDescription.AssemblyMainName + ".skp";
+		private string newSkippingFontsListFile = RDGenerics.AppStartupPath + ProgramDescription.AssemblyMainName + "." +
+			ProgramDescription.SkipFileExtension;
 		private SupportedLanguages al;
 		private string sampleText;
 		private FontFamily[] existentFonts;
@@ -48,11 +50,24 @@ namespace RD_AAOW
 			ExistentFontsListBox.DataSource = existentFonts;
 			ExistentFontsListBox.DisplayMember = ExistentFontsListBox.ValueMember = "Name";
 
-			// Загрузка файла
+			// Загрузка файла с поддержкой наследия
+			if (File.Exists (oldSkippingFontsListFile))
+				{
+				try
+					{
+					File.Move (oldSkippingFontsListFile, newSkippingFontsListFile);
+					}
+				catch
+					{
+					FillingRequired.Checked = true;
+					return;
+					}
+				}
+
 			FileStream FS = null;
 			try
 				{
-				FS = new FileStream (skippingFontsListFile, FileMode.Open);
+				FS = new FileStream (newSkippingFontsListFile, FileMode.Open);
 				}
 			catch
 				{
@@ -178,7 +193,7 @@ namespace RD_AAOW
 			FileStream FS = null;
 			try
 				{
-				FS = new FileStream (skippingFontsListFile, FileMode.Create);
+				FS = new FileStream (newSkippingFontsListFile, FileMode.Create);
 				}
 			catch
 				{
