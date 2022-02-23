@@ -1,4 +1,4 @@
-_Changes for v 2.14.3_:
+_Changes for v 2.14.37_:
+- Implemented the updates downloading directly from the “About the app” interface. This function requires DPModule. It allows you to download DPModule if it was not previously installed;
 - Current updates and improvements applied;
-- App got the scalable icons and the digital signature (only self-signed for now);
 - Added new icon for FFS (fonts skipping list) file

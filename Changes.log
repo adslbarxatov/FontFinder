@@ -1,5 +1,9 @@
 ﻿Font finder changes log
 
+Version 2.14.37:
+• Implemented the updates downloading directly from the “About the app” interface. This function
+  requires DPModule. It allows you to download DPModule if it was not previously installed
+
 Version 2.14.3:
 • Current updates and improvements applied
 
