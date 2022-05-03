@@ -2,26 +2,26 @@
 > PCC: 00061DEBE076DD86
 
 
-A tool for finding font by its image
+A tool to search for a font by its image
 
 Инструмент для поиска шрифта по его изображению
 
 
 #
 
-This tool allows you to find font name/family by its image. You need only present font sample
-on the picture (high contrast, only target letters) and specify pictured text. Application
-allows you to set font search parameters and interruption condition (percentage of match).
+This tool allows you to find the name / family of a font by its image. You only need to provide a sample
+font in the picture (high contrast, target letters only) and specify the text in the picture.
+The application allows you to set font search parameters and a break condition (match percentage).
 
-Warning! Tool works only with fonts that are installed on your operating system.
+Warning! The tool only works with fonts installed on your operating system
 
 #
 
-Инструмент позволяет найти шрифт или семейство шрифтов по изображению. Вам потребуется образец
-начертания шрифта в файле изображения (только буквы, хороший контраст) и указать представленный текст.
-Программа позволяет настраивать параметры поиска шрифта и условие приостановки (процент совпадения).
+Этот инструмент позволяет найти название/семейство шрифта по его изображению. Вам нужно только
+представить образец шрифта на картинке (высококонтрастный, только целевые буквы) и указать текст на картинке.
+Приложение позволяет задать параметры поиска шрифта и условие прерывания (процент совпадения).
 
-Предупреждение! Инструмент работает только с теми шрифтами, которые установлены в операционной системе.
+Предупреждение! Инструмент работает только со шрифтами, установленными в вашей операционной системе
 
 &nbsp;
 
