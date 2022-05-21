@@ -1,5 +1,5 @@
-# FontFinder v 2.14.37
-> PCC: 00061DEBE076DD86
+# FontFinder v 2.15
+> PCC: 00062C18295E2FBF
 
 
 A tool to search for a font by its image
@@ -30,7 +30,7 @@ Warning! The tool only works with fonts installed on your operating system
 ## Requirements / Требования
 
 - Windows XP or newer / или новее;
-- [Microsoft .NET Framework 4.0](https://www.microsoft.com/en-us/download/details.aspx?id=17718).
+- [Microsoft .NET Framework 4.0](https://microsoft.com/en-us/download/details.aspx?id=17718).
 
 Interface languages / языки интерфейса: ru_ru, en_us.
 
