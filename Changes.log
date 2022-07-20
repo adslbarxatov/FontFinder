@@ -1,5 +1,8 @@
 ﻿Font finder changes log
 
+Version 2.15.2:
+• Fixed the bug that affected the file association method
+
 Version 2.15:
 • Parsing methods for ADP and projects descriptions have been upgraded;
 • Current updates and improvements applied
