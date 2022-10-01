@@ -9,18 +9,22 @@ namespace RD_AAOW
 	/// <summary>
 	/// Главная форма программы
 	/// </summary>
-	public partial class MainForm:Form
+	public partial class MainForm: Form
 		{
 		// Переменные
 		private Bitmap image = null;                                    // Исходное изображение
 		private string imageText = "";                                  // Текст на нём
 		private List<FontFamily> foundFF = new List<FontFamily> ();     // Найденные шрифты
-		private List<double> foundFFMatch = new List<double> ();        // Оценки степени их соответствия исходному изображению
+
+		// Оценки степени их соответствия исходному изображению
+		private List<double> foundFFMatch = new List<double> ();
+
 		private FontStyle searchFontStyle = FontStyle.Regular;          // Стиль шрифта для поиска
 		private SupportedLanguages al = Localization.CurrentLanguage;
 		private SkipListProcessor slp = new SkipListProcessor ();
 
-		private double searchPauseFactor = 90.0;                        // Порог срабатывания правила приостановки поиска
+		// Порог срабатывания правила приостановки поиска
+		private double searchPauseFactor = 90.0;
 
 		// Ограничительные константы
 

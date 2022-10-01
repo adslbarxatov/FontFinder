@@ -11,7 +11,7 @@ namespace RD_AAOW
 	public static class ImageProcessor
 		{
 		// Стили, замещающие текущий в случае его недоступности
-		private static FontStyle[] otherStyles = { FontStyle.Regular,	
+		private static FontStyle[] otherStyles = { FontStyle.Regular,
 											  FontStyle.Bold ,
 											  FontStyle.Italic,
 											  FontStyle.Bold | FontStyle.Italic };
@@ -137,9 +137,9 @@ namespace RD_AAOW
 	public class ImageCreator
 		{
 		// Переменные
-		private Bitmap image = null;	// Формируемое изображение
-		private Brush whiteBrush = new SolidBrush (Color.FromArgb (255, 255, 255));	// Белая кисть
-		private Brush blackBrush = new SolidBrush (Color.FromArgb (0, 0, 0));		// Чёрная кисть
+		private Bitmap image = null;    // Формируемое изображение
+		private Brush whiteBrush = new SolidBrush (Color.FromArgb (255, 255, 255)); // Белая кисть
+		private Brush blackBrush = new SolidBrush (Color.FromArgb (0, 0, 0));       // Чёрная кисть
 
 		/// <summary>
 		/// Возвращает сформированное изображение
@@ -228,8 +228,8 @@ namespace RD_AAOW
 	public class ImageLoader
 		{
 		// Переменные
-		private Bitmap image = null;									// Загруженное изображение
-		private ImageLoaderStatuses status = ImageLoaderStatuses.Ok;	// Статус инициализации класса (по умолчанию = Ok)
+		private Bitmap image = null;                                    // Загруженное изображение
+		private ImageLoaderStatuses status = ImageLoaderStatuses.Ok;    // Статус инициализации класса
 
 		/// <summary>
 		/// Конструктор. Создаёт объект-изображение из файла
@@ -263,7 +263,7 @@ namespace RD_AAOW
 
 			// Устранение ссылочной зависимости загруженного изображения от файла
 			Image image2 = (Image)image.Clone (new Rectangle (0, 0, image.Width, image.Height),
-				System.Drawing.Imaging.PixelFormat.Format1bppIndexed);	// Теперь загружается сразу монохромным
+				PixelFormat.Format1bppIndexed); // Теперь загружается сразу монохромным
 			FS.Close ();
 
 			image.Dispose ();
@@ -309,31 +309,27 @@ namespace RD_AAOW
 				for (y = 0; y < image.Height; y++)
 					{
 					if (image.GetPixel (x, y).R < 128)
-						{
 						goto ll;
-						}
 					}
 				}
 ll:
+
+// Эта ситуация возможна лишь при полностью белом рисунке
 			if (x == image.Width)
-				{
-				return new Rectangle ();		// Эта ситуация возможна лишь при полностью белом рисунке
-				}
+				return new Rectangle ();
+
 			// На этом месте произойдёт её полное отсеивание
 			else
-				{
 				r.X = x;
-				}
 
 			// Правая
+			// Это позволит ускорить прогон уже обрезанного изображения (в нём есть границы)
 			for (x = image.Width - 1; x >= 0; x--)
 				{
-				for (y = image.Height - 1; y >= 0; y--)	// Это позволит ускорить прогон уже обрезанного изображения (в нём есть границы)
+				for (y = image.Height - 1; y >= 0; y--)
 					{
 					if (image.GetPixel (x, y).R < 128)
-						{
 						goto lr;
-						}
 					}
 				}
 
@@ -346,9 +342,7 @@ lr:
 				for (x = 0; x < image.Width; x++)
 					{
 					if (image.GetPixel (x, y).R < 128)
-						{
 						goto lt;
-						}
 					}
 				}
 lt:
@@ -360,9 +354,7 @@ lt:
 				for (x = image.Width - 1; x >= 0; x--)
 					{
 					if (image.GetPixel (x, y).R < 128)
-						{
 						goto lb;
-						}
 					}
 				}
 lb:

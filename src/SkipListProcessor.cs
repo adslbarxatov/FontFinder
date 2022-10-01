@@ -11,13 +11,14 @@ namespace RD_AAOW
 	/// <summary>
 	/// Форма настройки пропускаемых шрифтов
 	/// </summary>
-	public partial class SkipListProcessor:Form
+	public partial class SkipListProcessor: Form
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = new List<string> ();
-		private string oldSkippingFontsListFile = RDGenerics.AppStartupPath + ProgramDescription.AssemblyMainName + ".skp";
-		private string newSkippingFontsListFile = RDGenerics.AppStartupPath + ProgramDescription.AssemblyMainName + "." +
-			ProgramDescription.SkipFileExtension;
+		private string oldSkippingFontsListFile = RDGenerics.AppStartupPath +
+			ProgramDescription.AssemblyMainName + ".skp";
+		private string newSkippingFontsListFile = RDGenerics.AppStartupPath +
+			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
 		private SupportedLanguages al;
 		private string sampleText;
 		private FontFamily[] existentFonts;
