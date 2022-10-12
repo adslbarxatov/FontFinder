@@ -1,5 +1,9 @@
 ﻿Font finder changes log
 
+Version 3.0.2:
+• XPR control has been implemented;
+• Adjusted the control of single active copy
+
 Version 3.0:
 • Implemented the ability to open localized ADP, SCP and Welcome pages;
 • Required framework version updated from 4.0 to 4.8

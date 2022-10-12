@@ -19,16 +19,14 @@ namespace RD_AAOW
 			Application.EnableVisualStyles ();
 			Application.SetCompatibleTextRenderingDefault (false);
 
-			// Проверка запуска единственной копии
-			bool result;
-			Mutex instance = new Mutex (true, ProgramDescription.AssemblyTitle, out result);
-			if (!result)
-				{
-				MessageBox.Show (string.Format (Localization.GetText ("AlreadyStarted", Localization.CurrentLanguage),
-					ProgramDescription.AssemblyTitle),
-					ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			// Язык интерфейса и контроль XPR
+			SupportedLanguages al = Localization.CurrentLanguage;
+			if (!Localization.IsXPRClassAcceptable)
 				return;
-				}
+
+			// Проверка запуска единственной копии
+			if (!RDGenerics.IsThisInstanceUnique (al == SupportedLanguages.ru_ru))
+				return;
 
 			// Отображение справки и запроса на принятие Политики
 			if (!ProgramDescription.AcceptEULA ())
