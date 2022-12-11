@@ -1,4 +1,8 @@
-﻿Font finder changes log
+﻿Font finder: changes log
+
+Version 3.1:
+• The app now uses a new, secure method for setting the size and position of windows;
+• Implemented support for HypeHelp mechanics
 
 Version 3.0.2:
 • XPR control has been implemented;

@@ -1,5 +1,5 @@
-_Changes for v 3.0.2_:
+_Changes for v 3.1_:
+- The app now uses a new, secure method for setting the size and position of windows;
+- Implemented support for HypeHelp mechanics;
 - XPR control has been implemented;
-- Adjusted the control of single active copy;
-- Implemented the ability to open localized ADP, SCP and Welcome pages;
-- Required framework version updated from 4.0 to 4.8
+- Adjusted the control of single active copy

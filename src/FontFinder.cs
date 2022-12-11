@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace RD_AAOW
@@ -29,9 +28,10 @@ namespace RD_AAOW
 				return;
 
 			// Отображение справки и запроса на принятие Политики
-			if (!ProgramDescription.AcceptEULA ())
+			if (!RDGenerics.AcceptEULA ())
 				return;
-			ProgramDescription.ShowAbout (true);
+			if (!RDGenerics.ShowAbout (true))
+				ProgramDescription.RegisterAppExtensions ();
 
 			// Запуск
 			Application.Run (new MainForm ());

@@ -27,26 +27,10 @@ namespace RD_AAOW
 		private double searchPauseFactor = 90.0;
 
 		// Ограничительные константы
-
-		/// <summary>
-		/// Максимальная длина строки для сравнения
-		/// </summary>
-		public const uint MaxSearchStringLength = 50;
-
-		/// <summary>
-		/// Максимальное количество отображаемых результатов
-		/// </summary>
-		public const uint MaxResultsCount = 100;
-
-		/// <summary>
-		/// Минимальный порог прерывания поиска
-		/// </summary>
-		public const uint MinValidationLimit = 50;
-
-		/// <summary>
-		/// Максимальный порог прерывания поиска
-		/// </summary>
-		public const uint MaxValidationLimit = 99;
+		private const uint MaxSearchStringLength = 50;		// Максимальная длина строки для сравнения
+		private const uint MaxResultsCount = 100;			// Максимальное количество отображаемых результатов
+		private const uint MinValidationLimit = 50;			// Минимальный порог прерывания поиска
+		private const uint MaxValidationLimit = 99;			// Максимальный порог прерывания поиска
 
 		/// <summary>
 		/// Конструктор. Создаёт главную форму программы
@@ -58,6 +42,7 @@ namespace RD_AAOW
 
 			// Настройка контролов
 			this.Text = ProgramDescription.AssemblyTitle;
+			RDGenerics.LoadWindowDimensions (this);
 
 			LoadedPicText.MaxLength = (int)MaxSearchStringLength;
 			SearchPauseFactor.Minimum = MinValidationLimit;
@@ -96,13 +81,15 @@ namespace RD_AAOW
 				switch (il.InitStatus)
 					{
 					case ImageLoaderStatuses.FileNotFound:
-						MessageBox.Show (Localization.GetText ("FileNotFound", al),
-							ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						/*MessageBox.Shw (Localization.GetText ("FileNotFound", al),
+							ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
+						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "FileNotFound");
 						break;
 
 					case ImageLoaderStatuses.FileIsNotAnImage:
-						MessageBox.Show (Localization.GetText ("FileIsNotAnImage", al),
-							ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						/*MessageBox.Shw (Localization.GetText ("FileIsNotAnImage", al),
+							ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
+						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "FileIsNotAnImage");
 						break;
 					}
 
@@ -116,8 +103,10 @@ namespace RD_AAOW
 			il.Dispose ();
 
 			if ((image.Width > LoadedPicture.Width) || (image.Height > LoadedPicture.Height))
-				MessageBox.Show (Localization.GetText ("LargePicture", al),
-					ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Information, "LargePicture");
+
+			/*MessageBox.Shw (Localization.GetText ("LargePicture", al),
+				ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);*/
 
 			if (LoadedPicture.BackgroundImage != null)
 				LoadedPicture.BackgroundImage.Dispose ();
@@ -132,8 +121,9 @@ namespace RD_AAOW
 			{
 			if (LoadedPicText.Text == "")
 				{
-				MessageBox.Show (Localization.GetText ("SpecifyTextFromImage", al),
-					ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				/*MessageBox.Shw (Localization.GetText ("SpecifyTextFromImage", al),
+					ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "SpecifyTextFromImage");
 				return;
 				}
 
@@ -217,9 +207,14 @@ namespace RD_AAOW
 				// Запрос на прерывание поиска
 				if (PauseSearch.Checked && (res >= searchPauseFactor))
 					{
-					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name + ", " + resultStyle.ToString ());
-					if (MessageBox.Show (Localization.GetText ("FinishSearch", al),
-						ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name +
+						", " + resultStyle.ToString ());
+
+					/*if (MessageBox.Shw (Localization.GetText ("FinishSearch", al),
+						ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == 
+						DialogResult.Yes)*/
+					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question, "FinishSearch",
+						Localization.DefaultButtons.Yes, Localization.DefaultButtons.No) == RDMessageButtons.ButtonOne)
 						{
 						e.Cancel = true;
 						}
@@ -277,14 +272,15 @@ namespace RD_AAOW
 
 		private void MainForm_FormClosing (object sender, FormClosingEventArgs e)
 			{
-			// Сохранение списка
+			// Сохранение
+			RDGenerics.SaveWindowDimensions (this);
 			slp.SaveList ();
 			}
 
 		// Справочные сведения
 		private void Q5_Click (object sender, EventArgs e)
 			{
-			ProgramDescription.ShowAbout (false);
+			RDGenerics.ShowAbout (false);
 			}
 
 		// Выбор пункта для предпросмотра
@@ -296,8 +292,9 @@ namespace RD_AAOW
 			// Проверка на наличие текста
 			if (LoadedPicText.Text == "")
 				{
-				MessageBox.Show (Localization.GetText ("EmptyTextField", al),
-					 ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				/*MessageBox.Shw (Localization.GetText ("EmptyTextField", al),
+					 ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "EmptyTextField");
 				return;
 				}
 
@@ -306,8 +303,8 @@ namespace RD_AAOW
 				ViewBox.BackgroundImage.Dispose ();
 
 			Bitmap createdImage;
-			ImageProcessor.CreateBitmapFromFont (LoadedPicText.Text, foundFF[ResultsList.SelectedIndex], ViewBox.Height, searchFontStyle,
-				CUnder.Checked, CStrike.Checked, out createdImage);
+			ImageProcessor.CreateBitmapFromFont (LoadedPicText.Text, foundFF[ResultsList.SelectedIndex],
+				ViewBox.Height, searchFontStyle, CUnder.Checked, CStrike.Checked, out createdImage);
 			if (createdImage == null)
 				return;
 

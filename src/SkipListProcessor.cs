@@ -166,8 +166,13 @@ namespace RD_AAOW
 		private void BClear_Click (object sender, EventArgs e)
 			{
 			// Контроль
-			if (MessageBox.Show (Localization.GetText ("ClearSkippingFonts", al), ProgramDescription.AssemblyTitle,
-				MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+			/*if (MessageBox.Shw (Localization.GetText ("ClearSkippingFonts", al), 
+				ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+				MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+				return;*/
+			if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "ClearSkippingFonts",
+				Localization.DefaultButtons.YesNoFocus, Localization.DefaultButtons.No) !=
+				RDMessageButtons.ButtonOne)
 				return;
 
 			// Сброс
@@ -284,8 +289,9 @@ namespace RD_AAOW
 				}
 			catch
 				{
-				MessageBox.Show (Localization.GetText ("WrongFont", al), ProgramDescription.AssemblyTitle,
-					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				/*MessageBox.Shw (Localization.GetText ("WrongFont", al), ProgramDescription.AssemblyTitle,
+					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "WrongFont");
 				return;
 				}
 

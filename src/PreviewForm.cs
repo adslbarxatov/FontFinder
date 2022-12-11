@@ -19,7 +19,9 @@ namespace RD_AAOW
 			// Инициализация
 			InitializeComponent ();
 			ViewBox.BackgroundImage = Preview;
+
 			this.CancelButton = this.AcceptButton = FClose;
+			FClose.Text = Localization.GetDefaultButtonName (Localization.DefaultButtons.OK);
 
 			// Заголовок окна
 			this.Text = Caption;
