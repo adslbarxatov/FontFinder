@@ -15,11 +15,13 @@ namespace RD_AAOW
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = new List<string> ();
+
 		private string oldSkippingFontsListFile = RDGenerics.AppStartupPath +
 			ProgramDescription.AssemblyMainName + ".skp";
 		private string newSkippingFontsListFile = RDGenerics.AppStartupPath +
 			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
-		private SupportedLanguages al;
+
+		/*private SupportedLanguages al;*/
 		private string sampleText;
 		private FontFamily[] existentFonts;
 		private bool changed = false;
@@ -91,27 +93,28 @@ namespace RD_AAOW
 		/// Метод открывает окно ручного управления списком
 		/// </summary>
 		/// <param name="SampleText">Образец текста для предпросмотра шрифтов</param>
-		/// <param name="InterfaceLanguage">Язык интерфейса программы</param>
-		public void EditList (SupportedLanguages InterfaceLanguage, string SampleText)
+		public void EditList (/*SupportedLanguages InterfaceLanguage,*/ string SampleText)
 			{
 			// Инициализация
-			al = InterfaceLanguage;
+			/*al = InterfaceLanguage;*/
 
 			if ((SampleText != null) && (SampleText != ""))
 				sampleText = SampleText;
 			else
-				sampleText = Localization.GetText ("SampleText", al);
+				sampleText = Localization.GetText ("SampleText");
 
 			// Настройка
-			this.Text = Localization.GetText ("SkipListProcessorCaption", al);
-			BExit.Text = Localization.GetText ("BExitText", al);
-			FillingRequired.Text = Localization.GetText ("FillingRequiredText", al);
-			ExistentLabel.Text = string.Format (Localization.GetText ("ExistentLabelText", al), ExistentFontsListBox.Items.Count);
+			this.Text = Localization.GetText ("SkipListProcessorCaption");
+			BExit.Text = Localization.GetText ("BExitText");
+			FillingRequired.Text = Localization.GetText ("FillingRequiredText");
+			ExistentLabel.Text = string.Format (Localization.GetText ("ExistentLabelText"),
+				ExistentFontsListBox.Items.Count);
 
 			// Запуск
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+				SkippingFontsListBox.Items.Count);
 
 			this.ShowDialog ();
 			}
@@ -133,7 +136,8 @@ namespace RD_AAOW
 			// Передача в списки
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+				SkippingFontsListBox.Items.Count);
 
 			changed = true;
 			}
@@ -157,7 +161,8 @@ namespace RD_AAOW
 			// Обновление списков
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+				SkippingFontsListBox.Items.Count);
 
 			changed = true;
 			}
@@ -166,10 +171,6 @@ namespace RD_AAOW
 		private void BClear_Click (object sender, EventArgs e)
 			{
 			// Контроль
-			/*if (MessageBox.Shw (Localization.GetText ("ClearSkippingFonts", al), 
-				ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question,
-				MessageBoxDefaultButton.Button2) != DialogResult.Yes)
-				return;*/
 			if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "ClearSkippingFonts",
 				Localization.DefaultButtons.YesNoFocus, Localization.DefaultButtons.No) !=
 				RDMessageButtons.ButtonOne)
@@ -181,7 +182,8 @@ namespace RD_AAOW
 			// Обновление
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText", al), SkippingFontsListBox.Items.Count);
+			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+				SkippingFontsListBox.Items.Count);
 
 			changed = true;
 			}

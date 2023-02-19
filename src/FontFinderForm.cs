@@ -20,7 +20,7 @@ namespace RD_AAOW
 		private List<double> foundFFMatch = new List<double> ();
 
 		private FontStyle searchFontStyle = FontStyle.Regular;          // Стиль шрифта для поиска
-		private SupportedLanguages al = Localization.CurrentLanguage;
+		/*private SupportedLanguages al = Localization.CurrentLanguage;*/
 		private SkipListProcessor slp = new SkipListProcessor ();
 
 		// Порог срабатывания правила приостановки поиска
@@ -51,7 +51,7 @@ namespace RD_AAOW
 			LanguageCombo.Items.AddRange (Localization.LanguagesNames);
 			try
 				{
-				LanguageCombo.SelectedIndex = (int)al;
+				LanguageCombo.SelectedIndex = (int)Localization.CurrentLanguage;
 				}
 			catch
 				{
@@ -245,11 +245,11 @@ namespace RD_AAOW
 				if (maxRes < res)
 					maxRes = res;
 
-				string msg = string.Format (Localization.GetText ("ProcessingMessage", al), i, slp.ExistentFonts.Length,
+				string msg = string.Format (Localization.GetText ("ProcessingMessage"), i, slp.ExistentFonts.Length,
 					slp.ExistentFonts[i].Name);
 				if (resultStyle != searchFontStyle)
-					msg += string.Format (Localization.GetText ("ProcessingStyle", al), resultStyle.ToString ());
-				msg += string.Format (Localization.GetText ("SkippingFontsCountAndPercentage", al),
+					msg += string.Format (Localization.GetText ("ProcessingStyle"), resultStyle.ToString ());
+				msg += string.Format (Localization.GetText ("SkippingFontsCountAndPercentage"),
 					slp.SkippingFontsCount, maxRes.ToString ("F2"));
 
 				((BackgroundWorker)sender).ReportProgress ((int)(HardWorkExecutor.ProgressBarSize *
@@ -335,33 +335,33 @@ namespace RD_AAOW
 		private void LanguageCombo_SelectedIndexChanged (object sender, EventArgs e)
 			{
 			// Сохранение языка
-			Localization.CurrentLanguage = al = (SupportedLanguages)LanguageCombo.SelectedIndex;
+			Localization.CurrentLanguage = (SupportedLanguages)LanguageCombo.SelectedIndex;
 
 			// Локализация
-			OpenImage.Filter = Localization.GetText ("OpenImageFilter", al) +
+			OpenImage.Filter = Localization.GetText ("OpenImageFilter") +
 				" (*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|" +
 				"*.bmp;*.gif;*.jpe;*.jpeg;*.jpg;*.jfif;*.png";
-			OpenImage.Title = Localization.GetText ("OpenImageTitle", al);
+			OpenImage.Title = Localization.GetText ("OpenImageTitle");
 
-			SelectImage.Text = Localization.GetText ("SelectImageText", al);
-			Label02.Text = Localization.GetText ("Label02Text", al);
-			Label03.Text = Localization.GetText ("Label03Text", al);
-			CBold.Text = Localization.GetText ("CBoldText", al);
-			CItalic.Text = Localization.GetText ("CItalicText", al);
-			CUnder.Text = Localization.GetText ("CUnderText", al);
-			CStrike.Text = Localization.GetText ("CStrikeText", al);
-			PauseSearch.Text = Localization.GetText ("PauseSearchText", al);
-			StartSearch.Text = Localization.GetText ("StartSearchText", al);
-			Label05.Text = Localization.GetText ("Label05Text", al);
-			BExit.Text = Localization.GetText ("BExitText", al);
-			Label06.Text = Localization.GetText ("Label06Text", al);
-			BSkipping.Text = Localization.GetText ("BSkippingText", al);
+			SelectImage.Text = Localization.GetText ("SelectImageText");
+			Label02.Text = Localization.GetText ("Label02Text");
+			Label03.Text = Localization.GetText ("Label03Text");
+			CBold.Text = Localization.GetText ("CBoldText");
+			CItalic.Text = Localization.GetText ("CItalicText");
+			CUnder.Text = Localization.GetText ("CUnderText");
+			CStrike.Text = Localization.GetText ("CStrikeText");
+			PauseSearch.Text = Localization.GetText ("PauseSearchText");
+			StartSearch.Text = Localization.GetText ("StartSearchText");
+			Label05.Text = Localization.GetText ("Label05Text");
+			BExit.Text = Localization.GetText ("BExitText");
+			Label06.Text = Localization.GetText ("Label06Text");
+			BSkipping.Text = Localization.GetText ("BSkippingText");
 			}
 
 		// Работа с пропущенными шрифтами
 		private void BSkipping_Click (object sender, EventArgs e)
 			{
-			slp.EditList (al, LoadedPicText.Text);
+			slp.EditList (LoadedPicText.Text);
 			}
 		}
 	}
