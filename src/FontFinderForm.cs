@@ -11,26 +11,36 @@ namespace RD_AAOW
 	/// </summary>
 	public partial class MainForm: Form
 		{
-		// Переменные
-		private Bitmap image = null;                                    // Исходное изображение
-		private string imageText = "";                                  // Текст на нём
-		private List<FontFamily> foundFF = new List<FontFamily> ();     // Найденные шрифты
+		// Исходное изображение
+		private Bitmap image = null;
+
+		// Текст на нём
+		private string imageText = "";
+
+		// Найденные шрифты
+		private List<FontFamily> foundFF = new List<FontFamily> ();
 
 		// Оценки степени их соответствия исходному изображению
 		private List<double> foundFFMatch = new List<double> ();
 
-		private FontStyle searchFontStyle = FontStyle.Regular;          // Стиль шрифта для поиска
-		/*private SupportedLanguages al = Localization.CurrentLanguage;*/
+		// Стиль шрифта для поиска
+		private FontStyle searchFontStyle = FontStyle.Regular;
 		private SkipListProcessor slp = new SkipListProcessor ();
 
 		// Порог срабатывания правила приостановки поиска
 		private double searchPauseFactor = 90.0;
 
-		// Ограничительные константы
-		private const uint MaxSearchStringLength = 50;		// Максимальная длина строки для сравнения
-		private const uint MaxResultsCount = 100;			// Максимальное количество отображаемых результатов
-		private const uint MinValidationLimit = 50;			// Минимальный порог прерывания поиска
-		private const uint MaxValidationLimit = 99;			// Максимальный порог прерывания поиска
+		// Максимальная длина строки для сравнения
+		private const uint MaxSearchStringLength = 50;
+
+		// Максимальное количество отображаемых результатов
+		private const uint MaxResultsCount = 100;
+
+		// Минимальный порог прерывания поиска
+		private const uint MinValidationLimit = 50;
+
+		// Максимальный порог прерывания поиска
+		private const uint MaxValidationLimit = 99;
 
 		/// <summary>
 		/// Конструктор. Создаёт главную форму программы
@@ -81,14 +91,10 @@ namespace RD_AAOW
 				switch (il.InitStatus)
 					{
 					case ImageLoaderStatuses.FileNotFound:
-						/*MessageBox.Shw (Localization.GetText ("FileNotFound", al),
-							ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
 						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "FileNotFound");
 						break;
 
 					case ImageLoaderStatuses.FileIsNotAnImage:
-						/*MessageBox.Shw (Localization.GetText ("FileIsNotAnImage", al),
-							ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
 						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "FileIsNotAnImage");
 						break;
 					}
@@ -96,17 +102,21 @@ namespace RD_AAOW
 				return;
 				}
 
-			// Сохранение
+			// Получение изображения и контроль
 			if (image != null)
 				image.Dispose ();
-			image = il.GetBlackZone ();
+			image = il.GetBlackArea ();
 			il.Dispose ();
 
+			if (image == null)  // Не удалось найти границы
+				{
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "CannotFindText");
+				return;
+				}
+
+			// Обработка
 			if ((image.Width > LoadedPicture.Width) || (image.Height > LoadedPicture.Height))
 				RDGenerics.LocalizedMessageBox (RDMessageTypes.Information, "LargePicture");
-
-			/*MessageBox.Shw (Localization.GetText ("LargePicture", al),
-				ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);*/
 
 			if (LoadedPicture.BackgroundImage != null)
 				LoadedPicture.BackgroundImage.Dispose ();
@@ -121,8 +131,6 @@ namespace RD_AAOW
 			{
 			if (LoadedPicText.Text == "")
 				{
-				/*MessageBox.Shw (Localization.GetText ("SpecifyTextFromImage", al),
-					ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
 				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "SpecifyTextFromImage");
 				return;
 				}
@@ -180,20 +188,20 @@ namespace RD_AAOW
 					continue;
 
 				// Создание изображения с выбранным шрифтом
-				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, slp.ExistentFonts[i], image.Height,
-					searchFontStyle, CUnder.Checked, CStrike.Checked, out createdImage);
+				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, slp.ExistentFonts[i],
+					image.Height, searchFontStyle, CUnder.Checked, CStrike.Checked, out createdImage);
 				if (createdImage == null)
-					continue;   // Здесь шрифты не пропускаем, т.к. есть шрифты, где лишь некоторые символы дают такой результат
+					continue;
+				// Здесь шрифты не пропускаем, т.к. есть шрифты, где лишь некоторые символы дают такой результат
 
 				// Сравнение
 				double res = 0;
 				try
 					{
-					res = ImageProcessor.Compare (image, createdImage); // Иногда имеют место сбои обращения к изображению
+					res = ImageProcessor.Compare (image, createdImage);
+					// Иногда имеют место сбои обращения к изображению
 					}
-				catch
-					{
-					}
+				catch { }
 
 				// Отсечение совпадающих результатов
 				// (исходим из предположения, что разные шрифты не могут давать одинаковый результат сравнения)
@@ -210,9 +218,6 @@ namespace RD_AAOW
 					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name +
 						", " + resultStyle.ToString ());
 
-					/*if (MessageBox.Shw (Localization.GetText ("FinishSearch", al),
-						ProgramDescription.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == 
-						DialogResult.Yes)*/
 					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question, "FinishSearch",
 						Localization.DefaultButtons.Yes, Localization.DefaultButtons.No) == RDMessageButtons.ButtonOne)
 						{
@@ -292,8 +297,6 @@ namespace RD_AAOW
 			// Проверка на наличие текста
 			if (LoadedPicText.Text == "")
 				{
-				/*MessageBox.Shw (Localization.GetText ("EmptyTextField", al),
-					 ProgramDescription.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
 				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "EmptyTextField");
 				return;
 				}

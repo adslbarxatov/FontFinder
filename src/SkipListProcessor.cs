@@ -21,7 +21,6 @@ namespace RD_AAOW
 		private string newSkippingFontsListFile = RDGenerics.AppStartupPath +
 			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
 
-		/*private SupportedLanguages al;*/
 		private string sampleText;
 		private FontFamily[] existentFonts;
 		private bool changed = false;
@@ -93,12 +92,10 @@ namespace RD_AAOW
 		/// Метод открывает окно ручного управления списком
 		/// </summary>
 		/// <param name="SampleText">Образец текста для предпросмотра шрифтов</param>
-		public void EditList (/*SupportedLanguages InterfaceLanguage,*/ string SampleText)
+		public void EditList (string SampleText)
 			{
 			// Инициализация
-			/*al = InterfaceLanguage;*/
-
-			if ((SampleText != null) && (SampleText != ""))
+			if (!string.IsNullOrWhiteSpace (SampleText))
 				sampleText = SampleText;
 			else
 				sampleText = Localization.GetText ("SampleText");
@@ -291,8 +288,6 @@ namespace RD_AAOW
 				}
 			catch
 				{
-				/*MessageBox.Shw (Localization.GetText ("WrongFont", al), ProgramDescription.AssemblyTitle,
-					MessageBoxButtons.OK, MessageBoxIcon.Exclamation);*/
 				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "WrongFont");
 				return;
 				}

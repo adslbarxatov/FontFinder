@@ -78,7 +78,11 @@ namespace RD_AAOW
 					ic = new ImageCreator (Text, font);
 					font.Dispose ();
 
-					ResultImage = (Bitmap)ic.CreatedImage.Clone ();
+					if (ic.IsImageCreated)
+						ResultImage = (Bitmap)ic.CreatedImage.Clone ();
+					else
+						ResultImage = null;
+
 					ic.Dispose ();
 					return Style;
 					}
@@ -108,7 +112,11 @@ namespace RD_AAOW
 						ic = new ImageCreator (Text, font);
 						font.Dispose ();
 
-						ResultImage = (Bitmap)ic.CreatedImage.Clone ();
+						if (ic.IsImageCreated)
+							ResultImage = (Bitmap)ic.CreatedImage.Clone ();
+						else
+							ResultImage = null;
+
 						ic.Dispose ();
 						return otherFontStyle;
 						}
@@ -136,10 +144,14 @@ namespace RD_AAOW
 	/// </summary>
 	public class ImageCreator
 		{
-		// Переменные
-		private Bitmap image = null;    // Формируемое изображение
-		private Brush whiteBrush = new SolidBrush (Color.FromArgb (255, 255, 255)); // Белая кисть
-		private Brush blackBrush = new SolidBrush (Color.FromArgb (0, 0, 0));       // Чёрная кисть
+		// Формируемое изображение
+		private Bitmap image = null;
+
+		// Белая кисть
+		private Brush whiteBrush = new SolidBrush (Color.FromArgb (255, 255, 255));
+
+		// Чёрная кисть
+		private Brush blackBrush = new SolidBrush (Color.FromArgb (0, 0, 0));
 
 		/// <summary>
 		/// Возвращает сформированное изображение
@@ -149,6 +161,17 @@ namespace RD_AAOW
 			get
 				{
 				return image;
+				}
+			}
+
+		/// <summary>
+		/// Возвращает флаг успешности формирования изображения
+		/// </summary>
+		public bool IsImageCreated
+			{
+			get
+				{
+				return (image != null);
 				}
 			}
 
@@ -182,7 +205,7 @@ namespace RD_AAOW
 			// Обрезка изображения
 			ImageLoader il = new ImageLoader (image);
 			image.Dispose ();
-			image = il.GetBlackZone ();
+			image = il.GetBlackArea ();
 
 			// Очистка памяти
 			il.Dispose ();
@@ -367,8 +390,9 @@ lb:
 		/// <summary>
 		/// Возвращает часть исходного изображения, содержащую контрастный объект
 		/// </summary>
-		/// <returns>Изображение, обрезанное до границ контрастного объекта</returns>
-		public Bitmap GetBlackZone ()
+		/// <returns>Изображение, обрезанное до границ контрастного объекта,
+		/// или null, если границы найти не удалось</returns>
+		public Bitmap GetBlackArea ()
 			{
 			// Контроль
 			if (status != ImageLoaderStatuses.Ok)

@@ -240,4 +240,9 @@ Skipping fonts: {0:D}</value>
   <data name="ffsfile" xml:space="preserve">
     <value>Fonts skipping list file</value>
   </data>
+  <data name="CannotFindText" xml:space="preserve">
+    <value>Cannot find a contrast image of text in the specified picture.
+
+Increase the contrast and try again</value>
+  </data>
 </root>

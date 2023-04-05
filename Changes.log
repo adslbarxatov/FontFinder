@@ -1,5 +1,8 @@
 Font finder: changes log
 
+Version 3.2:
+• Fixed the crash on empty or low contrast images
+
 Version 3.1.7:
 • Updated the HypeHelp mechanics
 

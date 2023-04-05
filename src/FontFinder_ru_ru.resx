@@ -240,4 +240,9 @@
   <data name="ffsfile" xml:space="preserve">
     <value>Файл списка пропускаемых шрифтов</value>
   </data>
+  <data name="CannotFindText" xml:space="preserve">
+    <value>Не удаётся найти контрастное изображение текста на указанной картинке.
+
+Увеличьте контраст и повторите попытку</value>
+  </data>
 </root>
