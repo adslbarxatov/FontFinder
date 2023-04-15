@@ -21,7 +21,7 @@ namespace RD_AAOW
 			ViewBox.BackgroundImage = Preview;
 
 			this.CancelButton = this.AcceptButton = FClose;
-			FClose.Text = Localization.GetDefaultButtonName (Localization.DefaultButtons.OK);
+			FClose.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_OK);
 
 			// Заголовок окна
 			this.Text = Caption;

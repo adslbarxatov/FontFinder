@@ -219,7 +219,7 @@ namespace RD_AAOW
 						", " + resultStyle.ToString ());
 
 					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question, "FinishSearch",
-						Localization.DefaultButtons.Yes, Localization.DefaultButtons.No) == RDMessageButtons.ButtonOne)
+						LzDefaultTextValues.Button_Yes, LzDefaultTextValues.Button_No) == RDMessageButtons.ButtonOne)
 						{
 						e.Cancel = true;
 						}
@@ -356,7 +356,7 @@ namespace RD_AAOW
 			PauseSearch.Text = Localization.GetText ("PauseSearchText");
 			StartSearch.Text = Localization.GetText ("StartSearchText");
 			Label05.Text = Localization.GetText ("Label05Text");
-			BExit.Text = Localization.GetText ("BExitText");
+			BExit.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_Exit);
 			Label06.Text = Localization.GetText ("Label06Text");
 			BSkipping.Text = Localization.GetText ("BSkippingText");
 			}

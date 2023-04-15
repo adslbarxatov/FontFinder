@@ -124,9 +124,9 @@ namespace RD_AAOW
 		public RDMessageForm (SupportedLanguages CurrentInterfaceLanguage)
 			{
 			RDMessageFormInit (RDMessageTypes.LanguageSelector,
-				Localization.GetDefaultButtonName (Localization.DefaultButtons.LanguageSelector),
-				Localization.GetDefaultButtonName (Localization.DefaultButtons.Apply),
-				Localization.GetDefaultButtonName (Localization.DefaultButtons.Cancel),
+				Localization.GetDefaultText (LzDefaultTextValues.Message_LanguageSelection),
+				Localization.GetDefaultText (LzDefaultTextValues.Button_Apply),
+				Localization.GetDefaultText (LzDefaultTextValues.Button_Cancel),
 				null, CurrentInterfaceLanguage, 0);
 			}
 
@@ -137,7 +137,7 @@ namespace RD_AAOW
 		/// <param name="Type">Тип создаваемого окна</param>
 		public RDMessageForm (RDMessageTypes Type, string Message)
 			{
-			RDMessageFormInit (Type, Message, Localization.GetDefaultButtonName (Localization.DefaultButtons.OK),
+			RDMessageFormInit (Type, Message, Localization.GetDefaultText (LzDefaultTextValues.Button_OK),
 				null, null, SupportedLanguages.en_us, 0);
 			}
 
@@ -247,7 +247,7 @@ namespace RD_AAOW
 				}
 			else
 				{
-				Button01.Text = Localization.GetDefaultButtonName (Localization.DefaultButtons.OK);
+				Button01.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_OK);
 				}
 
 			if (!string.IsNullOrWhiteSpace (ButtonTwoName))

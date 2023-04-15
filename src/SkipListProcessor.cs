@@ -102,7 +102,7 @@ namespace RD_AAOW
 
 			// Настройка
 			this.Text = Localization.GetText ("SkipListProcessorCaption");
-			BExit.Text = Localization.GetText ("BExitText");
+			BExit.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_Exit);
 			FillingRequired.Text = Localization.GetText ("FillingRequiredText");
 			ExistentLabel.Text = string.Format (Localization.GetText ("ExistentLabelText"),
 				ExistentFontsListBox.Items.Count);
@@ -169,7 +169,7 @@ namespace RD_AAOW
 			{
 			// Контроль
 			if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "ClearSkippingFonts",
-				Localization.DefaultButtons.YesNoFocus, Localization.DefaultButtons.No) !=
+				LzDefaultTextValues.Button_YesNoFocus, LzDefaultTextValues.Button_No) !=
 				RDMessageButtons.ButtonOne)
 				return;
 

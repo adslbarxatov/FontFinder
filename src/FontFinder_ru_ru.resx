@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BAboutText" xml:space="preserve">
-    <value>Abo&amp;ut</value>
-  </data>
-  <data name="BExitText" xml:space="preserve">
-    <value>В&amp;ыход</value>
-  </data>
   <data name="BSkippingText" xml:space="preserve">
     <value>Пропуск</value>
   </data>

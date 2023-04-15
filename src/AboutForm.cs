@@ -26,15 +26,15 @@ namespace RD_AAOW
 
 		private static string[][] locale = new string[][] { new string [] {
 
-			"&Руководство",
-			"&О проекте",
+			"",
+			"",
 			"Поиск обновлений...",
 			"Открыть в &браузере",		// 03
-			"&Политика и EULA",
-			"&Принять",
-			"&ОК",
-			"Спросить ра&зработчика",	// 07
-			"О&тклонить",
+			"",
+			"",
+			"",
+			"",	// 07
+			"От&клонить",
 
 			"Не удалось получить текст Политики. Попробуйте использовать кнопку перехода в браузер",
 			"[Проверка обновлений...]\r\n\r\n",
@@ -69,11 +69,11 @@ namespace RD_AAOW
 
 			"Предупреждение: необходимые расширения файлов будут зарегистрированы с использованием " +
 			"текущего местоположения приложения.\n\nУбедитесь, что вы не будете менять расположение " +
-			"этого приложения перед использованием этой функции.\n\nВы хотите продолжить?",
+			"этого приложения перед использованием этой функции.\n\nПродолжить?",
 
 			"Предупреждение: необходимые протоколы будут зарегистрированы с использованием " +
 			"текущего местоположения приложения.\n\nУбедитесь, что вы не будете менять расположение " +
-			"этого приложения перед использованием этой функции.\n\nВы хотите продолжить?",		// 28
+			"этого приложения перед использованием этой функции.\n\nПродолжить?",		// 28
 
 			"&Видео",	// 29
 
@@ -93,15 +93,15 @@ namespace RD_AAOW
 
 			}, new string [] {
 
-			"&User manual",
-			"Project’s &webpage",
+			"",
+			"",
 			"Checking updates...",
 			"Open in &browser",			// 03
-			"&Policy and EULA",
-			"&Accept",
-			"&OK",
-			"Ask the &developer",		// 07
-			"&Decline",
+			"",
+			"",
+			"",
+			"",		// 07
+			"De&cline",
 
 			"Failed to get Policy text. Try button to open it in browser",
 			"[Checking for updates...]\r\n\r\n",
@@ -137,11 +137,11 @@ namespace RD_AAOW
 
 			"Warning: required file extensions will be registered using current app location.\n\n" +
 			"Make sure you will not change location of this application before using this feature.\n\n" +
-			"Do you want to continue?",
+			"Continue?",
 
 			"Warning: required protocols will be registered using current app location.\n\n" +
 			"Make sure you will not change location of this application before using this feature.\n\n" +
-			"Do you want to continue?",			// 28
+			"Continue?",			// 28
 
 			"&Video",	// 29
 
@@ -235,10 +235,7 @@ namespace RD_AAOW
 				RDGenerics.GitUpdatesSublink;
 
 			// Загрузка окружения
-			AboutLabel.Text = ProgramDescription.AssemblyTitle + "\n" + ProgramDescription.AssemblyDescription +
-				"\n\n" + RDGenerics.AssemblyCopyright + "\nv " + ProgramDescription.AssemblyVersion +
-				"; " + ProgramDescription.AssemblyLastUpdate;
-
+			AboutLabel.Text = RDGenerics.AppAboutLabelText;
 			if (AppIcon != null)
 				{
 				IconBox.BackgroundImage = AppIcon.ToBitmap ();
@@ -332,12 +329,14 @@ namespace RD_AAOW
 			// Настройка контролов
 			int al = (int)Localization.CurrentLanguage;
 
-			UserManualButton.Text = locale[al][0];
-			ProjectPageButton.Text = locale[al][1];
+			UserManualButton.Text = Localization.GetDefaultText (LzDefaultTextValues.Control_UserManual);
+			ProjectPageButton.Text = Localization.GetDefaultText (LzDefaultTextValues.Control_ProjectWebpage);
 			UpdatesPageButton.Text = locale[al][2];
-			ADPButton.Text = locale[al][AcceptMode ? 3 : 4];
-			ExitButton.Text = locale[al][AcceptMode ? 5 : 6];
-			AskDeveloper.Text = locale[al][7];
+			ADPButton.Text = AcceptMode ? locale[al][3] :
+				Localization.GetDefaultText (LzDefaultTextValues.Control_PolicyEULA);
+			ExitButton.Text = Localization.GetDefaultText (AcceptMode ? LzDefaultTextValues.Button_Accept :
+				LzDefaultTextValues.Button_OK);
+			AskDeveloper.Text = Localization.GetDefaultText (LzDefaultTextValues.Control_AskDeveloper);
 			MisacceptButton.Text = locale[al][8];
 
 			if (!desciptionHasBeenUpdated)
@@ -580,9 +579,9 @@ namespace RD_AAOW
 				{
 				// Выбор варианта обработки
 				switch (RDGenerics.MessageBox (RDMessageTypes.Question, dpModuleAbsence,
-						Localization.GetDefaultButtonName (Localization.DefaultButtons.Yes),
+						Localization.GetDefaultText (LzDefaultTextValues.Button_Yes),
 						locale[(int)Localization.CurrentLanguage][29],
-						Localization.GetDefaultButtonName (Localization.DefaultButtons.Cancel)))
+						Localization.GetDefaultText (LzDefaultTextValues.Button_Cancel)))
 					{
 					case RDMessageButtons.ButtonThree:
 						return;
@@ -602,8 +601,8 @@ namespace RD_AAOW
 			else
 				{
 				if (RDGenerics.MessageBox (RDMessageTypes.Question, startDownload,
-					Localization.GetDefaultButtonName (Localization.DefaultButtons.Yes),
-					Localization.GetDefaultButtonName (Localization.DefaultButtons.No)) !=
+					Localization.GetDefaultText (LzDefaultTextValues.Button_Yes),
+					Localization.GetDefaultText (LzDefaultTextValues.Button_No)) !=
 					RDMessageButtons.ButtonOne)
 					return;
 
@@ -1049,8 +1048,8 @@ policy:
 			// Контроль
 			if (ShowWarning && (RDGenerics.MessageBox (RDMessageTypes.Warning,
 				locale[(int)Localization.CurrentLanguage][27],
-				Localization.GetDefaultButtonName (Localization.DefaultButtons.Yes),
-				Localization.GetDefaultButtonName (Localization.DefaultButtons.No)) ==
+				Localization.GetDefaultText (LzDefaultTextValues.Button_Yes),
+				Localization.GetDefaultText (LzDefaultTextValues.Button_Cancel)) ==
 				RDMessageButtons.ButtonTwo))
 				return false;
 
@@ -1108,8 +1107,8 @@ policy:
 			// Контроль
 			if (ShowWarning && (RDGenerics.MessageBox (RDMessageTypes.Warning,
 				locale[(int)Localization.CurrentLanguage][28],
-				Localization.GetDefaultButtonName (Localization.DefaultButtons.Yes),
-				Localization.GetDefaultButtonName (Localization.DefaultButtons.No)) ==
+				Localization.GetDefaultText (LzDefaultTextValues.Button_Yes),
+				Localization.GetDefaultText (LzDefaultTextValues.Button_Cancel)) ==
 				RDMessageButtons.ButtonTwo))
 				return false;
 
