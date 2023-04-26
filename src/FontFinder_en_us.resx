@@ -161,7 +161,7 @@ Cropped image will be shown in the field below the image selection button.
 'Search' button starts fonts matching with sample image.
 
 5. After search complete you’ll get a list of most matching fonts (not more than 100). By clicking you can see specified text in selected font and style.
-Search may be too long. Use “×” button to finish it immediately and view current results.
+Search may be too long. Use “Cancel” button to finish it immediately and view current results.
 
 6. Application will add fonts that give the same comparison results to skipping list. It will increase search speed. You can change it manually if needed or turn off using corresponding flag</value>
   </data>
