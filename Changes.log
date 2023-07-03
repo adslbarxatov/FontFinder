@@ -3,7 +3,7 @@ Font finder: changes log
 Version 3.2.7:
 • Added UTF32 encoding;
 • Removed support for .skp file format;
-• Windows: the interface was adapted to Windows 10, incorrect window borders were fixed
+• The interface was adapted to Windows 10, incorrect window borders were fixed
 
 Version 3.2.5:
 • Cumulative updates have been applied
