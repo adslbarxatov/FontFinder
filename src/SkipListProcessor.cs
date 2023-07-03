@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace RD_AAOW
@@ -16,8 +15,8 @@ namespace RD_AAOW
 		// Переменные и константы
 		private List<string> skippingFonts = new List<string> ();
 
-		private string oldSkippingFontsListFile = RDGenerics.AppStartupPath +
-			ProgramDescription.AssemblyMainName + ".skp";
+		/*private string oldSkippingFontsListFile = RDGenerics.AppStartupPath +
+			ProgramDescription.AssemblyMainName + ".skp";*/
 		private string newSkippingFontsListFile = RDGenerics.AppStartupPath +
 			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
 
@@ -52,8 +51,8 @@ namespace RD_AAOW
 			ExistentFontsListBox.DataSource = existentFonts;
 			ExistentFontsListBox.DisplayMember = ExistentFontsListBox.ValueMember = "Name";
 
-			// Загрузка файла с поддержкой наследия
-			if (File.Exists (oldSkippingFontsListFile))
+			// Загрузка файла
+			/*if (File.Exists (oldSkippingFontsListFile))
 				{
 				try
 					{
@@ -64,7 +63,7 @@ namespace RD_AAOW
 					FillingRequired.Checked = true;
 					return;
 					}
-				}
+				}*/
 
 			FileStream FS = null;
 			try
@@ -76,12 +75,10 @@ namespace RD_AAOW
 				FillingRequired.Checked = true;
 				return;
 				}
-			StreamReader SR = new StreamReader (FS, Encoding.Unicode);
+			StreamReader SR = new StreamReader (FS, RDGenerics.GetEncoding (SupportedEncodings.Unicode16));
 
 			while (!SR.EndOfStream)
-				{
 				skippingFonts.Add (SR.ReadLine ());
-				}
 
 			// Завершено
 			SR.Close ();
@@ -204,7 +201,7 @@ namespace RD_AAOW
 				{
 				return;
 				}
-			StreamWriter SW = new StreamWriter (FS, Encoding.Unicode);
+			StreamWriter SW = new StreamWriter (FS, RDGenerics.GetEncoding (SupportedEncodings.Unicode16));
 
 			for (int i = 0; i < skippingFonts.Count; i++)
 				SW.WriteLine (skippingFonts[i]);

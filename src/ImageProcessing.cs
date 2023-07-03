@@ -11,10 +11,12 @@ namespace RD_AAOW
 	public static class ImageProcessor
 		{
 		// Стили, замещающие текущий в случае его недоступности
-		private static FontStyle[] otherStyles = { FontStyle.Regular,
-											  FontStyle.Bold ,
-											  FontStyle.Italic,
-											  FontStyle.Bold | FontStyle.Italic };
+		private static FontStyle[] otherStyles = {
+			FontStyle.Regular,
+			FontStyle.Bold ,
+			FontStyle.Italic,
+			FontStyle.Bold | FontStyle.Italic
+			};
 
 		/// <summary>
 		/// Сравнивает два изображения и возвращает степень их совпадения
