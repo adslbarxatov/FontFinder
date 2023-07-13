@@ -1,5 +1,8 @@
 Font finder: changes log
 
+Version 3.3:
+• Rewritten settings operator: it should fix problems with requiring administrator rights
+
 Version 3.2.8:
 • Updated the interface of message boxes
 
