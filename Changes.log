@@ -1,5 +1,8 @@
 Font finder: changes log
 
+Version 3.2.8:
+• Updated the interface of message boxes
+
 Version 3.2.7:
 • Added UTF32 encoding;
 • Removed support for .skp file format;

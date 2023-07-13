@@ -14,9 +14,6 @@ namespace RD_AAOW
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = new List<string> ();
-
-		/*private string oldSkippingFontsListFile = RDGenerics.AppStartupPath +
-			ProgramDescription.AssemblyMainName + ".skp";*/
 		private string newSkippingFontsListFile = RDGenerics.AppStartupPath +
 			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
 
@@ -52,19 +49,6 @@ namespace RD_AAOW
 			ExistentFontsListBox.DisplayMember = ExistentFontsListBox.ValueMember = "Name";
 
 			// Загрузка файла
-			/*if (File.Exists (oldSkippingFontsListFile))
-				{
-				try
-					{
-					File.Move (oldSkippingFontsListFile, newSkippingFontsListFile);
-					}
-				catch
-					{
-					FillingRequired.Checked = true;
-					return;
-					}
-				}*/
-
 			FileStream FS = null;
 			try
 				{
@@ -165,7 +149,7 @@ namespace RD_AAOW
 		private void BClear_Click (object sender, EventArgs e)
 			{
 			// Контроль
-			if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "ClearSkippingFonts",
+			if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "ClearSkippingFonts",
 				LzDefaultTextValues.Button_YesNoFocus, LzDefaultTextValues.Button_No) !=
 				RDMessageButtons.ButtonOne)
 				return;
@@ -285,7 +269,7 @@ namespace RD_AAOW
 				}
 			catch
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "WrongFont");
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "WrongFont");
 				return;
 				}
 

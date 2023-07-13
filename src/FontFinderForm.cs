@@ -91,11 +91,11 @@ namespace RD_AAOW
 				switch (il.InitStatus)
 					{
 					case ImageLoaderStatuses.FileNotFound:
-						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "FileNotFound");
+						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "FileNotFound");
 						break;
 
 					case ImageLoaderStatuses.FileIsNotAnImage:
-						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "FileIsNotAnImage");
+						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "FileIsNotAnImage");
 						break;
 					}
 
@@ -110,13 +110,13 @@ namespace RD_AAOW
 
 			if (image == null)  // Не удалось найти границы
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "CannotFindText");
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "CannotFindText");
 				return;
 				}
 
 			// Обработка
 			if ((image.Width > LoadedPicture.Width) || (image.Height > LoadedPicture.Height))
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Information, "LargePicture");
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Information_Center, "LargePicture");
 
 			if (LoadedPicture.BackgroundImage != null)
 				LoadedPicture.BackgroundImage.Dispose ();
@@ -131,7 +131,7 @@ namespace RD_AAOW
 			{
 			if (LoadedPicText.Text == "")
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "SpecifyTextFromImage");
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "SpecifyTextFromImage");
 				return;
 				}
 
@@ -218,7 +218,7 @@ namespace RD_AAOW
 					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name +
 						", " + resultStyle.ToString ());
 
-					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question, "FinishSearch",
+					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question_Center, "FinishSearch",
 						LzDefaultTextValues.Button_Yes, LzDefaultTextValues.Button_No) == RDMessageButtons.ButtonOne)
 						{
 						e.Cancel = true;
@@ -297,7 +297,7 @@ namespace RD_AAOW
 			// Проверка на наличие текста
 			if (LoadedPicText.Text == "")
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning, "EmptyTextField");
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "EmptyTextField");
 				return;
 				}
 

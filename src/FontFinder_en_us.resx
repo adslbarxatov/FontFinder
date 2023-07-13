@@ -127,7 +127,7 @@
     <value>&amp;Italic</value>
   </data>
   <data name="ClearSkippingFonts" xml:space="preserve">
-    <value>Clear list of skipping fonts?</value>
+    <value>Clear the list of skipping fonts?</value>
   </data>
   <data name="CStrikeText" xml:space="preserve">
     <value>Striked &amp;out</value>
@@ -206,7 +206,7 @@ Search may be too long. Use “Cancel” button to finish it immediately and vie
     <value>Skipping fonts</value>
   </data>
   <data name="SpecifyTextFromImage" xml:space="preserve">
-    <value>Specify text from the sample image</value>
+    <value>Specify the text from the sample image</value>
   </data>
   <data name="StartSearchText" xml:space="preserve">
     <value>4. Begin &amp;search</value>

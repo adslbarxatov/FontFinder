@@ -1,4 +1,5 @@
-_Changes for v 3.2.7_:
+_Changes for v 3.2.8_:
+- Updated the interface of message boxes;
 - Added UTF32 encoding;
 - Removed support for `.skp` file format;
 - Windows: the interface was adapted to Windows 10, incorrect window borders were fixed;
