@@ -1,4 +1,4 @@
-_Changes for v 3.3_: 
+_Changes for v 3.3.1_:
 - Rewritten settings operator: it should fix problems with requiring administrator rights;
 - Updated the interface of message boxes;
 - Removed support for `.skp` file format;
