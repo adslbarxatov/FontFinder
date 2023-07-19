@@ -199,9 +199,6 @@ Search may be too long. Use “Cancel” button to finish it immediately and vie
   <data name="SelectImageText" xml:space="preserve">
     <value>1. Select &amp;picture of the font</value>
   </data>
-  <data name="ShowVideo" xml:space="preserve">
-    <value>Do you want to view user videoguide on our YouTube channel?</value>
-  </data>
   <data name="SkipListProcessorCaption" xml:space="preserve">
     <value>Skipping fonts</value>
   </data>

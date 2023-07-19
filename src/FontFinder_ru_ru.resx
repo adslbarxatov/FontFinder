@@ -199,9 +199,6 @@
   <data name="SelectImageText" xml:space="preserve">
     <value>1. Укажите &amp;изображение с образцом шрифта</value>
   </data>
-  <data name="ShowVideo" xml:space="preserve">
-    <value>Показать видеоруководство пользователя на нашем YouTube-канале?</value>
-  </data>
   <data name="SkipListProcessorCaption" xml:space="preserve">
     <value>Пропускаемые шрифты</value>
   </data>

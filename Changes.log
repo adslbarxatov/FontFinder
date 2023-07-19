@@ -1,5 +1,10 @@
 Font finder: changes log
 
+Version 3.3.3:
+• Implemented the access rights checker: it will test the availability of the Windows registry
+  and the application placements for writing and notify user about possible problems;
+• Updated the storage method of text tips
+
 Version 3.3.1:
 • Rewritten settings operator: it should fix problems with requiring administrator rights
 

@@ -67,6 +67,13 @@ namespace RD_AAOW
 				{
 				LanguageCombo.SelectedIndex = 0;
 				}
+
+			// Контроль прав
+			if (!RDGenerics.IsStartupPathAccessible)
+				{
+				BSkipping.Enabled = false;
+				this.Text += Localization.GetDefaultText (LzDefaultTextValues.Message_LimitedFunctionality);
+				}
 			}
 
 		// Выбор изображения
