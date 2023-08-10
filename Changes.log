@@ -1,7 +1,8 @@
 Font finder: changes log
 
-ToDo:
-- Add infopage
+Version 3.3.5:
+• Fixed some text messages;
+• Updated the user guide
 
 Version 3.3.3:
 • Implemented the access rights checker: it will test the availability of the Windows registry

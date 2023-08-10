@@ -98,7 +98,9 @@ namespace RD_AAOW
 				switch (il.InitStatus)
 					{
 					case ImageLoaderStatuses.FileNotFound:
-						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "FileNotFound");
+						RDGenerics.MessageBox (RDMessageTypes.Warning_Center,
+							Localization.GetFileProcessingMessage (OpenImage.FileName,
+							LzFileProcessingMessageTypes.Load_Failure));
 						break;
 
 					case ImageLoaderStatuses.FileIsNotAnImage:

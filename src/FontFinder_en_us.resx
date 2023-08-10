@@ -141,9 +141,6 @@
   <data name="FileIsNotAnImage" xml:space="preserve">
     <value>Specified file is not a valid image</value>
   </data>
-  <data name="FileNotFound" xml:space="preserve">
-    <value>Specified file is unavailable for opening</value>
-  </data>
   <data name="FinishSearch" xml:space="preserve">
     <value>Finish the search?</value>
   </data>
@@ -155,15 +152,14 @@ Cropped image will be shown in the field below the image selection button.
 
 2. It is necessary to specify the text from the picture (it’s case sensitive). This version of application allows non-empty text strings no longer than 50 characters.
 
-3. In some cases these parameters may significantly change results of search. Specify them if you haven’t received needed fonts.
+3. In some cases the font parameters may significantly change results of search. Specify them if you haven’t received needed results.
 
-4. If you want to pause search when you get the specified percentage of similarity (between 50 and 99).
-'Search' button starts fonts matching with sample image.
+4. 4. You can use the stop factor if you want to pause search when you get the specified percentage of similarity (between 50 and 99). The “Search” button starts fonts matching with the sample image.
 
-5. After search complete you’ll get a list of most matching fonts (not more than 100). By clicking you can see specified text in selected font and style.
+5. After search complete you’ll get a list of most matching fonts (not more than 100). By clicking you can see the specified text in selected font and style.
 Search may be too long. Use “Cancel” button to finish it immediately and view current results.
 
-6. Application will add fonts that give the same comparison results to skipping list. It will increase search speed. You can change it manually if needed or turn off using corresponding flag</value>
+6. Application will add fonts that give the same comparison results to the skipping list. It will increase the search speed. You can change it manually if needed or turn off using corresponding flag</value>
   </data>
   <data name="Label02Text" xml:space="preserve">
     <value>2. Specify text from the picture:</value>

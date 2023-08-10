@@ -1,27 +1,14 @@
-# FontFinder v 3.3.3
-> PCC: 00049FCDB6B62534
+# FontFinder v 3.3.5
+> PCC: 00049DCD401F1F3C
 
 
-A tool to search for a font by its image
+A tool to search for a font by its image.
+Detailed description of the app is now available on [its own page](https://adslbarxatov.github.io/FontFinder)
 
-Инструмент для поиска шрифта по его изображению
+---
 
-
-#
-
-This tool allows you to find the name / family of a font by its image. You only need to provide a sample
-font in the picture (high contrast, target letters only) and specify the text in the picture.
-The application allows you to set font search parameters and a break condition (match percentage).
-
-Warning! The tool only works with fonts installed on your operating system
-
-#
-
-Этот инструмент позволяет найти название/семейство шрифта по его изображению. Вам нужно только
-представить образец шрифта на картинке (высококонтрастный, только целевые буквы) и указать текст на картинке.
-Приложение позволяет задать параметры поиска шрифта и условие прерывания (процент совпадения).
-
-Предупреждение! Инструмент работает только со шрифтами, установленными в вашей операционной системе
+Инструмент для поиска шрифта по его изображению.
+Подробное описание приложения теперь доступно на [отдельной странице](https://adslbarxatov.github.io/FontFinder/ru)
 
 &nbsp;
 

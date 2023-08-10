@@ -141,9 +141,6 @@
   <data name="FileIsNotAnImage" xml:space="preserve">
     <value>Указанный файл не является допустимым изображением</value>
   </data>
-  <data name="FileNotFound" xml:space="preserve">
-    <value>Указанный файл не найден или недоступен</value>
-  </data>
   <data name="FinishSearch" xml:space="preserve">
     <value>Завершить поиск?</value>
   </data>
