@@ -1,5 +1,5 @@
-# FontFinder v 3.3.5
-> PCC: 00049DCD401F1F3C
+# FontFinder v 3.3.7
+> PCC: 00047BCD182D43A2
 
 
 A tool to search for a font by its image.

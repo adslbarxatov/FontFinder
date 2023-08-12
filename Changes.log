@@ -1,5 +1,8 @@
 Font finder: changes log
 
+Version 3.3.7:
+• Fixed some issues with the Policy loader where it would sometimes ask for multiple confirmations
+
 Version 3.3.5:
 • Fixed some text messages;
 • Updated the user guide
