@@ -1,5 +1,8 @@
 Font finder: changes log
 
+Version 3.3.8:
+• Added the obvious URLs for videoguide and for text guide
+
 Version 3.3.7:
 • Fixed some issues with the Policy loader where it would sometimes ask for multiple confirmations
 
