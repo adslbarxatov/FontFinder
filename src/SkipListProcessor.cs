@@ -83,7 +83,7 @@ namespace RD_AAOW
 
 			// Настройка
 			this.Text = Localization.GetText ("SkipListProcessorCaption");
-			BExit.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_Exit);
+			BExit.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_Close);
 			FillingRequired.Text = Localization.GetText ("FillingRequiredText");
 			ExistentLabel.Text = string.Format (Localization.GetText ("ExistentLabelText"),
 				ExistentFontsListBox.Items.Count);
