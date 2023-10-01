@@ -1,4 +1,3 @@
-_Changes for v 3.3.9_:
-- New identity has been applied;
-- Added the obvious URLs for videoguide and for text guide;
-- Updated the user guide
+_Changes for v 3.3.11_:
+- Updates and fixes have been applied to the update polling mechanism, as well as to other auxiliary functions;
+- New identity has been applied
