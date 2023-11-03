@@ -1,14 +1,18 @@
-# FontFinder v 3.3.11
-> PCC: 0004AAE939AED6DA
+# FontFinder
+
+## Description
+
+A tool for finding a font by its image.
+Detailed description of the app is available on [its own page](https://adslbarxatov.github.io/FontFinder)
+
+&nbsp;
 
 
-A tool to search for a font by its image.
-Detailed description of the app is now available on [its own page](https://adslbarxatov.github.io/FontFinder)
 
----
+## Описание
 
 Инструмент для поиска шрифта по его изображению.
-Подробное описание приложения теперь доступно на [отдельной странице](https://adslbarxatov.github.io/FontFinder/ru)
+Подробное описание приложения доступно на [отдельной странице](https://adslbarxatov.github.io/FontFinder/ru)
 
 &nbsp;
 

@@ -368,6 +368,7 @@ namespace RD_AAOW
 			BExit.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_Exit);
 			Label06.Text = Localization.GetText ("Label06Text");
 			BSkipping.Text = Localization.GetText ("BSkippingText");
+			Q5.Text = Localization.GetDefaultText (LzDefaultTextValues.Control_AppAbout);
 			}
 
 		// Работа с пропущенными шрифтами
