@@ -1,5 +1,5 @@
 # Font finder: user guide
-> **ƒ** &nbsp;RD AAOW FDL; 11.08.2023; 0:33
+> **ƒ** &nbsp;RD AAOW FDL; 27.11.2023; 2:33
 
 
 
