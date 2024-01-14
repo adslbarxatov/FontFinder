@@ -59,7 +59,7 @@ namespace RD_AAOW
 				FillingRequired.Checked = true;
 				return;
 				}
-			StreamReader SR = new StreamReader (FS, RDGenerics.GetEncoding (SupportedEncodings.Unicode16));
+			StreamReader SR = new StreamReader (FS, RDGenerics.GetEncoding (RDEncodings.Unicode16));
 
 			while (!SR.EndOfStream)
 				skippingFonts.Add (SR.ReadLine ());
@@ -79,19 +79,19 @@ namespace RD_AAOW
 			if (!string.IsNullOrWhiteSpace (SampleText))
 				sampleText = SampleText;
 			else
-				sampleText = Localization.GetText ("SampleText");
+				sampleText = RDLocale.GetText ("SampleText");
 
 			// Настройка
-			this.Text = Localization.GetText ("SkipListProcessorCaption");
-			BExit.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_Close);
-			FillingRequired.Text = Localization.GetText ("FillingRequiredText");
-			ExistentLabel.Text = string.Format (Localization.GetText ("ExistentLabelText"),
+			this.Text = RDLocale.GetText ("SkipListProcessorCaption");
+			BExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Close);
+			FillingRequired.Text = RDLocale.GetText ("FillingRequiredText");
+			ExistentLabel.Text = string.Format (RDLocale.GetText ("ExistentLabelText"),
 				ExistentFontsListBox.Items.Count);
 
 			// Запуск
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+			SkippingLabel.Text = string.Format (RDLocale.GetText ("SkippingLabelText"),
 				SkippingFontsListBox.Items.Count);
 
 			this.ShowDialog ();
@@ -114,7 +114,7 @@ namespace RD_AAOW
 			// Передача в списки
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+			SkippingLabel.Text = string.Format (RDLocale.GetText ("SkippingLabelText"),
 				SkippingFontsListBox.Items.Count);
 
 			changed = true;
@@ -139,7 +139,7 @@ namespace RD_AAOW
 			// Обновление списков
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+			SkippingLabel.Text = string.Format (RDLocale.GetText ("SkippingLabelText"),
 				SkippingFontsListBox.Items.Count);
 
 			changed = true;
@@ -150,7 +150,7 @@ namespace RD_AAOW
 			{
 			// Контроль
 			if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "ClearSkippingFonts",
-				LzDefaultTextValues.Button_YesNoFocus, LzDefaultTextValues.Button_No) !=
+				RDLDefaultTexts.Button_YesNoFocus, RDLDefaultTexts.Button_No) !=
 				RDMessageButtons.ButtonOne)
 				return;
 
@@ -160,7 +160,7 @@ namespace RD_AAOW
 			// Обновление
 			SkippingFontsListBox.DataSource = null;
 			SkippingFontsListBox.DataSource = skippingFonts;
-			SkippingLabel.Text = string.Format (Localization.GetText ("SkippingLabelText"),
+			SkippingLabel.Text = string.Format (RDLocale.GetText ("SkippingLabelText"),
 				SkippingFontsListBox.Items.Count);
 
 			changed = true;
@@ -185,7 +185,7 @@ namespace RD_AAOW
 				{
 				return;
 				}
-			StreamWriter SW = new StreamWriter (FS, RDGenerics.GetEncoding (SupportedEncodings.Unicode16));
+			StreamWriter SW = new StreamWriter (FS, RDGenerics.GetEncoding (RDEncodings.Unicode16));
 
 			for (int i = 0; i < skippingFonts.Count; i++)
 				SW.WriteLine (skippingFonts[i]);

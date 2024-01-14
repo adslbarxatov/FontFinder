@@ -396,6 +396,18 @@ lb:
 		/// или null, если границы найти не удалось</returns>
 		public Bitmap GetBlackArea ()
 			{
+			return GetBlackArea (0, 0);
+			}
+
+		/// <summary>
+		/// Возвращает часть исходного изображения, содержащую контрастный объект
+		/// </summary>
+		/// <returns>Изображение, обрезанное до границ контрастного объекта,
+		/// или null, если границы найти не удалось.
+		/// Если параметры Width и Height не равны нулю, исходное изображение
+		/// будет изменено таким образом, чтобы вписаться в оба значения</returns>
+		public Bitmap GetBlackArea (uint Width, uint Height)
+			{
 			// Контроль
 			if (status != ImageLoaderStatuses.Ok)
 				return null;
@@ -405,7 +417,52 @@ lb:
 			if (borders == Rectangle.Empty)
 				return null;
 
-			// Возврат
+			// Обрезка по контрастному объекту
+			Bitmap image2 = image.Clone (borders, PixelFormat.Format1bppIndexed);
+			image.Dispose ();
+
+			// Подгонка размера
+			if (Width * Height != 0)
+				{
+				int w = image2.Width;
+				int h = image2.Height;
+				int origW = (int)Width;
+				int origH = (int)Height;
+				double dw = 1.0;
+				double dh = 1.0;
+				bool changed = false;
+
+				// Расчёт масштабов
+				if (origH < image2.Height)
+					{
+					dh = (double)image2.Height / (double)origH;
+					changed = true;
+					}
+
+				if (origW < image2.Width)
+					{
+					dw = (double)image2.Width / (double)origW;
+					changed = true;
+					}
+
+				// Изменение размера
+				if (changed)
+					{
+					double d = Math.Max (dw, dh);
+
+					Bitmap image3 = new Bitmap (image2, (int)(w / d), (int)(h / d));
+					image2.Dispose ();
+
+					image2 = (Bitmap)image3.Clone ();
+					image3.Dispose ();
+					}
+				}
+
+			// Повторная монохромизация
+			image = (Bitmap)image2.Clone ();
+			image2.Dispose ();
+
+			borders = new Rectangle (0, 0, image.Width, image.Height);
 			return image.Clone (borders, PixelFormat.Format1bppIndexed);
 			}
 

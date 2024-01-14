@@ -58,10 +58,10 @@ namespace RD_AAOW
 			SearchPauseFactor.Minimum = MinValidationLimit;
 			SearchPauseFactor.Maximum = MaxValidationLimit;
 
-			LanguageCombo.Items.AddRange (Localization.LanguagesNames);
+			LanguageCombo.Items.AddRange (RDLocale.LanguagesNames);
 			try
 				{
-				LanguageCombo.SelectedIndex = (int)Localization.CurrentLanguage;
+				LanguageCombo.SelectedIndex = (int)RDLocale.CurrentLanguage;
 				}
 			catch
 				{
@@ -72,7 +72,7 @@ namespace RD_AAOW
 			if (!RDGenerics.IsStartupPathAccessible)
 				{
 				BSkipping.Enabled = false;
-				this.Text += Localization.GetDefaultText (LzDefaultTextValues.Message_LimitedFunctionality);
+				this.Text += RDLocale.GetDefaultText (RDLDefaultTexts.Message_LimitedFunctionality);
 				}
 			}
 
@@ -99,8 +99,10 @@ namespace RD_AAOW
 					{
 					case ImageLoaderStatuses.FileNotFound:
 						RDGenerics.MessageBox (RDMessageTypes.Warning_Center,
-							Localization.GetFileProcessingMessage (OpenImage.FileName,
-							LzFileProcessingMessageTypes.Load_Failure));
+							/*Localization.GetFileProcessingMessage (OpenImage.FileName,
+							LzFileProcessingMessageTypes.Load_Failure)*/
+							string.Format (RDLocale.GetDefaultText (RDLDefaultTexts.Message_LoadFailure_Fmt),
+							OpenImage.FileName));
 						break;
 
 					case ImageLoaderStatuses.FileIsNotAnImage:
@@ -114,7 +116,7 @@ namespace RD_AAOW
 			// Получение изображения и контроль
 			if (image != null)
 				image.Dispose ();
-			image = il.GetBlackArea ();
+			image = il.GetBlackArea ((uint)LoadedPicture.Width, (uint)LoadedPicture.Height);
 			il.Dispose ();
 
 			if (image == null)  // Не удалось найти границы
@@ -124,8 +126,8 @@ namespace RD_AAOW
 				}
 
 			// Обработка
-			if ((image.Width > LoadedPicture.Width) || (image.Height > LoadedPicture.Height))
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Information_Center, "LargePicture");
+			/*if ((image.Width > LoadedPicture.Width) || (image.Height > LoadedPicture.Height))
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Information_Center, "LargePicture");*/
 
 			if (LoadedPicture.BackgroundImage != null)
 				LoadedPicture.BackgroundImage.Dispose ();
@@ -165,7 +167,9 @@ namespace RD_AAOW
 			foundFFMatch.Clear ();
 
 			// Запуск потока поиска и ожидание его завершения
-			HardWorkExecutor hwe = new HardWorkExecutor (Search, null, " ", false, true);
+			/*HardWorkExecutor hwe = new HardWorkExecutor (Search, null, " ", false, true);
+			*/
+			RDGenerics.RunWork (Search, null, null, RDRunWorkFlags.AllowOperationAbort);
 			slp.FinishFilling ();
 
 			// Деблокировка окна
@@ -228,7 +232,7 @@ namespace RD_AAOW
 						", " + resultStyle.ToString ());
 
 					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question_Center, "FinishSearch",
-						LzDefaultTextValues.Button_Yes, LzDefaultTextValues.Button_No) == RDMessageButtons.ButtonOne)
+						RDLDefaultTexts.Button_Yes, RDLDefaultTexts.Button_No) == RDMessageButtons.ButtonOne)
 						{
 						e.Cancel = true;
 						}
@@ -259,11 +263,11 @@ namespace RD_AAOW
 				if (maxRes < res)
 					maxRes = res;
 
-				string msg = string.Format (Localization.GetText ("ProcessingMessage"), i, slp.ExistentFonts.Length,
+				string msg = string.Format (RDLocale.GetText ("ProcessingMessage"), i, slp.ExistentFonts.Length,
 					slp.ExistentFonts[i].Name);
 				if (resultStyle != searchFontStyle)
-					msg += string.Format (Localization.GetText ("ProcessingStyle"), resultStyle.ToString ());
-				msg += string.Format (Localization.GetText ("SkippingFontsCountAndPercentage"),
+					msg += string.Format (RDLocale.GetText ("ProcessingStyle"), resultStyle.ToString ());
+				msg += string.Format (RDLocale.GetText ("SkippingFontsCountAndPercentage"),
 					slp.SkippingFontsCount, maxRes.ToString ("F2"));
 
 				((BackgroundWorker)sender).ReportProgress ((int)(HardWorkExecutor.ProgressBarSize *
@@ -347,28 +351,28 @@ namespace RD_AAOW
 		private void LanguageCombo_SelectedIndexChanged (object sender, EventArgs e)
 			{
 			// Сохранение языка
-			Localization.CurrentLanguage = (SupportedLanguages)LanguageCombo.SelectedIndex;
+			RDLocale.CurrentLanguage = (RDLanguages)LanguageCombo.SelectedIndex;
 
 			// Локализация
-			OpenImage.Filter = Localization.GetText ("OpenImageFilter") +
+			OpenImage.Filter = RDLocale.GetText ("OpenImageFilter") +
 				" (*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|" +
 				"*.bmp;*.gif;*.jpe;*.jpeg;*.jpg;*.jfif;*.png";
-			OpenImage.Title = Localization.GetText ("OpenImageTitle");
+			OpenImage.Title = RDLocale.GetText ("OpenImageTitle");
 
-			SelectImage.Text = Localization.GetText ("SelectImageText");
-			Label02.Text = Localization.GetText ("Label02Text");
-			Label03.Text = Localization.GetText ("Label03Text");
-			CBold.Text = Localization.GetText ("CBoldText");
-			CItalic.Text = Localization.GetText ("CItalicText");
-			CUnder.Text = Localization.GetText ("CUnderText");
-			CStrike.Text = Localization.GetText ("CStrikeText");
-			PauseSearch.Text = Localization.GetText ("PauseSearchText");
-			StartSearch.Text = Localization.GetText ("StartSearchText");
-			Label05.Text = Localization.GetText ("Label05Text");
-			BExit.Text = Localization.GetDefaultText (LzDefaultTextValues.Button_Exit);
-			Label06.Text = Localization.GetText ("Label06Text");
-			BSkipping.Text = Localization.GetText ("BSkippingText");
-			Q5.Text = Localization.GetDefaultText (LzDefaultTextValues.Control_AppAbout);
+			SelectImage.Text = RDLocale.GetText ("SelectImageText");
+			Label02.Text = RDLocale.GetText ("Label02Text");
+			Label03.Text = RDLocale.GetText ("Label03Text");
+			CBold.Text = RDLocale.GetText ("CBoldText");
+			CItalic.Text = RDLocale.GetText ("CItalicText");
+			CUnder.Text = RDLocale.GetText ("CUnderText");
+			CStrike.Text = RDLocale.GetText ("CStrikeText");
+			PauseSearch.Text = RDLocale.GetText ("PauseSearchText");
+			StartSearch.Text = RDLocale.GetText ("StartSearchText");
+			Label05.Text = RDLocale.GetText ("Label05Text");
+			BExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Exit);
+			Label06.Text = RDLocale.GetText ("Label06Text");
+			BSkipping.Text = RDLocale.GetText ("BSkippingText");
+			Q5.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Control_AppAbout);
 			}
 
 		// Работа с пропущенными шрифтами
