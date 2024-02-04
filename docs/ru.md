@@ -1,5 +1,5 @@
 # Font finder: руководство пользователя
-> **ƒ** &nbsp;RD AAOW FDL; 11.08.2023; 0:34
+> **ƒ** &nbsp;RD AAOW FDL; 4.02.2024; 18:53
 
 
 
@@ -7,7 +7,7 @@
 
 - [Общие сведения](#section-1)
 - [Ссылки для загрузки](https://adslbarxatov.github.io/DPArray/ru#font-finder)
-- [Видеоруководство](https://youtube.com/watch?v=zK-6pfEMCbA)
+- [Видеоруководство](https://youtube.com/watch?v=n2DNUsWvfpQ)
 - [English version](https://adslbarxatov.github.io/FontFinder)
 
 ---
