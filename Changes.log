@@ -1,5 +1,8 @@
 Font finder: changes log
 
+Version 3.4.2:
+• Added localized videoguides
+
 Version 3.4:
 • App now resizes the original image by itself to fit the control window
   and increase the speed of search;

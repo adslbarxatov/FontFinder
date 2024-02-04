@@ -191,7 +191,7 @@
     <value>Specified font is unavailable</value>
   </data>
   <data name="FillingRequiredText" xml:space="preserve">
-    <value>Filling required</value>
+    <value>Add a new search to the list</value>
   </data>
   <data name="SkippingFontsCountAndPercentage" xml:space="preserve">
     <value>

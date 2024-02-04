@@ -191,7 +191,7 @@
     <value>Выбранный шрифт недоступен</value>
   </data>
   <data name="FillingRequiredText" xml:space="preserve">
-    <value>Требуется заполнение</value>
+    <value>Дополнить список новым поиском</value>
   </data>
   <data name="SkippingFontsCountAndPercentage" xml:space="preserve">
     <value>
