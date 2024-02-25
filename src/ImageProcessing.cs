@@ -203,6 +203,7 @@ namespace RD_AAOW
 
 			// Отрисовка текста
 			g.DrawString (Text, UsedFont, blackBrush, (image.Width - sz.Width) / 2, (image.Height - sz.Height) / 2);
+			g.Dispose ();
 
 			// Обрезка изображения
 			ImageLoader il = new ImageLoader (image);
@@ -211,7 +212,6 @@ namespace RD_AAOW
 
 			// Очистка памяти
 			il.Dispose ();
-			g.Dispose ();
 			}
 
 		/// <summary>
@@ -337,9 +337,9 @@ namespace RD_AAOW
 						goto ll;
 					}
 				}
-ll:
+			ll:
 
-// Эта ситуация возможна лишь при полностью белом рисунке
+			// Эта ситуация возможна лишь при полностью белом рисунке
 			if (x == image.Width)
 				return new Rectangle ();
 
@@ -358,7 +358,7 @@ ll:
 					}
 				}
 
-lr:
+			lr:
 			r.Width = x + 1 - r.X;
 
 			// Верхняя
@@ -370,7 +370,7 @@ lr:
 						goto lt;
 					}
 				}
-lt:
+			lt:
 			r.Y = y;
 
 			// Нижняя
@@ -382,7 +382,7 @@ lt:
 						goto lb;
 					}
 				}
-lb:
+			lb:
 			r.Height = y + 1 - r.Y;
 
 			// Готово

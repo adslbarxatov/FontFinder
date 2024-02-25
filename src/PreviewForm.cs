@@ -34,7 +34,7 @@ namespace RD_AAOW
 			this.Close ();
 			}
 
-		// Изменение размера формы
+		/* Изменение размера формы
 		private void PreviewForm_Resize (object sender, EventArgs e)
 			{
 			FClose.Top = this.Height - 62;
@@ -42,6 +42,6 @@ namespace RD_AAOW
 
 			ViewBox.Width = this.Width - 30;
 			ViewBox.Height = this.Height - 80;
-			}
+			}*/
 		}
 	}

@@ -1,5 +1,9 @@
 Font finder: changes log
 
+Version 3.4.5:
+• Removed some unreliable memory operations;
+• Fixed some interface bugs
+
 Version 3.4.2:
 • Added localized videoguides
 

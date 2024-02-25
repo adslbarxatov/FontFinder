@@ -14,8 +14,10 @@ namespace RD_AAOW
 		// Исходное изображение
 		private Bitmap image = null;
 
-		// Текст на нём
+		// Интерфейсные параметры, передаваемые в поисковый процесс
 		private string imageText = "";
+		private double searchPauseFactor = 90.0;
+		private bool pauseSearch = false;
 
 		// Найденные шрифты
 		private List<FontFamily> foundFF = new List<FontFamily> ();
@@ -26,9 +28,6 @@ namespace RD_AAOW
 		// Стиль шрифта для поиска
 		private FontStyle searchFontStyle = FontStyle.Regular;
 		private SkipListProcessor slp = new SkipListProcessor ();
-
-		// Порог срабатывания правила приостановки поиска
-		private double searchPauseFactor = 90.0;
 
 		// Максимальная длина строки для сравнения
 		private const uint MaxSearchStringLength = 50;
@@ -99,8 +98,6 @@ namespace RD_AAOW
 					{
 					case ImageLoaderStatuses.FileNotFound:
 						RDGenerics.MessageBox (RDMessageTypes.Warning_Center,
-							/*Localization.GetFileProcessingMessage (OpenImage.FileName,
-							LzFileProcessingMessageTypes.Load_Failure)*/
 							string.Format (RDLocale.GetDefaultText (RDLDefaultTexts.Message_LoadFailure_Fmt),
 							OpenImage.FileName));
 						break;
@@ -126,9 +123,6 @@ namespace RD_AAOW
 				}
 
 			// Обработка
-			/*if ((image.Width > LoadedPicture.Width) || (image.Height > LoadedPicture.Height))
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Information_Center, "LargePicture");*/
-
 			if (LoadedPicture.BackgroundImage != null)
 				LoadedPicture.BackgroundImage.Dispose ();
 			LoadedPicture.BackgroundImage = (Bitmap)image.Clone ();
@@ -140,7 +134,7 @@ namespace RD_AAOW
 		// Запуск поиска
 		private void StartSearch_Click (object sender, EventArgs e)
 			{
-			if (LoadedPicText.Text == "")
+			if (string.IsNullOrWhiteSpace (LoadedPicText.Text))
 				{
 				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "SpecifyTextFromImage");
 				return;
@@ -156,6 +150,7 @@ namespace RD_AAOW
 			// Считывание параметров поиска
 			imageText = LoadedPicText.Text;
 			searchPauseFactor = (double)SearchPauseFactor.Value;
+			pauseSearch = PauseSearch.Checked;
 
 			// Настройка стиля поиска
 			CBold_CheckedChanged (null, null);
@@ -167,8 +162,6 @@ namespace RD_AAOW
 			foundFFMatch.Clear ();
 
 			// Запуск потока поиска и ожидание его завершения
-			/*HardWorkExecutor hwe = new HardWorkExecutor (Search, null, " ", false, true);
-			*/
 			RDGenerics.RunWork (Search, null, null, RDRunWorkFlags.AllowOperationAbort);
 			slp.FinishFilling ();
 
@@ -191,6 +184,7 @@ namespace RD_AAOW
 			{
 			// Переменные
 			Bitmap createdImage;
+			BackgroundWorker bw = ((BackgroundWorker)sender);
 
 			// Поиск
 			double maxRes = 0;
@@ -203,9 +197,20 @@ namespace RD_AAOW
 				// Создание изображения с выбранным шрифтом
 				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, slp.ExistentFonts[i],
 					image.Height, searchFontStyle, CUnder.Checked, CStrike.Checked, out createdImage);
+
+				// Отображение прогресса
+				string msg = string.Format (RDLocale.GetText ("ProcessingMessage"), i, slp.ExistentFonts.Length,
+					slp.ExistentFonts[i].Name);
+				if (resultStyle != searchFontStyle)
+					msg += string.Format (RDLocale.GetText ("ProcessingStyle"), resultStyle.ToString ());
+				msg += string.Format (RDLocale.GetText ("SkippingFontsCountAndPercentage"),
+					slp.SkippingFontsCount, maxRes.ToString ("F2"));
+
+				bw.ReportProgress ((int)(HardWorkExecutor.ProgressBarSize * i / slp.ExistentFonts.Length), msg);
+
+				// Защита
 				if (createdImage == null)
 					continue;
-				// Здесь шрифты не пропускаем, т.к. есть шрифты, где лишь некоторые символы дают такой результат
 
 				// Сравнение
 				double res = 0;
@@ -226,7 +231,7 @@ namespace RD_AAOW
 					}
 
 				// Запрос на прерывание поиска
-				if (PauseSearch.Checked && (res >= searchPauseFactor))
+				if (pauseSearch /*PauseSearch.Checked*/ && (res >= searchPauseFactor))
 					{
 					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name +
 						", " + resultStyle.ToString ());
@@ -259,22 +264,12 @@ namespace RD_AAOW
 				// Очистка памяти
 				createdImage.Dispose ();
 
-				// Возврат прогресса
+				// Обновление максимума
 				if (maxRes < res)
 					maxRes = res;
 
-				string msg = string.Format (RDLocale.GetText ("ProcessingMessage"), i, slp.ExistentFonts.Length,
-					slp.ExistentFonts[i].Name);
-				if (resultStyle != searchFontStyle)
-					msg += string.Format (RDLocale.GetText ("ProcessingStyle"), resultStyle.ToString ());
-				msg += string.Format (RDLocale.GetText ("SkippingFontsCountAndPercentage"),
-					slp.SkippingFontsCount, maxRes.ToString ("F2"));
-
-				((BackgroundWorker)sender).ReportProgress ((int)(HardWorkExecutor.ProgressBarSize *
-					i / slp.ExistentFonts.Length), msg);
-
 				// Завершение работы, если получено требование от диалога
-				if (((BackgroundWorker)sender).CancellationPending || e.Cancel)
+				if (bw.CancellationPending || e.Cancel)
 					{
 					e.Cancel = true;
 					return;
