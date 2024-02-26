@@ -1,5 +1,8 @@
 Font finder: changes log
 
+ToDo:
+- Segment comparator
+
 Version 3.4.5:
 • Removed some unreliable memory operations;
 • Fixed some interface bugs
