@@ -1,7 +1,8 @@
 Font finder: changes log
 
 ToDo:
-- Segment comparator
+- Segment comparator;
+- Left alignment for warning messages
 
 Version 3.4.5:
 • Removed some unreliable memory operations;
