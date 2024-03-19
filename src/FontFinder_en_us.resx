@@ -136,7 +136,7 @@
     <value>&amp;Underlined</value>
   </data>
   <data name="EmptyTextField" xml:space="preserve">
-    <value>Text field should not be empty. Enter text to view the font</value>
+    <value>The text field should not be empty. Enter some text to view the font</value>
   </data>
   <data name="FileIsNotAnImage" xml:space="preserve">
     <value>Specified file is not a valid image</value>

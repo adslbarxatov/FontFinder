@@ -1,8 +1,11 @@
 Font finder: changes log
 
 ToDo:
-- Segment comparator;
-- Left alignment for warning messages
+- Segment comparator
+
+Version 3.4.6:
+• Update for XPUN has been applied;
+• Fixed the alignment of some warnings
 
 Version 3.4.5:
 • Removed some unreliable memory operations;

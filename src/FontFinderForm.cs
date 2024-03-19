@@ -97,7 +97,7 @@ namespace RD_AAOW
 				switch (il.InitStatus)
 					{
 					case ImageLoaderStatuses.FileNotFound:
-						RDGenerics.MessageBox (RDMessageTypes.Warning_Center,
+						RDGenerics.MessageBox (RDMessageTypes.Warning_Left,
 							string.Format (RDLocale.GetDefaultText (RDLDefaultTexts.Message_LoadFailure_Fmt),
 							OpenImage.FileName));
 						break;
@@ -118,7 +118,7 @@ namespace RD_AAOW
 
 			if (image == null)  // Не удалось найти границы
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "CannotFindText");
+				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Left, "CannotFindText");
 				return;
 				}
 

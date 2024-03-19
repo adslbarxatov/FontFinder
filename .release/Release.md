@@ -1,4 +1,6 @@
-_Changes for v 3.4.5_:
+_Changes for v 3.4.6_:
+- Update for XPUN has been applied;
+- Fixed the alignment of some warnings;
 - Removed some unreliable memory operations;
 - Fixed some interface bugs;
 - Added localized videoguides;
