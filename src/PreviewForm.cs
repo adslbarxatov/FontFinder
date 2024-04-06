@@ -33,15 +33,5 @@ namespace RD_AAOW
 			{
 			this.Close ();
 			}
-
-		/* Изменение размера формы
-		private void PreviewForm_Resize (object sender, EventArgs e)
-			{
-			FClose.Top = this.Height - 62;
-			FClose.Left = (this.Width - FClose.Width) / 2;
-
-			ViewBox.Width = this.Width - 30;
-			ViewBox.Height = this.Height - 80;
-			}*/
 		}
 	}

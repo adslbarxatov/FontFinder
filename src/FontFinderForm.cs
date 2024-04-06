@@ -231,7 +231,7 @@ namespace RD_AAOW
 					}
 
 				// Запрос на прерывание поиска
-				if (pauseSearch /*PauseSearch.Checked*/ && (res >= searchPauseFactor))
+				if (pauseSearch && (res >= searchPauseFactor))
 					{
 					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name +
 						", " + resultStyle.ToString ());
