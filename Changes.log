@@ -1,5 +1,8 @@
 Font finder: changes log
 
+ToDo:
+- Разблокировать пропуск шрифтов для MS Store
+
 Version 3.5.1:
 • The application has been retargeted to .NET Framework 4.8.1
 
