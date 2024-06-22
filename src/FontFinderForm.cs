@@ -68,7 +68,6 @@ namespace RD_AAOW
 				}
 
 			// Контроль прав
-			/*if (!RDGenerics.IsStartupPathAccessible)*/
 			if (!RDGenerics.AppHasAccessRights (false, false))
 				{
 				BSkipping.Enabled = false;
