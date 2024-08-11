@@ -1,5 +1,9 @@
 Font finder: changes log
 
+Version 3.5.9:
+• The “App about” interface has been updated;
+• The font skipping interface is now able to remember its position
+
 Version 3.5.8:
 • Unlocked the access to font skipping for MS Store;
 • XPUN update has been applied

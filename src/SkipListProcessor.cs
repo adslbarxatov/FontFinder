@@ -39,6 +39,7 @@ namespace RD_AAOW
 			{
 			// Инициализация
 			InitializeComponent ();
+			RDGenerics.LoadWindowDimensions (this);
 
 			// Получение списка шрифтов системы
 			InstalledFontCollection ifc = new InstalledFontCollection ();
@@ -124,6 +125,11 @@ namespace RD_AAOW
 		private void BExit_Click (object sender, EventArgs e)
 			{
 			this.Close ();
+			}
+
+		private void SkipListProcessor_FormClosing (object sender, FormClosingEventArgs e)
+			{
+			RDGenerics.SaveWindowDimensions (this);
 			}
 
 		// Удаление шрифта
