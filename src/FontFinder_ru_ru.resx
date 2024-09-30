@@ -215,4 +215,7 @@
 
 Увеличьте контраст и повторите попытку</value>
   </data>
+  <data name="BClear" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
 </root>

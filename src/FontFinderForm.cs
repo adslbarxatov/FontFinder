@@ -188,25 +188,27 @@ namespace RD_AAOW
 
 			// Поиск
 			double maxRes = 0;
-			for (int i = 0; i < slp.ExistentFonts.Length; i++)
+			int length = slp.ExistingFonts.Length;
+			for (int i = 0; i < length; i++)
 				{
 				// Проверка на пропуск
-				if (slp.FontMustBeSkipped (slp.ExistentFonts[i].Name))
+				string name = slp.ExistingFonts[i].Name;
+				if (slp.FontMustBeSkipped (name))
 					continue;
 
 				// Создание изображения с выбранным шрифтом
-				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, slp.ExistentFonts[i],
+				FontStyle resultStyle = ImageProcessor.CreateBitmapFromFont (imageText, slp.ExistingFonts[i],
 					image.Height, searchFontStyle, CUnder.Checked, CStrike.Checked, out createdImage);
 
 				// Отображение прогресса
-				string msg = string.Format (RDLocale.GetText ("ProcessingMessage"), i, slp.ExistentFonts.Length,
-					slp.ExistentFonts[i].Name);
+				string msg = string.Format (RDLocale.GetText ("ProcessingMessage"), i, length,
+					name);
 				if (resultStyle != searchFontStyle)
 					msg += string.Format (RDLocale.GetText ("ProcessingStyle"), resultStyle.ToString ());
 				msg += string.Format (RDLocale.GetText ("SkippingFontsCountAndPercentage"),
 					slp.SkippingFontsCount, maxRes.ToString ("F2"));
 
-				bw.ReportProgress ((int)(HardWorkExecutor.ProgressBarSize * i / slp.ExistentFonts.Length), msg);
+				bw.ReportProgress ((int)(HardWorkExecutor.ProgressBarSize * i / length), msg);
 
 				// Защита
 				if (createdImage == null)
@@ -226,15 +228,14 @@ namespace RD_AAOW
 				if (foundFFMatch.Contains (res))
 					{
 					if (slp.FillingIsRequired)
-						slp.AddSkippingFont (slp.ExistentFonts[i].Name);
+						slp.AddSkippingFont (name);
 					continue;
 					}
 
 				// Запрос на прерывание поиска
 				if (pauseSearch && (res >= searchPauseFactor))
 					{
-					PreviewForm prf = new PreviewForm (createdImage, slp.ExistentFonts[i].Name +
-						", " + resultStyle.ToString ());
+					PreviewForm prf = new PreviewForm (createdImage, name + ", " + resultStyle.ToString ());
 
 					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question_Center, "FinishSearch",
 						RDLDefaultTexts.Button_Yes, RDLDefaultTexts.Button_No) == RDMessageButtons.ButtonOne)
@@ -251,7 +252,7 @@ namespace RD_AAOW
 						break;
 					}
 
-				foundFF.Insert (j, slp.ExistentFonts[i]);
+				foundFF.Insert (j, slp.ExistingFonts[i]);
 				foundFFMatch.Insert (j, res);
 
 				// Обрезка списка результатов снизу

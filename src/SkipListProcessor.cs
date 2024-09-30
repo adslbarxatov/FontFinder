@@ -18,19 +18,19 @@ namespace RD_AAOW
 			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
 
 		private string sampleText;
-		private FontFamily[] existentFonts;
 		private bool changed = false;
 
 		/// <summary>
 		/// Возвращает список шрифтов операционной системы
 		/// </summary>
-		public FontFamily[] ExistentFonts
+		public FontFamily[] ExistingFonts
 			{
 			get
 				{
-				return existentFonts;
+				return existingFonts;
 				}
 			}
+		private FontFamily[] existingFonts;
 
 		/// <summary>
 		/// Конструктор. Загружает данные о пропускаемых шрифтах
@@ -43,10 +43,10 @@ namespace RD_AAOW
 
 			// Получение списка шрифтов системы
 			InstalledFontCollection ifc = new InstalledFontCollection ();
-			existentFonts = ifc.Families;
+			existingFonts = ifc.Families;
 			ifc.Dispose ();
 
-			ExistentFontsListBox.DataSource = existentFonts;
+			ExistentFontsListBox.DataSource = existingFonts;
 			ExistentFontsListBox.DisplayMember = ExistentFontsListBox.ValueMember = "Name";
 
 			// Загрузка файла
@@ -85,6 +85,8 @@ namespace RD_AAOW
 			// Настройка
 			this.Text = RDLocale.GetText ("SkipListProcessorCaption");
 			BExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Close);
+			BClear.Text = RDLocale.GetText ("BClear");
+
 			FillingRequired.Text = RDLocale.GetText ("FillingRequiredText");
 			ExistentLabel.Text = string.Format (RDLocale.GetText ("ExistentLabelText"),
 				ExistentFontsListBox.Items.Count);

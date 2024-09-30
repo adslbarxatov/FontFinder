@@ -215,4 +215,7 @@ Skipping fonts: {0:D}</value>
 
 Increase the contrast and try again</value>
   </data>
+  <data name="BClear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
 </root>
