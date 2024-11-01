@@ -8,7 +8,7 @@
 - [General information](#general-information)
 - [Download links](https://adslbarxatov.github.io/DPArray#font-finder)
 - [Video guide](https://youtube.com/watch?v=x3ImaRYH7_A)
-- [Русская версия](https://adslbarxatov.github.io/FontFinder/ru)
+- [Версия на русском языке](https://adslbarxatov.github.io/FontFinder/ru)
 
 ---
 
