@@ -30,7 +30,8 @@ namespace RD_AAOW
 			if (!RDGenerics.AcceptEULA ())
 				return;
 			if (!RDGenerics.ShowAbout (true))
-				ProgramDescription.RegisterAppExtensions ();
+				RDGenerics.RegisterFileAssociations (true);
+			/*ProgramDescription.RegisterAppExtensions ();*/
 
 			// Запуск
 			Application.Run (new MainForm ());
