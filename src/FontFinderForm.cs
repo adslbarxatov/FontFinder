@@ -97,13 +97,13 @@ namespace RD_AAOW
 				switch (il.InitStatus)
 					{
 					case ImageLoaderStatuses.FileNotFound:
-						RDGenerics.MessageBox (RDMessageTypes.Warning_Left,
+						RDInterface.MessageBox (RDMessageTypes.Warning_Left,
 							string.Format (RDLocale.GetDefaultText (RDLDefaultTexts.Message_LoadFailure_Fmt),
 							OpenImage.FileName));
 						break;
 
 					case ImageLoaderStatuses.FileIsNotAnImage:
-						RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "FileIsNotAnImage");
+						RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "FileIsNotAnImage");
 						break;
 					}
 
@@ -118,7 +118,7 @@ namespace RD_AAOW
 
 			if (image == null)  // Не удалось найти границы
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Left, "CannotFindText");
+				RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Left, "CannotFindText");
 				return;
 				}
 
@@ -136,7 +136,7 @@ namespace RD_AAOW
 			{
 			if (string.IsNullOrWhiteSpace (LoadedPicText.Text))
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "SpecifyTextFromImage");
+				RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "SpecifyTextFromImage");
 				return;
 				}
 
@@ -162,7 +162,7 @@ namespace RD_AAOW
 			foundFFMatch.Clear ();
 
 			// Запуск потока поиска и ожидание его завершения
-			RDGenerics.RunWork (Search, null, null, RDRunWorkFlags.AllowOperationAbort);
+			RDInterface.RunWork (Search, null, null, RDRunWorkFlags.AllowOperationAbort);
 			slp.FinishFilling ();
 
 			// Деблокировка окна
@@ -237,7 +237,7 @@ namespace RD_AAOW
 					{
 					PreviewForm prf = new PreviewForm (createdImage, name + ", " + resultStyle.ToString ());
 
-					if (RDGenerics.LocalizedMessageBox (RDMessageTypes.Question_Center, "FinishSearch",
+					if (RDInterface.LocalizedMessageBox (RDMessageTypes.Question_Center, "FinishSearch",
 						RDLDefaultTexts.Button_Yes, RDLDefaultTexts.Button_No) == RDMessageButtons.ButtonOne)
 						{
 						e.Cancel = true;
@@ -294,7 +294,7 @@ namespace RD_AAOW
 		// Справочные сведения
 		private void Q5_Click (object sender, EventArgs e)
 			{
-			RDGenerics.ShowAbout (false);
+			RDInterface.ShowAbout (false);
 			}
 
 		// Выбор пункта для предпросмотра
@@ -306,7 +306,7 @@ namespace RD_AAOW
 			// Проверка на наличие текста
 			if (LoadedPicText.Text == "")
 				{
-				RDGenerics.LocalizedMessageBox (RDMessageTypes.Warning_Center, "EmptyTextField");
+				RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "EmptyTextField");
 				return;
 				}
 
