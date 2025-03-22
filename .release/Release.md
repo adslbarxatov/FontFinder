@@ -1,3 +1,3 @@
-_Changes for v 3.6.8_:
-- User videoguide has been updated;
-- Access and appearance of the Lab Policy have been updated
+_Changes for v 3.6.9_:
+- Current updates have been applied;
+- User videoguide has been updated
