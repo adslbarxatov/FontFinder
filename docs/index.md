@@ -33,6 +33,8 @@ received needed results.
 4. You can use the stop factor if you want to pause search when you get the specified percentage of similarity
 (between 50 and 99). The “Search” button starts fonts matching with the sample image.
 
+<img src="/FontFinder/img/main_en.png" />
+
 5. After search complete you’ll get a list of most matching fonts (not more than 100). By clicking you can
 see the specified text in selected font and style. Search may be too long. Use “Cancel” button to finish it
 immediately and view current results.
