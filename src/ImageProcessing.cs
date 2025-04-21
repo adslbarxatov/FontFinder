@@ -11,12 +11,12 @@ namespace RD_AAOW
 	public static class ImageProcessor
 		{
 		// Стили, замещающие текущий в случае его недоступности
-		private static FontStyle[] otherStyles = {
+		private static FontStyle[] otherStyles = [
 			FontStyle.Regular,
 			FontStyle.Bold ,
 			FontStyle.Italic,
 			FontStyle.Bold | FontStyle.Italic
-			};
+			];
 
 		/// <summary>
 		/// Сравнивает два изображения и возвращает степень их совпадения
@@ -262,9 +262,10 @@ namespace RD_AAOW
 		/// <param name="Path">Путь к файлу изображения</param>
 		public ImageLoader (string Path)
 			{
-			FileStream FS = null;
+			/*FileStream FS = null;*/
 
 			// Попытка открытия файла
+			FileStream FS;
 			try
 				{
 				FS = new FileStream (Path, FileMode.Open);

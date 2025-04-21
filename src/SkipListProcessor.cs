@@ -13,7 +13,7 @@ namespace RD_AAOW
 	public partial class SkipListProcessor: Form
 		{
 		// Переменные и константы
-		private List<string> skippingFonts = new List<string> ();
+		private List<string> skippingFonts = [];
 		private string newSkippingFontsListFile = RDGenerics.AppStartupPath +
 			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
 
@@ -50,7 +50,8 @@ namespace RD_AAOW
 			ExistentFontsListBox.DisplayMember = ExistentFontsListBox.ValueMember = "Name";
 
 			// Загрузка файла
-			FileStream FS = null;
+			/*FileStream FS = null;*/
+			FileStream FS;
 			try
 				{
 				FS = new FileStream (newSkippingFontsListFile, FileMode.Open);
@@ -184,7 +185,8 @@ namespace RD_AAOW
 				return;
 
 			// Загрузка файла
-			FileStream FS = null;
+			/*FileStream FS = null;*/
+			FileStream FS;
 			try
 				{
 				FS = new FileStream (newSkippingFontsListFile, FileMode.Create);
@@ -270,7 +272,8 @@ namespace RD_AAOW
 
 			// Формирование и отображение изображения
 			Bitmap createdImage;
-			FontFamily fontFamily = null;
+			/*FontFamily fontFamily = null;*/
+			FontFamily fontFamily;
 			try
 				{
 				fontFamily = new FontFamily (SkippingFontsListBox.Items[SkippingFontsListBox.SelectedIndex].ToString ());

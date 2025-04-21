@@ -20,10 +20,10 @@ namespace RD_AAOW
 		private bool pauseSearch = false;
 
 		// Найденные шрифты
-		private List<FontFamily> foundFF = new List<FontFamily> ();
+		private List<FontFamily> foundFF = [];
 
 		// Оценки степени их соответствия исходному изображению
-		private List<double> foundFFMatch = new List<double> ();
+		private List<double> foundFFMatch = [];
 
 		// Стиль шрифта для поиска
 		private FontStyle searchFontStyle = FontStyle.Regular;
@@ -235,7 +235,7 @@ namespace RD_AAOW
 				// Запрос на прерывание поиска
 				if (pauseSearch && (res >= searchPauseFactor))
 					{
-					PreviewForm prf = new PreviewForm (createdImage, name + ", " + resultStyle.ToString ());
+					_ = new PreviewForm (createdImage, name + ", " + resultStyle.ToString ());
 
 					if (RDInterface.LocalizedMessageBox (RDMessageTypes.Question_Center, "FinishSearch",
 						RDLDefaultTexts.Button_Yes, RDLDefaultTexts.Button_No) == RDMessageButtons.ButtonOne)

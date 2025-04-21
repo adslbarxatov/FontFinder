@@ -1,5 +1,8 @@
 Font finder: changes log
 
+Version 3.7:
+• The application has been migrated to .NET 9.0 from .NET Framework 4.8.1
+
 Version 3.6.9:
 • Current updates have been applied
 

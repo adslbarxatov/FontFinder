@@ -17,6 +17,7 @@ namespace RD_AAOW
 			// Инициализация
 			Application.EnableVisualStyles ();
 			Application.SetCompatibleTextRenderingDefault (false);
+			RDLocale.InitEncodings ();
 
 			// Язык интерфейса и контроль XPUN
 			if (!RDLocale.IsXPUNClassAcceptable)
