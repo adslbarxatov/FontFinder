@@ -252,9 +252,11 @@ namespace RD_AAOW
 	/// </summary>
 	public class ImageLoader
 		{
-		// Переменные
-		private Bitmap image = null;                                    // Загруженное изображение
-		private ImageLoaderStatuses status = ImageLoaderStatuses.Ok;    // Статус инициализации класса
+		// Загруженное изображение
+		private Bitmap image = null;
+
+		// Статус инициализации класса
+		private ImageLoaderStatuses status = ImageLoaderStatuses.Ok;
 
 		/// <summary>
 		/// Конструктор. Создаёт объект-изображение из файла
@@ -262,8 +264,6 @@ namespace RD_AAOW
 		/// <param name="Path">Путь к файлу изображения</param>
 		public ImageLoader (string Path)
 			{
-			/*FileStream FS = null;*/
-
 			// Попытка открытия файла
 			FileStream FS;
 			try

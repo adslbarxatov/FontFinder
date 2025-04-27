@@ -50,7 +50,6 @@ namespace RD_AAOW
 			ExistentFontsListBox.DisplayMember = ExistentFontsListBox.ValueMember = "Name";
 
 			// Загрузка файла
-			/*FileStream FS = null;*/
 			FileStream FS;
 			try
 				{
@@ -185,7 +184,6 @@ namespace RD_AAOW
 				return;
 
 			// Загрузка файла
-			/*FileStream FS = null;*/
 			FileStream FS;
 			try
 				{
@@ -272,7 +270,6 @@ namespace RD_AAOW
 
 			// Формирование и отображение изображения
 			Bitmap createdImage;
-			/*FontFamily fontFamily = null;*/
 			FontFamily fontFamily;
 			try
 				{
