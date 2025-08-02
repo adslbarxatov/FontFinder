@@ -97,13 +97,14 @@ namespace RD_AAOW
 				switch (il.InitStatus)
 					{
 					case ImageLoaderStatuses.FileNotFound:
-						RDInterface.MessageBox (RDMessageTypes.Warning_Left,
+						RDInterface.MessageBox (RDMessageFlags.Warning,
 							string.Format (RDLocale.GetDefaultText (RDLDefaultTexts.Message_LoadFailure_Fmt),
 							OpenImage.FileName));
 						break;
 
 					case ImageLoaderStatuses.FileIsNotAnImage:
-						RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "FileIsNotAnImage");
+						RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText,
+							"FileIsNotAnImage");
 						break;
 					}
 
@@ -118,7 +119,7 @@ namespace RD_AAOW
 
 			if (image == null)  // Не удалось найти границы
 				{
-				RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Left, "CannotFindText");
+				RDInterface.LocalizedMessageBox (RDMessageFlags.Warning, "CannotFindText");
 				return;
 				}
 
@@ -136,7 +137,8 @@ namespace RD_AAOW
 			{
 			if (string.IsNullOrWhiteSpace (LoadedPicText.Text))
 				{
-				RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "SpecifyTextFromImage");
+				RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText,
+					"SpecifyTextFromImage");
 				return;
 				}
 
@@ -208,7 +210,7 @@ namespace RD_AAOW
 				msg += string.Format (RDLocale.GetText ("SkippingFontsCountAndPercentage"),
 					slp.SkippingFontsCount, maxRes.ToString ("F2"));
 
-				bw.ReportProgress ((int)(HardWorkExecutor.ProgressBarSize * i / length), msg);
+				bw.ReportProgress ((int)(RDWorkerForm.ProgressBarSize * i / length), msg);
 
 				// Защита
 				if (createdImage == null)
@@ -237,8 +239,9 @@ namespace RD_AAOW
 					{
 					_ = new PreviewForm (createdImage, name + ", " + resultStyle.ToString ());
 
-					if (RDInterface.LocalizedMessageBox (RDMessageTypes.Question_Center, "FinishSearch",
-						RDLDefaultTexts.Button_Yes, RDLDefaultTexts.Button_No) == RDMessageButtons.ButtonOne)
+					if (RDInterface.LocalizedMessageBox (RDMessageFlags.Question | RDMessageFlags.CenterText,
+						"FinishSearch", RDLDefaultTexts.Button_Yes,
+						RDLDefaultTexts.Button_No) == RDMessageButtons.ButtonOne)
 						{
 						e.Cancel = true;
 						}
@@ -306,7 +309,8 @@ namespace RD_AAOW
 			// Проверка на наличие текста
 			if (LoadedPicText.Text == "")
 				{
-				RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "EmptyTextField");
+				RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText,
+					"EmptyTextField");
 				return;
 				}
 

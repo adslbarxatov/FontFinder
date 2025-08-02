@@ -157,8 +157,8 @@ namespace RD_AAOW
 		private void BClear_Click (object sender, EventArgs e)
 			{
 			// Контроль
-			if (RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "ClearSkippingFonts",
-				RDLDefaultTexts.Button_YesNoFocus, RDLDefaultTexts.Button_No) !=
+			if (RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText,
+				"ClearSkippingFonts", RDLDefaultTexts.Button_YesNoFocus, RDLDefaultTexts.Button_No) !=
 				RDMessageButtons.ButtonOne)
 				return;
 
@@ -277,7 +277,8 @@ namespace RD_AAOW
 				}
 			catch
 				{
-				RDInterface.LocalizedMessageBox (RDMessageTypes.Warning_Center, "WrongFont");
+				RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText,
+					"WrongFont");
 				return;
 				}
 
