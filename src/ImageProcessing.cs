@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace RD_AAOW
 	{
@@ -13,7 +14,7 @@ namespace RD_AAOW
 		// Стили, замещающие текущий в случае его недоступности
 		private static FontStyle[] otherStyles = [
 			FontStyle.Regular,
-			FontStyle.Bold ,
+			FontStyle.Bold,
 			FontStyle.Italic,
 			FontStyle.Bold | FontStyle.Italic
 			];
@@ -21,10 +22,11 @@ namespace RD_AAOW
 		/// <summary>
 		/// Сравнивает два изображения и возвращает степень их совпадения
 		/// </summary>
-		/// <param name="ControlSample">Контрольное изображение</param>
+		/// <param name="ControlSample">Контрольное изображение в виде байт-массива</param>
+		/// <param name="ControlSampleSize">Размер контрольного изображения</param>
 		/// <param name="CreatedImage">Изображение для сравнения</param>
 		/// <returns>Степень совпадения в процентах</returns>
-		public static double Compare (Bitmap ControlSample, Bitmap CreatedImage)
+		public static double Compare (byte[] ControlSample, Size ControlSampleSize, Bitmap CreatedImage)
 			{
 			// Переменные
 			double res = 0.0;
@@ -33,25 +35,40 @@ namespace RD_AAOW
 			if ((ControlSample == null) || (CreatedImage == null))
 				return res;
 
-			if (ControlSample.Width * ControlSample.Height * CreatedImage.Width * CreatedImage.Height == 0)
+			if (ControlSampleSize.Width * ControlSampleSize.Height * CreatedImage.Width * CreatedImage.Height == 0)
 				return res;
 
 			// Сравнение с учётом масштаба
-			for (int x = 0; x < ControlSample.Width; x++)
+			/*for (int x = 0; x < ControlSample.Width; x++)
 				{
 				for (int y = 0; y < ControlSample.Height; y++)
 					{
-					if (Math.Abs (ControlSample.GetPixel (x, y).R -
-						CreatedImage.GetPixel (CreatedImage.Width * x / ControlSample.Width,
+					if (Math.Abs (ControlSample.Get Pixel (x, y).R -
+						CreatedImage.Get Pixel (CreatedImage.Width * x / ControlSample.Width,
 						CreatedImage.Height * y / ControlSample.Height).R) < 128)
 						{
 						res += 1.0;
 						}
 					}
+				}*/
+			byte[] compareSample = MakeArray (CreatedImage);
+
+			for (int y = 0; y < ControlSampleSize.Height; y++)
+				{
+				for (int x = 0; x < ControlSampleSize.Width; x++)
+					{
+					int off1 = MakeOffset (ControlSampleSize.Width, x, y);
+
+					int off2 = MakeOffset (CreatedImage.Width, CreatedImage.Width * x / ControlSampleSize.Width,
+						CreatedImage.Height * y / ControlSampleSize.Height);
+
+					if (ControlSample[off1] == compareSample[off2])
+						res += 1.0;
+					}
 				}
 
 			// Результат
-			return 100.0 * res / (ControlSample.Width * ControlSample.Height);
+			return 100.0 * res / (ControlSampleSize.Width * ControlSampleSize.Height);
 			}
 
 		/// <summary>
@@ -138,6 +155,39 @@ namespace RD_AAOW
 
 			ResultImage = null;
 			return Style;
+			}
+
+		/// <summary>
+		/// Метод преобразует изображение в байт-массив
+		/// </summary>
+		/// <param name="Image">Исходное изображение</param>
+		public static byte[] MakeArray (Bitmap Image)
+			{
+			BitmapData bmpData = Image.LockBits (new Rectangle (Point.Empty, Image.Size),
+				ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
+			IntPtr ptr = bmpData.Scan0;
+
+			byte[] array = new byte[MakeOffset (Image.Width, 0, Image.Height)];
+			Marshal.Copy (ptr, array, 0, array.Length);
+
+			Image.UnlockBits (bmpData);
+			return array;
+			}
+
+		/// <summary>
+		/// Метод формирует смещение в байт-массиве изображения по координатам указанного пикселя
+		/// </summary>
+		/// <param name="ImageWidth">Ширина изображения</param>
+		/// <param name="X">Абсцисса требуемого пикселя</param>
+		/// <param name="Y">Ордината требуемого пикселя</param>
+		/// <returns>Корректное смещение в байт-массиве для 8-битного изображения с палитрой</returns>
+		public static int MakeOffset (int ImageWidth, int X, int Y)
+			{
+			int v = (ImageWidth / 4) * 4;
+			if ((ImageWidth % 4) != 0)
+				v += 4;
+
+			return Y * v + X;
 			}
 		}
 
@@ -304,7 +354,8 @@ namespace RD_AAOW
 		public ImageLoader (Image CreatedImage)
 			{
 			if (CreatedImage != null)
-				image = (Bitmap)CreatedImage.Clone ();
+				image = ((Bitmap)CreatedImage).Clone (new Rectangle (Point.Empty, CreatedImage.Size), PixelFormat.Format8bppIndexed);
+			/*image = (Bitmap)CreatedImage.Clone ();*/
 			}
 
 		/// <summary>
@@ -327,6 +378,7 @@ namespace RD_AAOW
 
 			Rectangle r = new Rectangle (0, 0, 1, 1);
 			int x, y;
+			byte[] source = ImageProcessor.MakeArray (image);
 
 			// Поиск границ
 			// Левая
@@ -334,7 +386,8 @@ namespace RD_AAOW
 				{
 				for (y = 0; y < image.Height; y++)
 					{
-					if (image.GetPixel (x, y).R < 128)
+					/*if (image.Get Pixel (x, y).R < 128)*/
+					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto ll;
 					}
 				}
@@ -354,7 +407,8 @@ namespace RD_AAOW
 				{
 				for (y = image.Height - 1; y >= 0; y--)
 					{
-					if (image.GetPixel (x, y).R < 128)
+					/*if (image.Get Pixel (x, y).R < 128)*/
+					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto lr;
 					}
 				}
@@ -367,7 +421,8 @@ namespace RD_AAOW
 				{
 				for (x = 0; x < image.Width; x++)
 					{
-					if (image.GetPixel (x, y).R < 128)
+					/*if (image.Get Pixel (x, y).R < 128)*/
+					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto lt;
 					}
 				}
@@ -379,7 +434,8 @@ namespace RD_AAOW
 				{
 				for (x = image.Width - 1; x >= 0; x--)
 					{
-					if (image.GetPixel (x, y).R < 128)
+					/*if (image.Get Pixel (x, y).R < 128)*/
+					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto lb;
 					}
 				}

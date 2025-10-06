@@ -191,6 +191,8 @@ namespace RD_AAOW
 			// Поиск
 			double maxRes = 0;
 			int length = slp.ExistingFonts.Length;
+			byte[] controlSample = ImageProcessor.MakeArray (image);
+
 			for (int i = 0; i < length; i++)
 				{
 				// Проверка на пропуск
@@ -220,7 +222,8 @@ namespace RD_AAOW
 				double res = 0;
 				try
 					{
-					res = ImageProcessor.Compare (image, createdImage);
+					/*res = ImageProcessor.Compare (image, createdImage);*/
+					res = ImageProcessor.Compare (controlSample, image.Size, createdImage);
 					// Иногда имеют место сбои обращения к изображению
 					}
 				catch { }
@@ -307,7 +310,8 @@ namespace RD_AAOW
 				return;
 
 			// Проверка на наличие текста
-			if (LoadedPicText.Text == "")
+			/*if (LoadedPicText.Text == "")*/
+			if (string.IsNullOrWhiteSpace (LoadedPicText.Text))
 				{
 				RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText,
 					"EmptyTextField");
