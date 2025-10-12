@@ -218,4 +218,17 @@ Increase the contrast and try again</value>
   <data name="BClear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="ExtendedFilterRequest" xml:space="preserve">
+    <value>This option allows you to skip fonts that have no characters for your local alphabet. To do this, enter two different letters in the field below</value>
+  </data>
+  <data name="ExtendedFilterError" xml:space="preserve">
+    <value>Two different letters should be specified to continue</value>
+  </data>
+  <data name="BExtended" xml:space="preserve">
+    <value>Extended filter</value>
+  </data>
+  <data name="ExtendedFilterResult" xml:space="preserve">
+    <value>Operation has been completed.
+Fonts skipped: {0:D}</value>
+  </data>
 </root>

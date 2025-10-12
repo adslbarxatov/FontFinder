@@ -1,5 +1,11 @@
 Font finder: changes log
 
+Version 3.9:
+• Implemented the extended filter for local alphabets: it allows you to skip fonts that
+  don't support characters you usually look for;
+• Fixed some memory leaks;
+• Fixed size of the font preview form
+
 Version 3.8:
 • Implemented the direct memory access that has tripled (!) the speed of image processing
 

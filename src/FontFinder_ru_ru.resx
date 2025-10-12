@@ -218,4 +218,17 @@
   <data name="BClear" xml:space="preserve">
     <value>Сбросить</value>
   </data>
+  <data name="ExtendedFilterRequest" xml:space="preserve">
+    <value>Эта опция позволяет пропустить шрифты, в которых нет символов для Вашего локального алфавита. Для продолжения введите две разные буквы в поле ниже</value>
+  </data>
+  <data name="ExtendedFilterError" xml:space="preserve">
+    <value>Для продолжения необходимо указать две разные буквы</value>
+  </data>
+  <data name="BExtended" xml:space="preserve">
+    <value>Расширенная фильтрация</value>
+  </data>
+  <data name="ExtendedFilterResult" xml:space="preserve">
+    <value>Операция завершена.
+Пропущено шрифтов: {0:D}</value>
+  </data>
 </root>

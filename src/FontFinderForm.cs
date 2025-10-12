@@ -222,7 +222,6 @@ namespace RD_AAOW
 				double res = 0;
 				try
 					{
-					/*res = ImageProcessor.Compare (image, createdImage);*/
 					res = ImageProcessor.Compare (controlSample, image.Size, createdImage);
 					// Иногда имеют место сбои обращения к изображению
 					}
@@ -234,6 +233,8 @@ namespace RD_AAOW
 					{
 					if (slp.FillingIsRequired)
 						slp.AddSkippingFont (name);
+
+					createdImage.Dispose ();
 					continue;
 					}
 

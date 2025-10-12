@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
@@ -86,6 +87,7 @@ namespace RD_AAOW
 			this.Text = RDLocale.GetText ("SkipListProcessorCaption");
 			BExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Close);
 			BClear.Text = RDLocale.GetText ("BClear");
+			BExtended.Text = RDLocale.GetText ("BExtended");
 
 			FillingRequired.Text = RDLocale.GetText ("FillingRequiredText");
 			ExistentLabel.Text = string.Format (RDLocale.GetText ("ExistentLabelText"),
@@ -347,6 +349,142 @@ namespace RD_AAOW
 					ExistentFontsListBox_DoubleClick (null, null);
 					break;
 				}
+			}
+
+		// Дополнительная фильтрация шрифтов
+		private void BExtended_Click (object sender, EventArgs e)
+			{
+			// Запрос образца
+			string letters = RDInterface.LocalizedMessageBox ("ExtendedFilterRequest", false, 2);
+
+			if (string.IsNullOrWhiteSpace (letters) || (letters.Length < 2) || (letters[0] == letters[1]))
+				{
+				RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText, "ExtendedFilterError");
+				return;
+				}
+			efChars[0] = letters[0].ToString ();
+			efChars[1] = letters[1].ToString ();
+
+			// Прогон
+			int oldCount = skippingFonts.Count;
+			RDInterface.RunWork (ExtendedFiltration, null, " ", RDRunWorkFlags.AllowOperationAbort);
+
+			// Завершено
+			RDInterface.MessageBox (RDMessageFlags.Success | RDMessageFlags.CenterText,
+				string.Format (RDLocale.GetText ("ExtendedFilterResult"), skippingFonts.Count - oldCount));
+
+			// Обновление списков
+			SkippingFontsListBox.DataSource = null;
+			SkippingFontsListBox.DataSource = skippingFonts;
+			SkippingLabel.Text = string.Format (RDLocale.GetText ("SkippingLabelText"),
+				SkippingFontsListBox.Items.Count);
+			}
+		private string[] efChars = new string[2];
+
+		// Метод прогона
+		private void ExtendedFiltration (object sender, DoWorkEventArgs e)
+			{
+			BackgroundWorker bw = ((BackgroundWorker)sender);
+			int length = existingFonts.Length;
+			FontStyle style = FontStyle.Regular;
+			List<string> protectedNames = [];
+
+			// Создание контрольных образцов, используемых в качестве подмены
+			// в неподдерживаемых шрифтах
+			Bitmap ba;
+			FontFamily family = new FontFamily (GenericFontFamilies.SansSerif);
+			_ = ImageProcessor.CreateBitmapFromFont (efChars[1], family, 40, style, false, false, out ba);
+
+			byte[] arial = ImageProcessor.MakeArray (ba);
+			Size arialSize = ba.Size;
+			protectedNames.Add (family.Name);
+
+			ba.Dispose ();
+			family.Dispose ();
+
+			family = new FontFamily (GenericFontFamilies.Serif);
+			_ = ImageProcessor.CreateBitmapFromFont (efChars[1], family, 40, style, false, false, out ba);
+
+			byte[] times = ImageProcessor.MakeArray (ba);
+			Size timesSize = ba.Size;
+			protectedNames.Add (family.Name);
+
+			ba.Dispose ();
+			family.Dispose ();
+
+			family = new FontFamily (GenericFontFamilies.Monospace);
+			_ = ImageProcessor.CreateBitmapFromFont (efChars[1], family, 40, style, false, false, out ba);
+
+			byte[] courier = ImageProcessor.MakeArray (ba);
+			Size courierSize = ba.Size;
+			protectedNames.Add (family.Name);
+
+			ba.Dispose ();
+			family.Dispose ();
+
+			// Прогон
+			for (int i = 0; i < length; i++)
+				{
+				// Контроль
+				string name = existingFonts[i].Name;
+				if (skippingFonts.Contains (name))
+					continue;
+
+				// Завершение работы, если получено требование от диалога
+				if (bw.CancellationPending)
+					{
+					e.Cancel = true;
+					return;
+					}
+
+				// Сравнение
+				Bitmap b1;
+				_ = ImageProcessor.CreateBitmapFromFont (efChars[0], existingFonts[i], 40, style, false, false, out b1);
+				if (b1 == null)
+					continue;
+
+				Bitmap b2;
+				_ = ImageProcessor.CreateBitmapFromFont (efChars[1], existingFonts[i], 40, style, false, false, out b2);
+				if (b2 == null)
+					{
+					b2.Dispose ();
+					continue;
+					}
+
+				byte[] s1 = ImageProcessor.MakeArray (b1);
+				double res = 0, ares = 0, tres = 0, cres = 0;
+				try
+					{
+					res = ImageProcessor.Compare (s1, b1.Size, b2);
+					ares = ImageProcessor.Compare (arial, arialSize, b2);
+					tres = ImageProcessor.Compare (times, timesSize, b2);
+					cres = ImageProcessor.Compare (courier, courierSize, b2);
+					}
+				catch { }
+
+				b1.Dispose ();
+				b2.Dispose ();
+
+				// Добавление
+				if ((res > 99) || (ares > 99) || (tres > 99) || (cres > 99))
+					{
+					if (!skippingFonts.Contains (name) && !protectedNames.Contains (name))
+						{
+						skippingFonts.Add (name);
+						changed = true;
+						}
+					}
+
+				// Возврат прогресса
+				string msg = string.Format (RDLocale.GetText ("ProcessingMessage"), i, length, name);
+				msg += string.Format (RDLocale.GetText ("SkippingFontsCountAndPercentage"),
+					skippingFonts.Count, res.ToString ("F2"));
+
+				bw.ReportProgress ((int)(RDWorkerForm.ProgressBarSize * i / length), msg);
+				}
+
+			// Завершено
+			e.Result = 0;
 			}
 		}
 	}
