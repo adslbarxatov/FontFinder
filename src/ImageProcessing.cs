@@ -39,18 +39,6 @@ namespace RD_AAOW
 				return res;
 
 			// Сравнение с учётом масштаба
-			/*for (int x = 0; x < ControlSample.Width; x++)
-				{
-				for (int y = 0; y < ControlSample.Height; y++)
-					{
-					if (Math.Abs (ControlSample.Get Pixel (x, y).R -
-						CreatedImage.Get Pixel (CreatedImage.Width * x / ControlSample.Width,
-						CreatedImage.Height * y / ControlSample.Height).R) < 128)
-						{
-						res += 1.0;
-						}
-					}
-				}*/
 			byte[] compareSample = MakeArray (CreatedImage);
 
 			for (int y = 0; y < ControlSampleSize.Height; y++)
@@ -355,7 +343,6 @@ namespace RD_AAOW
 			{
 			if (CreatedImage != null)
 				image = ((Bitmap)CreatedImage).Clone (new Rectangle (Point.Empty, CreatedImage.Size), PixelFormat.Format8bppIndexed);
-			/*image = (Bitmap)CreatedImage.Clone ();*/
 			}
 
 		/// <summary>
@@ -386,7 +373,6 @@ namespace RD_AAOW
 				{
 				for (y = 0; y < image.Height; y++)
 					{
-					/*if (image.Get Pixel (x, y).R < 128)*/
 					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto ll;
 					}
@@ -407,7 +393,6 @@ namespace RD_AAOW
 				{
 				for (y = image.Height - 1; y >= 0; y--)
 					{
-					/*if (image.Get Pixel (x, y).R < 128)*/
 					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto lr;
 					}
@@ -421,7 +406,6 @@ namespace RD_AAOW
 				{
 				for (x = 0; x < image.Width; x++)
 					{
-					/*if (image.Get Pixel (x, y).R < 128)*/
 					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto lt;
 					}
@@ -434,7 +418,6 @@ namespace RD_AAOW
 				{
 				for (x = image.Width - 1; x >= 0; x--)
 					{
-					/*if (image.Get Pixel (x, y).R < 128)*/
 					if (source[ImageProcessor.MakeOffset (image.Width, x, y)] == 0)
 						goto lb;
 					}

@@ -311,7 +311,6 @@ namespace RD_AAOW
 				return;
 
 			// Проверка на наличие текста
-			/*if (LoadedPicText.Text == "")*/
 			if (string.IsNullOrWhiteSpace (LoadedPicText.Text))
 				{
 				RDInterface.LocalizedMessageBox (RDMessageFlags.Warning | RDMessageFlags.CenterText,
