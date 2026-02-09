@@ -15,8 +15,8 @@ namespace RD_AAOW
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = [];
-		private string newSkippingFontsListFile = RDGenerics.AppStartupPath +
-			ProgramDescription.AssemblyMainName + "." + ProgramDescription.SkipFileExtension;
+		private string newSkippingFontsListFile = ProgramDescription.AssemblyMainName + "." +
+			ProgramDescription.SkipFileExtension;
 
 		private string sampleText;
 		private bool changed = false;
@@ -54,7 +54,10 @@ namespace RD_AAOW
 			FileStream FS;
 			try
 				{
-				FS = new FileStream (newSkippingFontsListFile, FileMode.Open);
+				if (RDGenerics.StartedFromMSStore)
+					FS = new FileStream (newSkippingFontsListFile, FileMode.Open);
+				else
+					FS = new FileStream (RDGenerics.AppStartupPath + newSkippingFontsListFile, FileMode.Open);
 				}
 			catch
 				{
@@ -189,7 +192,10 @@ namespace RD_AAOW
 			FileStream FS;
 			try
 				{
-				FS = new FileStream (newSkippingFontsListFile, FileMode.Create);
+				if (RDGenerics.StartedFromMSStore)
+					FS = new FileStream (newSkippingFontsListFile, FileMode.Create);
+				else
+					FS = new FileStream (RDGenerics.AppStartupPath + newSkippingFontsListFile, FileMode.Create);
 				}
 			catch
 				{

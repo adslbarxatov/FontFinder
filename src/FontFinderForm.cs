@@ -50,7 +50,6 @@ namespace RD_AAOW
 			InitializeComponent ();
 
 			// Настройка контролов
-			/*this.Text = ProgramDescription.AssemblyTitle;*/
 			this.Text = RDGenerics.DefaultAssemblyVisibleName;
 			RDGenerics.LoadWindowDimensions (this);
 
