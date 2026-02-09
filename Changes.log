@@ -1,7 +1,8 @@
 Font finder: changes log
 
 Version 3.10.2:
-• Offline help has been replaced with the PDF format
+• Offline help has been replaced with the PDF format;
+• Probably fixed the inability to save the list of skipped fonts
 
 Version 3.10:
 • App has been migrated to .NET 10;
