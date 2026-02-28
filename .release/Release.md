@@ -1,5 +1,17 @@
-_Changes for v 3.10.2_:
+_en_us_
+
+- Improved the updates checking method;
+- Updated the package format;
 - Offline help has been replaced with the PDF format;
-- Internal assemblies have been updated;
-- App has been migrated to `.NET 10`;
-- Implemented the extended filter for local alphabets: it allows you to skip fonts that don't support characters you usually look for
+- Internal assemblies have been updated
+
+⁂
+
+_ru_ru_
+
+- Улучшен метод проверки обновлений;
+- Обновлён формат пакета;
+- Оффлайн-справка заменена форматом PDF;
+- Обновлены внутренние сборки приложения
+
+⁂
