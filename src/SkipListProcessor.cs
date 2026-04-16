@@ -15,6 +15,8 @@ namespace RD_AAOW
 		{
 		// Переменные и константы
 		private List<string> skippingFonts = [];
+		private List<string> fontFilesPaths = [];
+
 		private string newSkippingFontsListFile = ProgramDescription.AssemblyMainName + "." +
 			ProgramDescription.SkipFileExtension;
 
@@ -28,10 +30,81 @@ namespace RD_AAOW
 			{
 			get
 				{
+				if (DontUseSystemFonts)
+					return [];
+
 				return existingFonts;
 				}
 			}
 		private FontFamily[] existingFonts;
+
+		/// <summary>
+		/// Возвращает список шрифтов из файлов, кэшированных из указанных директорий
+		/// </summary>
+		public FontFamily[] FontsFromFiles
+			{
+			get
+				{
+				if (DontUseFontsFromFiles)
+					return [];
+
+				// Подготовленный список
+				if (fontsFromFilesCached)
+					return fontsFromFiles.ToArray ();
+
+				// Кэширование
+				RDInterface.RunWork (CacheFontFiles, null, " ", RDRunWorkFlags.CaptionInTheMiddle);
+				return fontsFromFiles.ToArray ();
+				}
+			}
+		private List<FontFamily> fontsFromFiles = [];
+		private bool fontsFromFilesCached = false;
+
+		// Метод кэширования шрифтов
+		private void CacheFontFiles (object sender, DoWorkEventArgs e)
+			{
+			BackgroundWorker bw = (BackgroundWorker)sender;
+
+			// Сбор списка файлов
+			bw.ReportProgress ((int)RDWorkerForm.ProgressBarSize, RDLocale.GetText ("FontFilesPathsCollection"));
+
+			List<string> files = [];
+			for (int i = 0; i < fontFilesPaths.Count; i++)
+				{
+				try
+					{
+					files.AddRange (Directory.GetFiles (fontFilesPaths[i], "*.ttf", SearchOption.AllDirectories));
+					}
+				catch { }
+
+				try
+					{
+					files.AddRange (Directory.GetFiles (fontFilesPaths[i], "*.otf", SearchOption.AllDirectories));
+					}
+				catch { }
+				}
+
+			// Попытка извлечения шрифтов
+			fontsFromFiles.Clear ();
+			PrivateFontCollection collection = new PrivateFontCollection ();
+
+			for (int i = 0; i < files.Count; i++)
+				{
+				bw.ReportProgress ((int)RDWorkerForm.ProgressBarSize * (i + 1) / files.Count,
+					string.Format (RDLocale.GetText ("FontFilesCaching"), i + 1, files.Count));
+
+				try
+					{
+					collection.AddFontFile (files[i]);
+					}
+				catch { }
+				}
+
+			// Завершено
+			fontsFromFiles.AddRange (collection.Families);
+			fontsFromFilesCached = true;
+			e.Result = 0;
+			}
 
 		/// <summary>
 		/// Конструктор. Загружает данные о пропускаемых шрифтах
@@ -55,6 +128,7 @@ namespace RD_AAOW
 			try
 				{
 				if (RDGenerics.StartedFromMSStore)
+					// Не уверен, что это на что-то влияет
 					FS = new FileStream (newSkippingFontsListFile, FileMode.Open);
 				else
 					FS = new FileStream (RDGenerics.AppStartupPath + newSkippingFontsListFile, FileMode.Open);
@@ -66,8 +140,17 @@ namespace RD_AAOW
 				}
 			StreamReader SR = new StreamReader (FS, RDGenerics.GetEncoding (RDEncodings.Unicode16));
 
-			while (!SR.EndOfStream)
-				skippingFonts.Add (SR.ReadLine ());
+			string s;
+			/*while (!SR.EndOfStream)
+				skippingFonts.Add (SR.ReadLine ());*/
+
+			// Названия шрифтов
+			while (!string.IsNullOrWhiteSpace (s = SR.ReadLine ()))
+				skippingFonts.Add (s);
+
+			// Пути к файлам шрифтов
+			while (!string.IsNullOrWhiteSpace (s = SR.ReadLine ()))
+				fontFilesPaths.Add (s);
 
 			// Завершено
 			SR.Close ();
@@ -89,7 +172,8 @@ namespace RD_AAOW
 			// Настройка
 			this.Text = RDLocale.GetText ("SkipListProcessorCaption");
 			BExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Close);
-			BClear.Text = RDLocale.GetText ("BClear");
+			/*BClear.Text = RDLocale.GetText ("BClear");*/
+			BClear.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Clear);
 			BExtended.Text = RDLocale.GetText ("BExtended");
 
 			FillingRequired.Text = RDLocale.GetText ("FillingRequiredText");
@@ -101,6 +185,17 @@ namespace RD_AAOW
 			SkippingFontsListBox.DataSource = skippingFonts;
 			SkippingLabel.Text = string.Format (RDLocale.GetText ("SkippingLabelText"),
 				SkippingFontsListBox.Items.Count);
+
+			DirectoriesListBox.DataSource = null;
+			DirectoriesListBox.DataSource = fontFilesPaths;
+			FilesLabel.Text = RDLocale.GetText ("FilesLabel");
+			BRemovePath.Enabled = (fontFilesPaths.Count > 0);
+
+			UseSystemFontsFlag.Text = RDLocale.GetText ("UseSystemFontsFlag");
+			UseSystemFontsFlag.Checked = !DontUseSystemFonts;
+
+			UseFileFontsFlag.Text = RDLocale.GetText ("UseFileFontsFlag");
+			UseFileFontsFlag.Checked = !DontUseFontsFromFiles;
 
 			this.ShowDialog ();
 			}
@@ -131,6 +226,8 @@ namespace RD_AAOW
 		// Выход
 		private void BExit_Click (object sender, EventArgs e)
 			{
+			DontUseSystemFonts = !UseSystemFontsFlag.Checked;
+			DontUseFontsFromFiles = !UseFileFontsFlag.Checked;
 			this.Close ();
 			}
 
@@ -205,6 +302,11 @@ namespace RD_AAOW
 
 			for (int i = 0; i < skippingFonts.Count; i++)
 				SW.WriteLine (skippingFonts[i]);
+
+			SW.WriteLine ();
+
+			for (int i = 0; i < fontFilesPaths.Count; i++)
+				SW.WriteLine (fontFilesPaths[i]);
 
 			// Завершено
 			SW.Close ();
@@ -492,5 +594,73 @@ namespace RD_AAOW
 			// Завершено
 			e.Result = 0;
 			}
+
+		// Добавление директории с внешними шрифтами
+		private void BAddPath_Click (object sender, EventArgs e)
+			{
+			if (FBDialog.ShowDialog () != DialogResult.OK)
+				return;
+
+			string s = FBDialog.SelectedPath;
+			if (!s.EndsWith ('\\'))
+				s += "\\";
+
+			fontFilesPaths.Add (s);
+			DirectoriesListBox.DataSource = null;
+			DirectoriesListBox.DataSource = fontFilesPaths;
+
+			BRemovePath.Enabled = (fontFilesPaths.Count > 0);
+
+			fontsFromFilesCached = false;
+			changed = true;
+			}
+
+		// Удаление директории с внешними шрифтами
+		private void BRemovePath_Click (object sender, EventArgs e)
+			{
+			if (DirectoriesListBox.SelectedIndex < 0)
+				return;
+
+			fontFilesPaths.RemoveAt (DirectoriesListBox.SelectedIndex);
+			DirectoriesListBox.DataSource = null;
+			DirectoriesListBox.DataSource = fontFilesPaths;
+
+			BRemovePath.Enabled = (fontFilesPaths.Count > 0);
+
+			fontsFromFilesCached = false;
+			changed = true;
+			}
+
+		/// <summary>
+		/// Возвращает или задаёт флаг пропуска системных шрифтов
+		/// </summary>
+		public static bool DontUseSystemFonts
+			{
+			get
+				{
+				return RDGenerics.GetSettings (dontUseSystemFontsPar, false);
+				}
+			set
+				{
+				RDGenerics.SetSettings (dontUseSystemFontsPar, value);
+				}
+			}
+		private const string dontUseSystemFontsPar = "DontUseSystemFonts";
+
+		/// <summary>
+		/// Возвращает или задаёт флаг пропуска файловых шрифтов
+		/// </summary>
+		public static bool DontUseFontsFromFiles
+			{
+			get
+				{
+				return RDGenerics.GetSettings (dontUseFontsFromFilesPar, false);
+				}
+			set
+				{
+				RDGenerics.SetSettings (dontUseFontsFromFilesPar, value);
+				}
+			}
+		private const string dontUseFontsFromFilesPar = "DontUseFontsFromFiles";
 		}
 	}

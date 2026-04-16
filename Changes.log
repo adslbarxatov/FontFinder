@@ -1,5 +1,14 @@
 Font finder: changes log
 
+Version 4.0:
+• Application is now the first one that has correct Portuguese localization
+  (great thanks to Paulo Roberto);
+• Localization subsystem has been adapted for multilanguage mode;
+• App now has correct window menu;
+• App is now able to use font files that aren't installed in the current OS
+  (great thanks to Paulo Roberto);
+• The app interface has been rebuilt
+
 Version 3.10.3:
 • Upgraded the update checking method;
 • Package format has been updated

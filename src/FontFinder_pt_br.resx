@@ -118,118 +118,118 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MSkippingFonts" xml:space="preserve">
-    <value>&amp;Fonts...</value>
+    <value>&amp;Fontes...</value>
   </data>
   <data name="CBoldText" xml:space="preserve">
-    <value>&amp;Bold</value>
+    <value>&amp;Negrito</value>
   </data>
   <data name="CItalicText" xml:space="preserve">
-    <value>&amp;Italic</value>
+    <value>&amp;Itálico</value>
   </data>
   <data name="ClearSkippingFonts" xml:space="preserve">
-    <value>Clear the list of skipping fonts?</value>
+    <value>Limpar a lista de fontes ignoradas?</value>
   </data>
   <data name="CStrikeText" xml:space="preserve">
-    <value>Striked &amp;out</value>
+    <value>&amp;Tachado</value>
   </data>
   <data name="CUnderText" xml:space="preserve">
-    <value>&amp;Underlined</value>
+    <value>&amp;Sublinhado</value>
   </data>
   <data name="EmptyTextField" xml:space="preserve">
-    <value>The text field should not be empty. Enter some text to view the font</value>
+    <value>O campo de texto não deve estar vazio. Digite algum texto para visualizar a fonte</value>
   </data>
   <data name="FileIsNotAnImage" xml:space="preserve">
-    <value>Specified file is not a valid image</value>
+    <value>O arquivo especificado não é uma imagem válida</value>
   </data>
   <data name="FinishSearch" xml:space="preserve">
-    <value>Finish the search?</value>
+    <value>Concluir a pesquisa?</value>
   </data>
   <data name="Label02Text" xml:space="preserve">
-    <value>&amp;2. Specify text from the picture:</value>
+    <value>&amp;2. Informe o texto da imagem:</value>
   </data>
   <data name="Label03Text" xml:space="preserve">
-    <value>&amp;3. Specify expected font style and stop-factor:</value>
+    <value>&amp;3. Defina o estilo de fonte esperado e o critério de parada:</value>
   </data>
   <data name="Label05Text" xml:space="preserve">
-    <value>&amp;5. Results (in descending order of similarity’s degree):</value>
+    <value>&amp;5. Resultados (em ordem decrescente de similaridade):</value>
   </data>
   <data name="Label06Text" xml:space="preserve">
-    <value>% match</value>
+    <value>% de correspondência</value>
   </data>
   <data name="LargePicture" xml:space="preserve">
-    <value>Loaded picture exceeds recommended dimensions. Processing may take significant time</value>
+    <value>A imagem carregada excede as dimensões recomendadas. O processamento pode levar um tempo considerável</value>
   </data>
   <data name="OpenImageFilter" xml:space="preserve">
-    <value>Images</value>
+    <value>Imagens</value>
   </data>
   <data name="OpenImageTitle" xml:space="preserve">
-    <value>Select an image file</value>
+    <value>Selecione um arquivo de imagem</value>
   </data>
   <data name="PauseSearchText" xml:space="preserve">
-    <value>P&amp;ause search if found</value>
+    <value>&amp;Pausar a busca se encontrado</value>
   </data>
   <data name="ProcessingMessage" xml:space="preserve">
-    <value>Processing {0:D} from {1:D}:
+    <value>Processando {0:D} de {1:D}:
 {2:S}</value>
   </data>
   <data name="ProcessingStyle" xml:space="preserve">
-    <value> using style {0:S}</value>
+    <value> com estilo {0:S}</value>
   </data>
   <data name="SelectImageText" xml:space="preserve">
-    <value>&amp;1. Select picture of the font</value>
+    <value>&amp;1. Selecione a imagem da fonte</value>
   </data>
   <data name="SkipListProcessorCaption" xml:space="preserve">
-    <value>Skipping fonts</value>
+    <value>Fontes Ignoradas</value>
   </data>
   <data name="SpecifyTextFromImage" xml:space="preserve">
-    <value>Specify the text from the sample image</value>
+    <value>Especifique o texto da imagem de exemplo</value>
   </data>
   <data name="StartSearchText" xml:space="preserve">
-    <value>&amp;4. Begin search</value>
+    <value>&amp;4. Iniciar Busca</value>
   </data>
   <data name="WrongFont" xml:space="preserve">
-    <value>Specified font is unavailable</value>
+    <value>A fonte especificada não está disponível</value>
   </data>
   <data name="FillingRequiredText" xml:space="preserve">
-    <value>Add a new search to the list</value>
+    <value>Adicionar uma nova busca à lista</value>
   </data>
   <data name="SkippingFontsCountAndPercentage" xml:space="preserve">
     <value>
-Maximum match obtained: {1:S}%
-Skipping fonts: {0:D}</value>
+Correspondência máxima obtida: {1:S}%
+Fontes Ignoradas: {0:D}</value>
   </data>
   <data name="ExistentLabelText" xml:space="preserve">
     <value>Operating system fonts ({0:D}):</value>
   </data>
   <data name="SkippingLabelText" xml:space="preserve">
-    <value>Skipping fonts ({0:D}):</value>
+    <value>Fontes Ignoradas ({0:D}):</value>
   </data>
   <data name="SampleText" xml:space="preserve">
-    <value>SaMpLe 123</value>
+    <value>AmOsTrA 123</value>
   </data>
   <data name="ffsfile" xml:space="preserve">
-    <value>Fonts skipping list file</value>
+    <value>Lista de Arquivo de fontes ignoradas</value>
   </data>
   <data name="CannotFindText" xml:space="preserve">
     <value>Cannot find a contrast image of text in the specified picture.
 
-Increase the contrast and try again</value>
+Aumente o contraste e tente novamente</value>
   </data>
   <data name="ExtendedFilterRequest" xml:space="preserve">
-    <value>This option allows you to skip fonts that have no characters for your local alphabet. To do this, enter two different letters in the field below</value>
+    <value>Esta opção permite ignorar fontes que não possuem caracteres do seu alfabeto local. Para isso, insira duas letras diferentes no campo abaixo</value>
   </data>
   <data name="ExtendedFilterError" xml:space="preserve">
-    <value>Two different letters should be specified to continue</value>
+    <value>Para continuar, devem ser especificadas duas letras diferentes</value>
   </data>
   <data name="BExtended" xml:space="preserve">
     <value>Extended filter</value>
   </data>
   <data name="ExtendedFilterResult" xml:space="preserve">
-    <value>Operation has been completed.
-Fonts skipped: {0:D}</value>
+    <value>A operação foi concluída.
+Fontes ignoradas: {0:D}</value>
   </data>
   <data name="MOptions" xml:space="preserve">
-    <value>&amp;Options</value>
+    <value>&amp;Opções</value>
   </data>
   <data name="MFiles" xml:space="preserve">
     <value>&amp;Font files...</value>

@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BSkippingText" xml:space="preserve">
-    <value>Пропускаемые шрифты</value>
+  <data name="MSkippingFonts" xml:space="preserve">
+    <value>&amp;Шрифты...</value>
   </data>
   <data name="CBoldText" xml:space="preserve">
     <value>&amp;Жирный</value>
@@ -145,13 +145,13 @@
     <value>Завершить поиск?</value>
   </data>
   <data name="Label02Text" xml:space="preserve">
-    <value>2. Укажите текст, содержащийся на изображении:</value>
+    <value>&amp;2. Укажите текст, содержащийся на изображении:</value>
   </data>
   <data name="Label03Text" xml:space="preserve">
-    <value>3. Укажите предполагаемый стиль и требуемый стоп-фактор:</value>
+    <value>&amp;3. Укажите предполагаемый стиль и требуемый стоп-фактор:</value>
   </data>
   <data name="Label05Text" xml:space="preserve">
-    <value>5. Результаты (по степени совпадения с образцом):</value>
+    <value>&amp;5. Результаты (по степени совпадения с образцом):</value>
   </data>
   <data name="Label06Text" xml:space="preserve">
     <value>%-ное совпадение</value>
@@ -176,7 +176,7 @@
     <value> со стилем {0:S}</value>
   </data>
   <data name="SelectImageText" xml:space="preserve">
-    <value>1. Укажите &amp;изображение с образцом шрифта</value>
+    <value>&amp;1. Укажите изображение с образцом шрифта</value>
   </data>
   <data name="SkipListProcessorCaption" xml:space="preserve">
     <value>Пропускаемые шрифты</value>
@@ -185,7 +185,7 @@
     <value>Укажите текст с загруженного изображения</value>
   </data>
   <data name="StartSearchText" xml:space="preserve">
-    <value>4. &amp;Начните поиск</value>
+    <value>&amp;4. Начните поиск</value>
   </data>
   <data name="WrongFont" xml:space="preserve">
     <value>Выбранный шрифт недоступен</value>
@@ -199,7 +199,7 @@
 Пропускаемых шрифтов: {0:D}</value>
   </data>
   <data name="ExistentLabelText" xml:space="preserve">
-    <value>Доступные шрифты ({0:D}):</value>
+    <value>Шрифты операционной системы ({0:D}):</value>
   </data>
   <data name="SkippingLabelText" xml:space="preserve">
     <value>Пропускаемые шрифты ({0:D}):</value>
@@ -215,9 +215,6 @@
 
 Увеличьте контраст и повторите попытку</value>
   </data>
-  <data name="BClear" xml:space="preserve">
-    <value>Сбросить</value>
-  </data>
   <data name="ExtendedFilterRequest" xml:space="preserve">
     <value>Эта опция позволяет пропустить шрифты, в которых нет символов для Вашего локального алфавита. Для продолжения введите две разные буквы в поле ниже</value>
   </data>
@@ -230,5 +227,27 @@
   <data name="ExtendedFilterResult" xml:space="preserve">
     <value>Операция завершена.
 Пропущено шрифтов: {0:D}</value>
+  </data>
+  <data name="MOptions" xml:space="preserve">
+    <value>&amp;Опции</value>
+  </data>
+  <data name="MFiles" xml:space="preserve">
+    <value>&amp;Файлы шрифтов...</value>
+  </data>
+  <data name="FilesLabel" xml:space="preserve">
+    <value>Шрифты из файлов, не установленных в системе:</value>
+  </data>
+  <data name="FontFilesPathsCollection" xml:space="preserve">
+    <value>Сбор сведений о файлах шрифтов...</value>
+  </data>
+  <data name="FontFilesCaching" xml:space="preserve">
+    <value>Загрузка шрифтов из файлов:
+{0:D} из {1:D}</value>
+  </data>
+  <data name="UseSystemFontsFlag" xml:space="preserve">
+    <value>Использовать системные шрифты</value>
+  </data>
+  <data name="UseFileFontsFlag" xml:space="preserve">
+    <value>Использовать файлы шрифтов</value>
   </data>
 </root>
