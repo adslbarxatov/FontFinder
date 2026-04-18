@@ -1,5 +1,9 @@
 Font finder: changes log
 
+Version 4.0.3:
+• Internal assemblies have been updated;
+• Portuguese localization has been completed (great thanks to Paulo Roberto)
+
 Version 4.0:
 • Application is now the first one that has correct Portuguese localization
   (great thanks to Paulo Roberto);

@@ -57,20 +57,9 @@ namespace RD_AAOW
 			SearchPauseFactor.Minimum = MinValidationLimit;
 			SearchPauseFactor.Maximum = MaxValidationLimit;
 
-			/*LanguageCombo.Items.AddRange (RDLocale.LanguagesNames);
-			try
-				{
-				LanguageCombo.SelectedIndex = (int)RDLocale.CurrentLanguage;
-				}
-			catch
-				{
-				LanguageCombo.SelectedIndex = 0;
-				}*/
-
 			// Контроль прав
 			if (!RDGenerics.AppHasAccessRights (false, false))
 				{
-				/*BSkipping.Enabled = false;*/
 				MSkippingFonts.Enabled = false;
 				this.Text += RDLocale.GetDefaultText (RDLDefaultTexts.Message_LimitedFunctionality);
 				}
@@ -150,7 +139,7 @@ namespace RD_AAOW
 				SelectImage.Enabled = LoadedPicture.Visible = LoadedPicText.Enabled =
 				CBold.Enabled = CItalic.Enabled = CUnder.Enabled = CStrike.Enabled =
 				PauseSearch.Enabled = SearchPauseFactor.Enabled = ViewBox.Visible =
-				StartSearch.Enabled = /*LanguageCombo.Enabled = BExit.Enabled =*/ MOptions.Enabled = false;
+				StartSearch.Enabled = MOptions.Enabled = false;
 
 			// Считывание параметров поиска
 			imageText = LoadedPicText.Text;
@@ -175,7 +164,7 @@ namespace RD_AAOW
 				SelectImage.Enabled = LoadedPicture.Visible = LoadedPicText.Enabled =
 				CBold.Enabled = CItalic.Enabled = CUnder.Enabled = CStrike.Enabled =
 				PauseSearch.Enabled = ViewBox.Visible = StartSearch.Enabled =
-				/*LanguageCombo.Enabled = BExit.Enabled =*/ MOptions.Enabled = true;
+				MOptions.Enabled = true;
 			SearchPauseFactor.Enabled = PauseSearch.Checked;
 
 			// Выгрузка результатов
@@ -272,7 +261,6 @@ namespace RD_AAOW
 						break;
 					}
 
-				/*foundFF.Insert (j, slp.ExistingFonts[i]);*/
 				foundFF.Insert (j, (i < osFonts) ? slp.ExistingFonts[i] : slp.FontsFromFiles[i - osFonts]);
 				foundFFMatch.Insert (j, res);
 
@@ -368,8 +356,6 @@ namespace RD_AAOW
 		// Локализация формы
 		private void LocalizeForm (object sender, EventArgs e)
 			{
-			/*// Сохранение языка
-			RDLocale.CurrentLanguage = (RDLanguages)LanguageCombo.SelectedIndex;*/
 			// Запрос языка
 			if ((sender != null) && !RDInterface.MessageBox ())
 				return;
@@ -380,7 +366,6 @@ namespace RD_AAOW
 			MLanguage.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Control_InterfaceLanguage);
 			MAbout.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Control_AppAbout);
 			MExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Exit);
-			/*MFiles.Text = RDLocale.GetText ("MFiles");*/
 
 			OpenImage.Filter = RDLocale.GetText ("OpenImageFilter") +
 				" (*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|" +
@@ -397,10 +382,7 @@ namespace RD_AAOW
 			PauseSearch.Text = RDLocale.GetText ("PauseSearchText");
 			StartSearch.Text = RDLocale.GetText ("StartSearchText");
 			Label05.Text = RDLocale.GetText ("Label05Text");
-			/*BExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Exit);*/
 			Label06.Text = RDLocale.GetText ("Label06Text");
-			/*BSkipping.Text = RDLocale.GetText ("BSkippingText");
-			Q5.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Control_AppAbout);*/
 			}
 
 		// Работа с пропущенными шрифтами

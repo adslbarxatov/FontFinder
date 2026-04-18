@@ -199,7 +199,7 @@ Correspondência máxima obtida: {1:S}%
 Fontes Ignoradas: {0:D}</value>
   </data>
   <data name="ExistentLabelText" xml:space="preserve">
-    <value>Operating system fonts ({0:D}):</value>
+    <value>Fontes do sistema operacional ({0:D}):</value>
   </data>
   <data name="SkippingLabelText" xml:space="preserve">
     <value>Fontes Ignoradas ({0:D}):</value>
@@ -211,7 +211,7 @@ Fontes Ignoradas: {0:D}</value>
     <value>Lista de Arquivo de fontes ignoradas</value>
   </data>
   <data name="CannotFindText" xml:space="preserve">
-    <value>Cannot find a contrast image of text in the specified picture.
+    <value>Não foi possível detectar texto com bom contraste na imagem.
 
 Aumente o contraste e tente novamente</value>
   </data>
@@ -222,7 +222,7 @@ Aumente o contraste e tente novamente</value>
     <value>Para continuar, devem ser especificadas duas letras diferentes</value>
   </data>
   <data name="BExtended" xml:space="preserve">
-    <value>Extended filter</value>
+    <value>Filtro avançado</value>
   </data>
   <data name="ExtendedFilterResult" xml:space="preserve">
     <value>A operação foi concluída.
@@ -232,22 +232,22 @@ Fontes ignoradas: {0:D}</value>
     <value>&amp;Opções</value>
   </data>
   <data name="MFiles" xml:space="preserve">
-    <value>&amp;Font files...</value>
+    <value>&amp;Arquivos de fontes...</value>
   </data>
   <data name="FilesLabel" xml:space="preserve">
-    <value>Fonts from files that aren’t installed:</value>
+    <value>Arquivos de fontes que não estão instalados:</value>
   </data>
   <data name="FontFilesPathsCollection" xml:space="preserve">
-    <value>Collecting information about font files...</value>
+    <value>Coletando informações sobre arquivos de fontes...</value>
   </data>
   <data name="FontFilesCaching" xml:space="preserve">
-    <value>Loading fonts from files:
-{0:D} from {1:D}</value>
+    <value>Carregando arquivos de fontes:
+{0:D} de {1:D}</value>
   </data>
   <data name="UseSystemFontsFlag" xml:space="preserve">
-    <value>Use system fonts</value>
+    <value>Usar fontes do sistema</value>
   </data>
   <data name="UseFileFontsFlag" xml:space="preserve">
-    <value>Use file fonts</value>
+    <value>Usar arquivos de fontes</value>
   </data>
 </root>

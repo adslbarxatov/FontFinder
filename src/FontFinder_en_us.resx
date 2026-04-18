@@ -242,12 +242,12 @@ Fonts skipped: {0:D}</value>
   </data>
   <data name="FontFilesCaching" xml:space="preserve">
     <value>Loading fonts from files:
-{0:D} from {1:D}</value>
+{0:D} of {1:D}</value>
   </data>
   <data name="UseSystemFontsFlag" xml:space="preserve">
     <value>Use system fonts</value>
   </data>
   <data name="UseFileFontsFlag" xml:space="preserve">
-    <value>Use file fonts</value>
+    <value>Use font files</value>
   </data>
 </root>

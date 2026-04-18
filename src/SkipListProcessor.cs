@@ -140,11 +140,8 @@ namespace RD_AAOW
 				}
 			StreamReader SR = new StreamReader (FS, RDGenerics.GetEncoding (RDEncodings.Unicode16));
 
-			string s;
-			/*while (!SR.EndOfStream)
-				skippingFonts.Add (SR.ReadLine ());*/
-
 			// Названия шрифтов
+			string s;
 			while (!string.IsNullOrWhiteSpace (s = SR.ReadLine ()))
 				skippingFonts.Add (s);
 
@@ -172,7 +169,6 @@ namespace RD_AAOW
 			// Настройка
 			this.Text = RDLocale.GetText ("SkipListProcessorCaption");
 			BExit.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Close);
-			/*BClear.Text = RDLocale.GetText ("BClear");*/
 			BClear.Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Clear);
 			BExtended.Text = RDLocale.GetText ("BExtended");
 
