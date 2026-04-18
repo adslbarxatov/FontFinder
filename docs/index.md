@@ -1,5 +1,5 @@
 # Font finder: user guide
-> **ƒ** &nbsp;RD AAOW FDL; 16.05.2025; 2:55
+> **ƒ** &nbsp;RD AAOW FDL; 19.04.2026; 2:05
 
 
 
@@ -18,7 +18,7 @@ font in the picture (high contrast, target letters only) and specify the text in
 The application allows you to set font search parameters and a break condition (match percentage).
 Finally, you can manage fonts that will be skipped during the search.
 
-> Warning! The tool only works with fonts installed on your operating system
+> Warning! The tool only works with fonts installed on your operating system and font files available locally
 
 1. It is recommended to use contrast pictures with dark text and bright background without other elements).
 Text must be flat (without trajectories). Cropped image will be shown in the field below the image selection button.
