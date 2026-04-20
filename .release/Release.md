@@ -1,6 +1,6 @@
 _en_us_
 
-- Internal assemblies have been updated;
+- Internal assemblies have been updated; 
 - Portuguese localization has been completed (great thanks to Paulo Roberto);
 - The app was ***the first to receive a proper localization in Portuguese*** (great thanks to Paulo Roberto for the interface translation);
 - The localization subsystem has been adapted for multilingual mode;
