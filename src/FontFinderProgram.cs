@@ -20,7 +20,7 @@ namespace RD_AAOW
 			RDLocale.InitEncodings ();
 
 			// Язык интерфейса и контроль XPUN
-			if (!RDLocale.IsXPUNClassAcceptable)
+			if (!RDLocale.CheckXPUNClass ())
 				return;
 
 			// Проверка запуска единственной копии
