@@ -120,19 +120,19 @@
   <data name="MSkippingFonts" xml:space="preserve">
     <value>&amp;Fonts...</value>
   </data>
-  <data name="CBoldText" xml:space="preserve">
+  <data name="CBold" xml:space="preserve">
     <value>&amp;Bold</value>
   </data>
-  <data name="CItalicText" xml:space="preserve">
+  <data name="CItalic" xml:space="preserve">
     <value>&amp;Italic</value>
   </data>
   <data name="ClearSkippingFonts" xml:space="preserve">
     <value>Clear the list of skipping fonts?</value>
   </data>
-  <data name="CStrikeText" xml:space="preserve">
+  <data name="CStrike" xml:space="preserve">
     <value>Striked &amp;out</value>
   </data>
-  <data name="CUnderText" xml:space="preserve">
+  <data name="CUnder" xml:space="preserve">
     <value>&amp;Underlined</value>
   </data>
   <data name="EmptyTextField" xml:space="preserve">
@@ -144,16 +144,16 @@
   <data name="FinishSearch" xml:space="preserve">
     <value>Finish the search?</value>
   </data>
-  <data name="Label02Text" xml:space="preserve">
+  <data name="Label02" xml:space="preserve">
     <value>&amp;2. Specify text from the picture:</value>
   </data>
-  <data name="Label03Text" xml:space="preserve">
+  <data name="Label03" xml:space="preserve">
     <value>&amp;3. Specify expected font style and stop-factor:</value>
   </data>
-  <data name="Label05Text" xml:space="preserve">
+  <data name="Label05" xml:space="preserve">
     <value>&amp;5. Results (in descending order of similarity’s degree):</value>
   </data>
-  <data name="Label06Text" xml:space="preserve">
+  <data name="Label06" xml:space="preserve">
     <value>% match</value>
   </data>
   <data name="LargePicture" xml:space="preserve">
@@ -165,7 +165,7 @@
   <data name="OpenImageTitle" xml:space="preserve">
     <value>Select an image file</value>
   </data>
-  <data name="PauseSearchText" xml:space="preserve">
+  <data name="PauseSearch" xml:space="preserve">
     <value>P&amp;ause search if found</value>
   </data>
   <data name="ProcessingMessage" xml:space="preserve">
@@ -175,7 +175,7 @@
   <data name="ProcessingStyle" xml:space="preserve">
     <value> using style {0:S}</value>
   </data>
-  <data name="SelectImageText" xml:space="preserve">
+  <data name="SelectImage" xml:space="preserve">
     <value>&amp;1. Select picture of the font</value>
   </data>
   <data name="SkipListProcessorCaption" xml:space="preserve">
@@ -184,13 +184,13 @@
   <data name="SpecifyTextFromImage" xml:space="preserve">
     <value>Specify the text from the sample image</value>
   </data>
-  <data name="StartSearchText" xml:space="preserve">
+  <data name="StartSearch" xml:space="preserve">
     <value>&amp;4. Begin search</value>
   </data>
   <data name="WrongFont" xml:space="preserve">
     <value>Specified font is unavailable</value>
   </data>
-  <data name="FillingRequiredText" xml:space="preserve">
+  <data name="FillingRequired" xml:space="preserve">
     <value>Add a new search to the list</value>
   </data>
   <data name="SkippingFontsCountAndPercentage" xml:space="preserve">

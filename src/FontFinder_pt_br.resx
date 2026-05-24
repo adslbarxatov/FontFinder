@@ -120,19 +120,19 @@
   <data name="MSkippingFonts" xml:space="preserve">
     <value>&amp;Fontes...</value>
   </data>
-  <data name="CBoldText" xml:space="preserve">
+  <data name="CBold" xml:space="preserve">
     <value>&amp;Negrito</value>
   </data>
-  <data name="CItalicText" xml:space="preserve">
+  <data name="CItalic" xml:space="preserve">
     <value>&amp;Itálico</value>
   </data>
   <data name="ClearSkippingFonts" xml:space="preserve">
     <value>Limpar a lista de fontes ignoradas?</value>
   </data>
-  <data name="CStrikeText" xml:space="preserve">
+  <data name="CStrike" xml:space="preserve">
     <value>&amp;Tachado</value>
   </data>
-  <data name="CUnderText" xml:space="preserve">
+  <data name="CUnder" xml:space="preserve">
     <value>&amp;Sublinhado</value>
   </data>
   <data name="EmptyTextField" xml:space="preserve">
@@ -144,16 +144,16 @@
   <data name="FinishSearch" xml:space="preserve">
     <value>Concluir a pesquisa?</value>
   </data>
-  <data name="Label02Text" xml:space="preserve">
+  <data name="Label02" xml:space="preserve">
     <value>&amp;2. Informe o texto da imagem:</value>
   </data>
-  <data name="Label03Text" xml:space="preserve">
+  <data name="Label03" xml:space="preserve">
     <value>&amp;3. Defina o estilo de fonte esperado e o critério de parada:</value>
   </data>
-  <data name="Label05Text" xml:space="preserve">
+  <data name="Label05" xml:space="preserve">
     <value>&amp;5. Resultados (em ordem decrescente de similaridade):</value>
   </data>
-  <data name="Label06Text" xml:space="preserve">
+  <data name="Label06" xml:space="preserve">
     <value>% de correspondência</value>
   </data>
   <data name="LargePicture" xml:space="preserve">
@@ -165,7 +165,7 @@
   <data name="OpenImageTitle" xml:space="preserve">
     <value>Selecione um arquivo de imagem</value>
   </data>
-  <data name="PauseSearchText" xml:space="preserve">
+  <data name="PauseSearch" xml:space="preserve">
     <value>&amp;Pausar a busca se encontrado</value>
   </data>
   <data name="ProcessingMessage" xml:space="preserve">
@@ -175,7 +175,7 @@
   <data name="ProcessingStyle" xml:space="preserve">
     <value> com estilo {0:S}</value>
   </data>
-  <data name="SelectImageText" xml:space="preserve">
+  <data name="SelectImage" xml:space="preserve">
     <value>&amp;1. Selecione a imagem da fonte</value>
   </data>
   <data name="SkipListProcessorCaption" xml:space="preserve">
@@ -184,13 +184,13 @@
   <data name="SpecifyTextFromImage" xml:space="preserve">
     <value>Especifique o texto da imagem de exemplo</value>
   </data>
-  <data name="StartSearchText" xml:space="preserve">
+  <data name="StartSearch" xml:space="preserve">
     <value>&amp;4. Iniciar Busca</value>
   </data>
   <data name="WrongFont" xml:space="preserve">
     <value>A fonte especificada não está disponível</value>
   </data>
-  <data name="FillingRequiredText" xml:space="preserve">
+  <data name="FillingRequired" xml:space="preserve">
     <value>Adicionar uma nova busca à lista</value>
   </data>
   <data name="SkippingFontsCountAndPercentage" xml:space="preserve">

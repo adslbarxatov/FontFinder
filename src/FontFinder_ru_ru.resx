@@ -120,19 +120,19 @@
   <data name="MSkippingFonts" xml:space="preserve">
     <value>&amp;Шрифты...</value>
   </data>
-  <data name="CBoldText" xml:space="preserve">
+  <data name="CBold" xml:space="preserve">
     <value>&amp;Жирный</value>
   </data>
-  <data name="CItalicText" xml:space="preserve">
+  <data name="CItalic" xml:space="preserve">
     <value>&amp;Курсив</value>
   </data>
   <data name="ClearSkippingFonts" xml:space="preserve">
     <value>Очистить список пропускаемых шрифтов?</value>
   </data>
-  <data name="CStrikeText" xml:space="preserve">
+  <data name="CStrike" xml:space="preserve">
     <value>&amp;Зачёркнутый</value>
   </data>
-  <data name="CUnderText" xml:space="preserve">
+  <data name="CUnder" xml:space="preserve">
     <value>&amp;Подчёркнутый</value>
   </data>
   <data name="EmptyTextField" xml:space="preserve">
@@ -144,16 +144,16 @@
   <data name="FinishSearch" xml:space="preserve">
     <value>Завершить поиск?</value>
   </data>
-  <data name="Label02Text" xml:space="preserve">
+  <data name="Label02" xml:space="preserve">
     <value>&amp;2. Укажите текст, содержащийся на изображении:</value>
   </data>
-  <data name="Label03Text" xml:space="preserve">
+  <data name="Label03" xml:space="preserve">
     <value>&amp;3. Укажите предполагаемый стиль и требуемый стоп-фактор:</value>
   </data>
-  <data name="Label05Text" xml:space="preserve">
+  <data name="Label05" xml:space="preserve">
     <value>&amp;5. Результаты (по степени совпадения с образцом):</value>
   </data>
-  <data name="Label06Text" xml:space="preserve">
+  <data name="Label06" xml:space="preserve">
     <value>%-ное совпадение</value>
   </data>
   <data name="LargePicture" xml:space="preserve">
@@ -165,7 +165,7 @@
   <data name="OpenImageTitle" xml:space="preserve">
     <value>Выберите файл изображения</value>
   </data>
-  <data name="PauseSearchText" xml:space="preserve">
+  <data name="PauseSearch" xml:space="preserve">
     <value>П&amp;риостанавливать поиск, если найдено</value>
   </data>
   <data name="ProcessingMessage" xml:space="preserve">
@@ -175,7 +175,7 @@
   <data name="ProcessingStyle" xml:space="preserve">
     <value> со стилем {0:S}</value>
   </data>
-  <data name="SelectImageText" xml:space="preserve">
+  <data name="SelectImage" xml:space="preserve">
     <value>&amp;1. Укажите изображение с образцом шрифта</value>
   </data>
   <data name="SkipListProcessorCaption" xml:space="preserve">
@@ -184,13 +184,13 @@
   <data name="SpecifyTextFromImage" xml:space="preserve">
     <value>Укажите текст с загруженного изображения</value>
   </data>
-  <data name="StartSearchText" xml:space="preserve">
+  <data name="StartSearch" xml:space="preserve">
     <value>&amp;4. Начните поиск</value>
   </data>
   <data name="WrongFont" xml:space="preserve">
     <value>Выбранный шрифт недоступен</value>
   </data>
-  <data name="FillingRequiredText" xml:space="preserve">
+  <data name="FillingRequired" xml:space="preserve">
     <value>Дополнить список новым поиском</value>
   </data>
   <data name="SkippingFontsCountAndPercentage" xml:space="preserve">
