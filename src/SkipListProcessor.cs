@@ -168,14 +168,10 @@ namespace RD_AAOW
 
 			// Настройка
 			this.Text = RDLocale.GetText ("SkipListProcessorCaption");
-			/*BExit. Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Close);
-			BClear. Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Clear);
-			BExtended. Text = RDLocale.GetText ("BExtended");*/
 			RDLocale.SetDefaultControlText (BExit, RDLDefaultTexts.Button_Close);
 			RDLocale.SetDefaultControlText (BClear, RDLDefaultTexts.Button_Clear);
 			RDLocale.SetControlText (BExtended);
 
-			/*FillingRequired. Text = RDLocale.GetText ("FillingRequiredText");*/
 			RDLocale.SetControlText (FillingRequired);
 			ExistentLabel.Text = string.Format (RDLocale.GetText ("ExistentLabelText"),
 				ExistentFontsListBox.Items.Count);
@@ -188,15 +184,12 @@ namespace RD_AAOW
 
 			DirectoriesListBox.DataSource = null;
 			DirectoriesListBox.DataSource = fontFilesPaths;
-			/*FilesLabel. Text = RDLocale.GetText ("FilesLabel");*/
 			RDLocale.SetControlText (FilesLabel);
 			BRemovePath.Enabled = (fontFilesPaths.Count > 0);
 
-			/*UseSystemFontsFlag. Text = RDLocale.GetText ("UseSystemFontsFlag");*/
 			RDLocale.SetControlText (UseSystemFontsFlag);
 			UseSystemFontsFlag.Checked = !DontUseSystemFonts;
 
-			/*UseFileFontsFlag. Text = RDLocale.GetText ("UseFileFontsFlag");*/
 			RDLocale.SetControlText (UseFileFontsFlag);
 			UseFileFontsFlag.Checked = !DontUseFontsFromFiles;
 

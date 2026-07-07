@@ -21,7 +21,6 @@ namespace RD_AAOW
 			ViewBox.BackgroundImage = Preview;
 
 			this.CancelButton = this.AcceptButton = FClose;
-			/*FClose. Text = RDLocale.GetDefaultText (RDLDefaultTexts.Button_Close);*/
 			RDLocale.SetDefaultControlText (FClose, RDLDefaultTexts.Button_Close);
 
 			// Заголовок окна

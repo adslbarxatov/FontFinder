@@ -1,29 +1,29 @@
-# Р”РµР№СЃС‚РІРёРµ, С„РѕСЂРјРёСЂСѓСЋС‰РµРµ СЂРµР»РёР·
+# Действие, формирующее релиз
 name: Release
 
-# РђРєС‚РёРІР°С†РёСЏ РїРѕ СЂСѓС‡РЅРѕРјСѓ РІС‹Р·РѕРІСѓ
+# Активация по ручному вызову
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths: .release/Release.md
 
-# РЎРѕРґРµСЂР¶РёС‚ РѕРґРЅРѕ Р·Р°РґР°РЅРёРµ build СЃ РЅР°Р·РІР°РЅРёРµРј Project release СЃ РЅРµСЃРєРѕР»СЊРєРёРјРё С€Р°РіР°РјРё
+# Содержит одно задание build с названием Project release с несколькими шагами
 jobs:
   build:
     name: Project release
     runs-on: ubuntu-latest
     
-# РљРѕРЅСЃС‚Р°РЅС‚С‹, РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РґР°Р»РµРµ РїРѕ С‚РµРєСЃС‚Сѓ
+# Константы, используемые далее по тексту
     env:
       PROJ: ${{ github.event.repository.name }}
-      TAG: '4.0.5'
+      TAG: '4.0.6'
 
     steps:
-# РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚Р°РІР° СЂРµРїРѕР·РёС‚РѕСЂРёСЏ (Р±РµР· Р°РЅР°Р»РёР·Р°, РєР°Рє РјРѕР¶РµС‚ РїРѕРєР°Р·Р°С‚СЊСЃСЏ)
+# Проверка состава репозитория (без анализа, как может показаться)
       - name: Checkout code
         uses: actions/checkout@v3
   
-# Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЂРµР»РёР·Р°
+# Формирование релиза
       - name: Create release
         id: create_release
         uses: ncipollo/release-action@v1
@@ -36,7 +36,7 @@ jobs:
           draft: false
           prerelease: false
 
-# Р—Р°РіСЂСѓР·РєР° Р±РёРЅР°СЂРЅС‹С… С„Р°Р№Р»РѕРІ РІ СЂРµР»РёР·
+# Загрузка бинарных файлов в релиз
       - name: Upload release asset
         id: upload-release-asset
         uses: actions/github-script@v4

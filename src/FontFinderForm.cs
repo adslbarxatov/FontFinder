@@ -372,17 +372,6 @@ namespace RD_AAOW
 				"*.bmp;*.gif;*.jpe;*.jpeg;*.jpg;*.jfif;*.png";
 			OpenImage.Title = RDLocale.GetText ("OpenImageTitle");
 
-			/*SelectImage. Text = RDLocale.GetText ("SelectImageText");
-			Label02. Text = RDLocale.GetText ("Label02Text");
-			Label03. Text = RDLocale.GetText ("Label03Text");
-			CBold. Text = RDLocale.GetText ("CBoldText");
-			CItalic. Text = RDLocale.GetText ("CItalicText");
-			CUnder. Text = RDLocale.GetText ("CUnderText");
-			CStrike. Text = RDLocale.GetText ("CStrikeText");
-			PauseSearch. Text = RDLocale.GetText ("PauseSearchText");
-			StartSearch. Text = RDLocale.GetText ("StartSearchText");
-			Label05. Text = RDLocale.GetText ("Label05Text");
-			Label06. Text = RDLocale.GetText ("Label06Text");*/
 			RDLocale.SetControlText (SelectImage);
 			RDLocale.SetControlText (Label02);
 			RDLocale.SetControlText (Label03);

@@ -1,19 +1,15 @@
 _en_us_
 
-- Internal assemblies have been updated;
+- Applied the updated GitHub markup for version numbers;
 - The app was ***the first to receive a proper localization in Portuguese*** (great thanks to Paulo Roberto for the interface translation);
-- The localization subsystem has been adapted for multilingual mode;
-- The ***app can now use font files not installed on the current OS*** (many thanks to Paulo Roberto for the recommendation);
-- The app interface has been partially redesigned
+- The localization subsystem has been adapted for multilingual mode
 
 ⁂
 
 _ru_ru_
 
-- Обновлены внутренние сборки приложения;
+- Применена обновлённая разметка GitHub для номеров версий;
 - Приложение стало ***первым, получившим корректную локализацию на португальском языке*** (огромная благодарность Paulo Roberto за перевод интерфейса);
-- Подсистема локализации адаптирована для многоязычного режима;
-- Приложение теперь ***может использовать файлы шрифтов, не установленные в текущей ОС*** (огромная благодарность Paulo Roberto за рекомендацию);
-- Интерфейс приложения частично переработан
+- Подсистема локализации адаптирована для многоязычного режима
 
 ⁂
