@@ -17,11 +17,18 @@ namespace RD_AAOW
 		private List<string> skippingFonts = [];
 		private List<string> fontFilesPaths = [];
 
-		private string newSkippingFontsListFile = ProgramDescription.AssemblyMainName + "." +
-			ProgramDescription.SkipFileExtension;
+		/*private string newSkippingFontsListFile = ProgramDescription.AssemblyMainName + "." +
+			ProgramDescription.SkipFileExtension;*/
 
 		private string sampleText;
 		private bool changed = false;
+
+		/// <summary>
+		/// Возвращает расширение файла пропускаемых шрифтов
+		/// </summary>
+		public const string SkipFileExtension = ".ffs";
+
+		private string skippingFontsListFile = ProgramDescription.AssemblyMainName + SkipFileExtension;
 
 		/// <summary>
 		/// Возвращает список шрифтов операционной системы
@@ -127,18 +134,62 @@ namespace RD_AAOW
 			FileStream FS;
 			try
 				{
-				if (RDGenerics.StartedFromMSStore)
+				// Новое место хранения
+				// !!! Временное решение для переноса настроек – должно быть переработано по истечении амортизации
+				string recommendedPath = RDGenerics.GetStoragePath (false);
+				if (File.Exists (recommendedPath + skippingFontsListFile))
+					FS = new FileStream (recommendedPath + skippingFontsListFile, FileMode.Open);
+
+				// Старые варианты
+				else if (RDGenerics.StartedFromMSStore)
+					FS = new FileStream (skippingFontsListFile, FileMode.Open);
+				else
+					FS = new FileStream (RDGenerics.StartupPath + skippingFontsListFile, FileMode.Open);
+
+				/*if (RDGenerics.St artedFromMSStore)
 					// Не уверен, что это на что-то влияет
 					FS = new FileStream (newSkippingFontsListFile, FileMode.Open);
 				else
-					FS = new FileStream (RDGenerics.AppStartupPath + newSkippingFontsListFile, FileMode.Open);
+					FS = new FileStream (RDGenerics.AppSt artupPath + newSkippingFontsListFile, FileMode.Open);*/
 				}
 			catch
 				{
 				FillingRequired.Checked = true;
 				return;
 				}
+
+			// Новая версия
+			BinaryReader BR = new BinaryReader (FS, RDGenerics.GetEncoding (RDEncodings.UTF8));
+			RDFormatSignatures version = (RDFormatSignatures)BR.ReadUInt16 ();
+			switch (version)
+				{
+				case RDFormatSignatures.FFSv3:
+					break;
+
+				default:
+					FS.Seek (0, SeekOrigin.Begin);
+					goto oldVersion;
+				}
+
+			// Названия шрифтов
+			UInt16 fontsCount = BR.ReadUInt16 ();
+			for (uint i = 0; i < fontsCount; i++)
+				skippingFonts.Add (BR.ReadString ());
+
+			// Пути к файлам шрифтов
+			UInt16 pathsCount = BR.ReadUInt16 ();
+			for (uint i = 0; i < pathsCount; i++)
+				fontFilesPaths.Add (BR.ReadString ());
+
+			// Выполнено
+			BR.Close ();
+			FS.Close ();
+			return;
+
+		oldVersion:
+			// Старая версия
 			StreamReader SR = new StreamReader (FS, RDGenerics.GetEncoding (RDEncodings.Unicode16));
+			version = RDFormatSignatures.FFSv2;
 
 			// Названия шрифтов
 			string s;
@@ -150,6 +201,8 @@ namespace RD_AAOW
 				fontFilesPaths.Add (s);
 
 			// Завершено
+			if (BR != null)
+				BR.Close ();
 			SR.Close ();
 			FS.Close ();
 			}
@@ -283,29 +336,49 @@ namespace RD_AAOW
 
 			// Загрузка файла
 			FileStream FS;
+			string recommendedPath = RDGenerics.GetStoragePath (true);
 			try
 				{
-				if (RDGenerics.StartedFromMSStore)
+				/*if (RDGenerics.St artedFromMSStore)
 					FS = new FileStream (newSkippingFontsListFile, FileMode.Create);
 				else
-					FS = new FileStream (RDGenerics.AppStartupPath + newSkippingFontsListFile, FileMode.Create);
+					FS = new FileStream (RDGenerics.AppSt artupPath + newSkippingFontsListFile, FileMode.Create);*/
+
+				/*// Для магазина директория подменяется
+				if (RDGenerics.StartedFromMSStore)
+					{
+					if (!Directory.Exists (RDGenerics.RecommendedStoragePath))
+						Directory.CreateDirectory (RDGenerics.RecommendedStoragePath);
+
+					FS = new FileStream (RDGenerics.RecommendedStoragePath + skippingFontsListFile, FileMode.Create);
+					}
+				else
+					{
+					FS = new FileStream (RDGenerics.AppStartupPath + skippingFontsListFile, FileMode.Create);
+					}*/
+
+				FS = new FileStream (recommendedPath + skippingFontsListFile, FileMode.Create);
 				}
 			catch
 				{
 				return;
 				}
-			StreamWriter SW = new StreamWriter (FS, RDGenerics.GetEncoding (RDEncodings.Unicode16));
+			BinaryWriter BW = new BinaryWriter (FS, RDGenerics.GetEncoding (RDEncodings.UTF8));
 
+			BW.Write ((UInt16)RDFormatSignatures.FFSActual);
+
+			BW.Write ((UInt16)skippingFonts.Count);
 			for (int i = 0; i < skippingFonts.Count; i++)
-				SW.WriteLine (skippingFonts[i]);
+				BW.Write (skippingFonts[i]);
 
-			SW.WriteLine ();
+			/*SW.WriteLine ();*/
 
+			BW.Write ((UInt16)fontFilesPaths.Count);
 			for (int i = 0; i < fontFilesPaths.Count; i++)
-				SW.WriteLine (fontFilesPaths[i]);
+				BW.Write (fontFilesPaths[i]);
 
 			// Завершено
-			SW.Close ();
+			BW.Close ();
 			FS.Close ();
 			}
 

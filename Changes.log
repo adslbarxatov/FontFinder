@@ -3,6 +3,11 @@ Font finder: changes log
 ToDo:
 - Try the four parts split
 
+Version 4.1:
+• The format of the skip list has been properly versioned;
+• The skip list will now be saved in the AllUsers directory (instead of ProgramFiles)
+  to avoid some side effects on MSStore updates
+
 Version 4.0.6:
 • Applied the updated GitHub markup for version numbers
 
