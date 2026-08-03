@@ -205,6 +205,9 @@ namespace RD_AAOW
 				BR.Close ();
 			SR.Close ();
 			FS.Close ();
+
+			// Старая версия требует принудительного пересохранения
+			changed = true;
 			}
 
 		/// <summary>

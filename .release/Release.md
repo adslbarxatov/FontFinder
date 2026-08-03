@@ -1,6 +1,6 @@
 _en_us_
 
-- The format of the skip list has been properly versioned;
+- The format of the skip list has been properly versioned; 
 - The skip list can now be saved in the `AllUsers` directory (instead of `Program files`) to avoid some side effects on MSStore updates;
 - Applied the updated GitHub markup for version numbers;
 - The app was ***the first to receive a proper localization in Portuguese*** (great thanks to Paulo Roberto for the interface translation);
