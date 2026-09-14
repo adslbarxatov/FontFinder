@@ -17,9 +17,6 @@ namespace RD_AAOW
 		private List<string> skippingFonts = [];
 		private List<string> fontFilesPaths = [];
 
-		/*private string newSkippingFontsListFile = ProgramDescription.AssemblyMainName + "." +
-			ProgramDescription.SkipFileExtension;*/
-
 		private string sampleText;
 		private bool changed = false;
 
@@ -145,12 +142,6 @@ namespace RD_AAOW
 					FS = new FileStream (skippingFontsListFile, FileMode.Open);
 				else
 					FS = new FileStream (RDGenerics.StartupPath + skippingFontsListFile, FileMode.Open);
-
-				/*if (RDGenerics.St artedFromMSStore)
-					// Не уверен, что это на что-то влияет
-					FS = new FileStream (newSkippingFontsListFile, FileMode.Open);
-				else
-					FS = new FileStream (RDGenerics.AppSt artupPath + newSkippingFontsListFile, FileMode.Open);*/
 				}
 			catch
 				{
@@ -342,24 +333,6 @@ namespace RD_AAOW
 			string recommendedPath = RDGenerics.GetStoragePath (true);
 			try
 				{
-				/*if (RDGenerics.St artedFromMSStore)
-					FS = new FileStream (newSkippingFontsListFile, FileMode.Create);
-				else
-					FS = new FileStream (RDGenerics.AppSt artupPath + newSkippingFontsListFile, FileMode.Create);*/
-
-				/*// Для магазина директория подменяется
-				if (RDGenerics.StartedFromMSStore)
-					{
-					if (!Directory.Exists (RDGenerics.RecommendedStoragePath))
-						Directory.CreateDirectory (RDGenerics.RecommendedStoragePath);
-
-					FS = new FileStream (RDGenerics.RecommendedStoragePath + skippingFontsListFile, FileMode.Create);
-					}
-				else
-					{
-					FS = new FileStream (RDGenerics.AppStartupPath + skippingFontsListFile, FileMode.Create);
-					}*/
-
 				FS = new FileStream (recommendedPath + skippingFontsListFile, FileMode.Create);
 				}
 			catch
@@ -373,8 +346,6 @@ namespace RD_AAOW
 			BW.Write ((UInt16)skippingFonts.Count);
 			for (int i = 0; i < skippingFonts.Count; i++)
 				BW.Write (skippingFonts[i]);
-
-			/*SW.WriteLine ();*/
 
 			BW.Write ((UInt16)fontFilesPaths.Count);
 			for (int i = 0; i < fontFilesPaths.Count; i++)

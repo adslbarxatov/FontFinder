@@ -370,7 +370,6 @@ namespace RD_AAOW
 			OpenImage.Filter = RDLocale.GetText ("OpenImageFilter") +
 				" (*.bmp, *.gif, *.jpe, *.jpeg, *.jpg, *.jfif, *.png)|" +
 				"*.bmp;*.gif;*.jpe;*.jpeg;*.jpg;*.jfif;*.png";
-			/*OpenImage. Title = RDLocale.GetText ("OpenImageTitle");*/
 
 			RDLocale.SetControlText (SelectImage);
 			RDLocale.SetControlText (Label02);
